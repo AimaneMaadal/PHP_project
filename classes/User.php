@@ -1,74 +1,113 @@
 <?php
-    abstract class User{
+
+include_once(__DIR__ . "/Db.php");
+class User{
         private $firstname;
         private $lastname;
         private $username;
+        private $email;
+        private $password;
      
-        
-        /**
-         * Get the value of firstname
-         */ 
-        public function getFirstname()
-        {
+        public function getFirstname(){
                 return $this->firstname;
         }
 
-        /**
-         * Set the value of firstname
-         *
-         * @return  self
-         */ 
-        public function setFirstname($firstname)
-        {
+        public function setFirstname($firstname){
+                if (empty($firstname)) {
+                        throw new Exception("firstname cant be empty");
+                }
                 $this->firstname = $firstname;
 
                 return $this;
         }
 
-
-        /**
-         * Get the value of lastname
-         */ 
-        public function getLastname()
-        {
+        public function getLastname(){
                 return $this->lastname;
         }
 
-        /**
-         * Set the value of lastname
-         *
-         * @return  self
-         */ 
-        public function setLastname($lastname)
-        {
+        public function setLastname($lastname){
+                if (empty($lastname)) {
+                        throw new Exception("lastname cant be empty");
+                }
                 $this->lastname = $lastname;
 
                 return $this;
         }
 
-        /**
-         * Get the value of username
-         */ 
-        public function getUsername()
-        {
-                return $this->username;
+        public function getEmail(){
+                return $this->email;
         }
 
-        /**
-         * Set the value of username
-         *
-         * @return  self
-         */ 
-        public function setUsername($username)
-        {
-                $this->username = $username;
+        public function setEmail($email){
+                if (!str_ends_with($email, '@student.thomasmore.be')) {
+                        if (!str_ends_with($email, '@thomasmore.be')) {
+                                throw new Exception("email has to end with @student.thomasmore.be or @thomasmore.be");
+                        }
+                }
+                else if (empty($email)) {
+                        throw new Exception("email cant be empty");
+                }
+                $this->email = $email;
                 return $this;
         }
 
-        public function __toString(){
-            return $this->firstname . " " . $this->lastname;
+        public function getPassword(){
+                return $this->password;
         }
 
+        public function setPassword($password){
+                if (strlen($password) < 5) {
+                        throw new Exception("Passwords must be longer than 5 characters.");
+                }
+                $this->password = $password;
+                return $this;
+        }
 
+        public static function getAll(){
+                $conn = Db::getInstance();
+                $sql = "SELECT * FROM users";
+                $statement = $conn->prepare($sql);
+                $statement->execute();
+                $result = $statement->fetchAll();
+                return $result;
+        }
 
+        public function register() {
+                $options = [
+                    'cost' => 12
+                ];
+                $password = password_hash($this->password, PASSWORD_BCRYPT, $options);
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("insert into users (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password);");
+                $statement->bindValue(':firstname', $this->firstname);
+                $statement->bindValue(':lastname', $this->lastname);
+                $statement->bindValue(':email', $this->email);
+                $statement->bindValue(':password', $password);
+                return $statement->execute();
+        }
+
+        public function canRegister($password, $password2) {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("select * from users where email = :email");
+                $statement -> bindValue(":email", $this -> email);
+                $statement -> execute();
+                $user = ($statement->fetch());
+                if(!$user){
+                        if($password == $password2){
+                                return true;
+                        }
+                        else{
+                                throw new Exception("wachtwoorden komen niet overeen");
+                                return false;
+                        }
+                }
+                else{
+                        throw new Exception("gebruiker bestaat al");
+                        return false;
+                }
+        }
+
+        public function __toString(){
+                return $this->firstname . " " . $this->lastname ." ". $this->email ." ". $this->email;
+        }
     }
