@@ -68,7 +68,7 @@
     <button type="submit">Submit</button>
   </form>
 
-  <a href="register.php">Don't have an account yet?</a><br>
+  <a href="login.php">I already have an account</a><br>
 
   <?php if (isset($error)) {
     echo $error;
