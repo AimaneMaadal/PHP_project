@@ -31,6 +31,10 @@ if (!empty($_POST)) {
 </head>
 
 <body>
+    <?php if (!empty($error)) : ?>
+        <div>Sorry, we couldn't log you in. Of course we need to hide this message by default.</div>
+    <?php endif; ?>
+
     <form action="" method="post">
         <label>Email address</label>
         <input type="email" name="email"><br>
