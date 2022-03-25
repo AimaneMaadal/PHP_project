@@ -2,6 +2,7 @@
 
 include_once(__DIR__ . "/Db.php");
 class User{
+        phpinfo();
         private $firstname;
         private $lastname;
         private $username;
@@ -30,7 +31,6 @@ class User{
                         throw new Exception("lastname cant be empty");
                 }
                 $this->lastname = $lastname;
-
                 return $this;
         }
 
