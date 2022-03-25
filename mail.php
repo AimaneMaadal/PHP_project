@@ -1,12 +1,4 @@
 <?php
-/*##########Script Information#########
-  # Purpose: Send mail Using PHPMailer#
-  #          & Gmail SMTP Server 	  #
-  # Created: 24-11-2019 			  #
-  #	Author : Hafiz Haider			  #
-  # Version: 1.0					  #
-  # Website: www.BroExperts.com 	  #
-  #####################################*/
 
 //Include required PHPMailer files
 	require 'includes/PHPMailer.php';
@@ -35,7 +27,7 @@
 //Email subject
 	$mail->Subject = "Test email using PHPMailer";
 //Set sender email
-	$mail->setFrom('janboskamp.imd@gmail.com');
+	$mail->setFrom('imd@gmail.com');
 //Enable HTML
 	$mail->isHTML(true);
 //Attachment
