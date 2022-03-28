@@ -8,6 +8,8 @@ class User
         private $username;
         private $email;
         private $password;
+        private $profilePicture;
+        private $userId;
 
         public function getFirstname()
         {
@@ -68,6 +70,14 @@ class User
                 }
                 $this->password = $password;
                 return $this;
+        }
+        public function getProfilePicture(){
+                return $this->profilePicture;
+        }
+        
+        public function setProfilePicture($profilePicture){
+                $this->profilePicture = $profilePicture;
+                return $this->profilePicture;
         }
 
         public function canLogin()
@@ -141,4 +151,56 @@ class User
         {
                 return $this->firstname . " " . $this->lastname . " " . $this->email . " " . $this->email;
         }
+
+
+        public static function getUserFromEmail($email){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
+                $statement->bindValue(':email', $email);
+                $statement->execute();
+                $result = $statement->fetch();
+                return $result;
+        }
+
+        public static function getUserFromId($id){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("SELECT * FROM users WHERE id = :id");
+                $statement->bindValue(':id', $id);
+                $statement->execute();
+                $result = $statement->fetch();
+                return $result;
+        }
+
+        public function updateUser() {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, profilepicture = :profilepicture WHERE email = :email");
+                
+
+                $firstname = $this->getFirstName();
+                $lastname = $this->getLastname();
+                $email = $this->getEmail();
+                //$profilepicture = $this->getProfilePicture();
+
+                $statement->bindValue(":email", $email);
+                $statement->bindValue(":firstname", $firstname);
+                $statement->bindValue(":lastname", $lastname);
+                //$statement->bindValue(":profilepicture", $profilepicture);
+
+                $statement->execute();
+        }
+
+        public function updateProfilePicture($profilepicture, $email) {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("UPDATE users SET profilepicture = :profilepicture WHERE email = :email");
+                
+                $statement->bindValue(":email", $email);
+                $statement->bindValue(":profilepicture", $profilepicture);
+
+                $statement->execute();
+
+                header('location: usersettings.php');
+        }
+    
+
+            
 }

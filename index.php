@@ -1,4 +1,19 @@
-<!DOCTYPE html>
+<?php
+    include_once(__DIR__ . "/classes/User.php");
+    include_once(__DIR__ . "/classes/Db.php");
+
+    session_start();
+    if(!isset($_SESSION['user'])) {
+        header('location: login.php');
+    } else{
+        $user = new User();
+        $sessionId = $_SESSION['user'];
+        $userData = User::getUserFromEmail($sessionId);
+    }
+
+    
+
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,7 +24,9 @@
 </head>
 
 <body>
-
+    <header>
+        <?php include('nav.php');?>
+    </header>
 </body>
 
 </html>
