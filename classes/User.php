@@ -102,16 +102,6 @@ class User
                 }
         }
 
-        public static function getAll()
-        {
-                $conn = Db::getInstance();
-                $sql = "SELECT * FROM users";
-                $statement = $conn->prepare($sql);
-                $statement->execute();
-                $result = $statement->fetchAll();
-                return $result;
-        }
-
         public function register()
         {
                 $options = [
@@ -124,6 +114,56 @@ class User
                 $statement->bindValue(':lastname', $this->lastname);
                 $statement->bindValue(':email', $this->email);
                 $statement->bindValue(':password', $password);
+                return $statement->execute();
+        }
+
+
+        
+        public static function updatePassword($token,$password){
+                $conn = Db::getInstance();
+                $sql = "SELECT * FROM `passwordreset` WHERE `token` = '$token';";
+                $statement = $conn->prepare($sql);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+                $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d"), date("Y"));
+                $expDate = date("Y-m-d H:i:s",$expFormat);
+
+                if (!$result) {
+                        throw new Exception("Link is not usable");
+                }
+
+                $email = $result["email"];
+                
+                if ($result["expiry_date"] < $expDate) {
+                        throw new Exception("Your link has been expired");
+                }
+
+                if (strlen($password) < 5) {
+                        throw new Exception("Passwords must be longer than 5 characters.");
+                }
+                $options = [
+                        'cost' => 12
+                ];
+                $password = password_hash($password, PASSWORD_BCRYPT, $options);
+                $statement2 = $conn->prepare("UPDATE `users` SET `password` = '$password' WHERE `users`.`email` = '$email';");
+                $statement2->execute();
+                $statement3 = $conn->prepare("DELETE FROM `passwordreset` WHERE `token` = '$token';");
+                $statement3->execute();
+               
+        }
+
+        public static function getAll(){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("SELECT email FROM users");
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                return $result;
+        }
+
+        public static function passwordResetToken($token,$expDate,$email){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("INSERT INTO `passwordreset` (`token`, `expiry_date`, `email`) VALUES ('$token', '$expDate', '$email');");
                 return $statement->execute();
         }
 
@@ -155,10 +195,10 @@ class User
 
         public static function getUserFromEmail($email){
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
-                $statement->bindValue(':email', $email);
+                $sql = "SELECT * FROM `users` WHERE `email` = '$email';";
+                $statement = $conn->prepare($sql);
                 $statement->execute();
-                $result = $statement->fetch();
+                $result = $statement->fetchAll();
                 return $result;
         }
 

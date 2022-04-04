@@ -8,6 +8,8 @@
 	use PHPMailer\PHPMailer\SMTP;
 	use PHPMailer\PHPMailer\Exception;
 
+	$token = $_GET["token"];
+
 	$mail = new PHPMailer();
 	$mail->isSMTP();
 	$mail->Host = "smtp.gmail.com";
@@ -19,9 +21,9 @@
 	$mail->Subject = "Test email using PHPMailer";
 	$mail->setFrom('janboskamp.imd@gmail.com');
 	$mail->isHTML(true);
-	$mail->Body = "<h1>This is HTML h1 Heading</h1></br><p>This is html paragraph</p>";
-	$mail->addAddress('elghamri.ismail.drupal@gmail.com');
+	$mail->Body = "<h1>This is HTML h1 Heading</h1></br><p>This is html paragraph</p><a href='http://localhost/PHP_project/newpassword.php?token=$token'>click here</a>";
+	$mail->addAddress($email);
 	if ( $mail->send() ) {
-		echo "Email Sent..!";
+		echo "Email Sent..!$email";
 	}
 	$mail->smtpClose();
