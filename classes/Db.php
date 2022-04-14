@@ -4,11 +4,11 @@
 
         public static function getInstance(){
             if(self::$conn != null){
-                echo "🚫";
+
                 // connection found, return connection
                 return self::$conn;
             } else{
-                echo "OK!";
+
                 $config = parse_ini_file("./config/config.ini");
                 self::$conn = new PDO('mysql:host='. $config['db_host'] .';dbname=' . $config['db_name'], $config['db_user'], $config['db_password'] );
                 return self::$conn;

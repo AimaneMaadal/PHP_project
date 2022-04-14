@@ -2,7 +2,8 @@
 
  if(!empty($_POST)){
     try{
-      include_once(__DIR__ . "/classes/User.php");
+      
+      include_once("bootstrap.php");
 
       $firstname = $_POST['firstname'];
       $lastname = $_POST['lastname'];

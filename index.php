@@ -1,15 +1,8 @@
 <?php
-    include_once(__DIR__ . "/classes/User.php");
-    include_once(__DIR__ . "/classes/Db.php");
+
+    include_once("bootstrap.php");
 
     session_start();
-    if(!isset($_SESSION['user'])) {
-        header('location: login.php');
-    } else{
-        $user = new User();
-        $sessionId = $_SESSION['user'];
-        $userData = User::getUserFromEmail($sessionId);
-    }
 
     
 

@@ -1,6 +1,7 @@
 <?php
 
 include_once(__DIR__ . "/Db.php");
+
 class User
 {
         private $firstname;
@@ -109,7 +110,7 @@ class User
                 ];
                 $password = password_hash($this->password, PASSWORD_BCRYPT, $options);
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("insert into users (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password);");
+                $statement = $conn->prepare("insert into users (firstname, lastname, email, password, profilepicture) values (:firstname, :lastname, :email, :password, '');");
                 $statement->bindValue(':firstname', $this->firstname);
                 $statement->bindValue(':lastname', $this->lastname);
                 $statement->bindValue(':email', $this->email);
@@ -198,7 +199,7 @@ class User
                 $sql = "SELECT * FROM `users` WHERE `email` = '$email';";
                 $statement = $conn->prepare($sql);
                 $statement->execute();
-                $result = $statement->fetchAll();
+                $result = $statement->fetch();
                 return $result;
         }
 
