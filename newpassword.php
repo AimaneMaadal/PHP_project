@@ -5,8 +5,6 @@ include_once("bootstrap.php");
 
 $token = $_GET["token"];
 
-//var_dump($token);
-
 
 
 if (!empty($_POST)) {
@@ -23,7 +21,7 @@ if (!empty($_POST)) {
         }
     }
     catch (Exception $e) {
-        echo $e->getMessage();
+        $error = $e->getMessage();
     }
     
 
@@ -49,20 +47,29 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-    <?php if (!empty($error)) : ?>
-        <div>Sorry, we couldn't log you in. Of course we need to hide this message by default.</div>
-    <?php endif; ?>
+<img id="logo_mini" src="images/logo_mini.svg">
 
-    <form action="" method="post">
-        <label>New password</label>
-        <input type="password" name="password1"><br>
+    <div id="form">
+        <form action="" method="post">
+        <br><br>
+            <h1>New password</h1>
+            <label>New password</label>
+            <input type="password" name="password1" class="inputfield"><br>
 
-        <label>Confirm password</label>
-        <input type="password" name="password2"><br>
+            <label>Confirm password</label>
+            <input type="password" name="password2" class="inputfield"><br>
 
 
-        <button type="submit">Submit</button>
-    </form>
+            
+            <?php if (isset($error)) {
+                echo "<div id='error'>".$error."</div>";
+            }?>
+
+            <button type="submit">Submit</button><br>
+
+
+        </form>
+    </div>
 
 
 
