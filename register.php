@@ -1,10 +1,8 @@
 <?php
 
  if(!empty($_POST)){
-    try{
-      
+    try{   
       include_once("bootstrap.php");
-
       $firstname = $_POST['firstname'];
       $lastname = $_POST['lastname'];
       $email = $_POST['email'];
@@ -47,33 +45,41 @@
 </head>
 
 <body>
+<img id="logo_mini" src="images/logo_mini.svg">
+  <div id="form">
+    <form action="" method="post">
+    <br><br>
+    <h1>Create account</h1>
 
-  <form action="" method="post">
+      <label>First name</label>
+      <input type="text" name="firstname" class="inputfield"><br>
 
-    <label>First name</label>
-    <input type="text" name="firstname"><br>
+      <label>Last name</label>
+      <input type="text" name="lastname" class="inputfield"><br>
 
-    <label>Last name</label>
-    <input type="text" name="lastname"><br>
+      <label>Email address</label>
+      <input type="email" name="email" class="inputfield"><br>
 
-    <label>Email address</label>
-    <input type="email" name="email"><br>
+      <label>Password</label>
+      <input type="password" name="password" class="inputfield"><br>
 
-    <label>Password</label>
-    <input type="password" name="password"><br>
+      <label>Confirm password</label>
+      <input type="password" name="password2" class="inputfield"><br>
+      
+      <input type="checkbox"></input>
+      <span>Remeber me</span>
 
-    <label>Confirm password</label>
-    <input type="password" name="password2"><br>
+      <?php if (isset($error)) {
+        echo "<div id='error'>".$error."</div>";
+        }?>
+
+      <button type="submit">Submit</button>
+      <a href="login.php" id="noAccountLink">I already have an account</a><br>
+    </form>
+  </div>
 
 
-    <button type="submit">Submit</button>
-  </form>
 
-  <a href="login.php">I already have an account</a><br>
-
-  <?php if (isset($error)) {
-    echo $error;
-  }?>
 
 </body>
 

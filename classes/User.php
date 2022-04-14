@@ -88,17 +88,16 @@ class User
                 $statement->bindValue(':email', $this->email);
                 $statement->execute();
                 $user = ($statement->fetch());
-                $hash = $user["password"];
-
+                
                 if (!$user) {
-                        echo "user does not exist";
+                        throw new Exception("User does not exist");
                         return false;
                 }
+                $hash = $user["password"];
                 if (password_verify($this->password, $hash)) {
-                        echo "you're logged in";
                         return true;
                 } else {
-                        echo "wrong password";
+                        throw new Exception("Wrong Password");
                         return false;
                 }
         }

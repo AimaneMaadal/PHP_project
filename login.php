@@ -1,25 +1,27 @@
 <?php
 //insert code here
 if (!empty($_POST)) {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    try{ 
+        $email = $_POST["email"];
+        $password = $_POST["password"];
 
-    include_once(__DIR__ . "/classes/User.php");
+        include_once(__DIR__ . "/classes/User.php");
 
-    $user = new User();
-    $user->setEmail($email);
-    $user->setPassword($password);
-    if ($user->canLogin($email, $password)) {
-        session_start();
-        $_SESSION["user"] = $email;
-        header("Location: index.php");
-    } else {
-        $error = true;
+        $user = new User();
+        $user->setEmail($email);
+        $user->setPassword($password);
+        if ($user->canLogin($email, $password)) {
+            session_start();
+            $_SESSION["user"] = $email;
+            header("Location: index.php");
+        }
+    }
+    catch(Throwable $error) {
+        $error = $error->getMessage();
     }
 }
 
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,23 +33,33 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-    <?php if (!empty($error)) : ?>
-        <div>Sorry, we couldn't log you in. Of course we need to hide this message by default.</div>
-    <?php endif; ?>
 
+    <img id="logo_mini" src="images/logo_mini.svg">
+    <div id="form">
     <form action="" method="post">
-        <label>Email address</label>
-        <input type="email" name="email"><br>
+        <br><br>
 
-        <label>Password</label>
-        <input type="password" name="password"><br>
-        </div>
+        <h1>Login account</h1>
+        <label>Email address</label><br>
+        <input placeholder="Email" type="email" name="email" class="inputfield"><br>
 
-        <button type="submit">Submit</button>
+        <label>Password</label><br>
+        <input placeholder="Password" type="password" name="password" class="inputfield"><br>
+
+        <input type="checkbox"></input>
+        <span>Remeber me</span>
+       
+        <a href="resetpassword.php" id="forgotLink">Forgot password?</a><br>
+
+        <?php if (isset($error)) {
+        echo "<div id='error'>".$error."</div>";
+        }?>
+
+        <button type="submit">Login</button>
     </form>
 
-    <a href="register.php">Don't have an account yet?</a>
-
+    <a href="register.php" id="noAccountLink">Don't have an account yet?</a><br>
+    </div>
 
 </body>
 

@@ -1,3 +1,95 @@
+
+@font-face {
+    font-family: roboto;
+    src: url(fonts/Roboto-Medium.ttf);
+}
+body{
+    margin: 0;
+    background-color: rgb(238, 238, 238);
+}
+
+/*LOGIN*/
+#form{
+    width: 40%;
+    margin: 0px auto;
+    font-family: 'roboto';
+    color: rgb(0, 0, 28);
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.inputfield{
+    width: 80%;
+    display: block;
+    margin: 0px auto;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid rgba(198, 198, 198, 0.614);
+}
+#form input[type='checkbox']{
+    margin-left: 10%;
+}
+#form label{
+    display: block;
+    margin-left: 10%;
+}
+#form button{
+    width: 120px;
+    height: 40px;
+    font-family: 'roboto';
+    border: none;
+    display: block;
+    margin: 40px auto;
+    border-radius: 5px;
+    color: white;
+    font-size: 15px;
+    background-color: #FBAB7E;
+    background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+}
+#form h1{
+    text-align: center;
+    font-size: 20px;
+   
+}
+#noAccountLink{
+    text-decoration: none;
+    color: rgb(0, 0, 28);
+    text-align: center;
+    display: block;
+    margin: 0px auto;
+}
+#forgotLink{
+    text-decoration: none;
+    color: rgb(0, 0, 28);
+    float: right;
+    display: block;
+    margin-right: 10%;
+}
+
+
+#logo_mini{
+    width: 5%;
+    display: block;
+    background-color: red;
+    margin: 30px auto;
+    border-radius: 20px;
+    background-color: #FBAB7E;
+    box-shadow: 8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25);
+}
+
+#error{
+    color: #D8000C;
+    background-color: #FFBABA;
+    height: 50px;
+    width: 80%;
+    margin: 40px auto;
+    font-size: 15px;
+    padding: 7px;
+}
+
+
+
+/*EDIT PROFILE*/
 .profilePicture{
     width: 200px;
     height: 200px;

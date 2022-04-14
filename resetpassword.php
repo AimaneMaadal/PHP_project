@@ -4,20 +4,30 @@ include_once("bootstrap.php");
 
 
 if (!empty($_POST)) {
-    $email = $_POST["email"];
+    try{
+        $email = $_POST["email"];
 
-    $user = User::getUserFromEmail($email);
+        $user = User::getUserFromEmail($email);
 
-    if ($user) {
-        $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y"));
-        $expDate = date("Y-m-d H:i:s",$expFormat);
-    
-        $token = md5($email."salty".$expDate);
-    
-        User::passwordResetToken($token,$expDate,$email);
+        if ($user) {
+            $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y"));
+            $expDate = date("Y-m-d H:i:s",$expFormat);
+        
+            $token = md5($email."salty".$expDate);
+        
+            User::passwordResetToken($token,$expDate,$email);
 
-        header("Location: mail.php?token=$token");
+            header("Location: mail.php?token=$token&email=$email");
+        }
+        else{
+            throw new Exception("User not found");
+        }
     }
+    catch(Throwable $error) {
+        // if any errors are thrown in the class, they can be caught here
+        $error = $error->getMessage();
+    }
+
 
 
     
@@ -38,18 +48,25 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-    <?php if (!empty($error)) : ?>
-        <div>Sorry, we couldn't log you in. Of course we need to hide this message by default.</div>
-    <?php endif; ?>
+<img id="logo_mini" src="images/logo_mini.svg">
 
-    <form action="" method="post">
-        <label>Email address</label>
-        <input type="email" name="email"><br>
+    <div id="form">
+        <form action="" method="post">
+            <br><br>
+            <h1>Reset password</h1>
+            <label>Email address</label>
+            <input type="email" name="email" class="inputfield"><br>
 
 
-        <button type="submit">Submit</button>
-    </form>
+            <?php if (isset($error)) {
+            echo "<div id='error'>".$error."</div>";
+            }?>
 
+            <button type="submit">Submit</button>
+            <br>
+
+        </form>
+    </div>
 
 
 </body>
