@@ -128,7 +128,7 @@ class User
 
                 $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d"), date("Y"));
                 $expDate = date("Y-m-d H:i:s",$expFormat);
-
+                
                 if (!$result) {
                         throw new Exception("Link is not usable");
                 }
