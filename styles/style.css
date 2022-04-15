@@ -2,26 +2,27 @@
     font-family: roboto;
     src: url(fonts/Roboto-Medium.ttf);
 }
+
 @font-face {
     font-family: lobster;
     src: url(fonts/Lobster-Regular.ttf);
 }
-body{
+
+body {
     margin: 0;
-    background-color: rgb(238, 238, 238);
+    background-color: #f2f3f8;
 }
 
 /*LOGIN*/
-#form{
+#form {
     width: 40%;
     margin: 0px auto;
     font-family: 'roboto';
     color: rgb(0, 0, 28);
-    border-radius: 20px;
     background-color: white;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-.inputfield{
+
+.inputfield {
     width: 80%;
     display: block;
     margin: 0px auto;
@@ -29,38 +30,43 @@ body{
     border-radius: 10px;
     border: 2px solid rgba(198, 198, 198, 0.614);
 }
-#form input[type='checkbox']{
+
+#form input[type='checkbox'] {
     margin-left: 10%;
 }
-#form label{
+
+#form label {
     display: block;
     margin-left: 10%;
 }
-#form button{
+
+#form button {
     width: 120px;
     height: 40px;
     font-family: 'roboto';
     border: none;
     display: block;
     margin: 40px auto;
-    border-radius: 5px;
+    border-radius: 20px;
     color: white;
     font-size: 15px;
     background-color: #FBAB7E;
-    background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
 }
-#form h1{
+
+#form h1 {
     text-align: center;
     font-size: 20px;
 }
-#noAccountLink{
+
+#noAccountLink {
     text-decoration: none;
     color: rgb(0, 0, 28);
     text-align: center;
     display: block;
     margin: 0px auto;
 }
-#forgotLink{
+
+#forgotLink {
     text-decoration: none;
     color: rgb(0, 0, 28);
     float: right;
@@ -68,18 +74,16 @@ body{
     margin-right: 10%;
 }
 
-
-#logo_mini{
+#logo_mini {
     width: 5%;
     display: block;
     background-color: red;
     margin: 30px auto;
-    border-radius: 20px;
     background-color: #FBAB7E;
-    box-shadow: 8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25);
+    border-radius: 20px;
 }
 
-#error{
+#error {
     color: #D8000C;
     background-color: #FFBABA;
     height: 50px;
@@ -92,10 +96,11 @@ body{
 
 
 /*NAVIGATION*/
-nav{
+nav {
     background-color: rgb(255, 255, 255);
 }
-nav span{
+
+nav span {
     font-family: 'lobster';
     font-size: 45px;
     margin-left: 10%;
@@ -104,10 +109,11 @@ nav span{
     background-size: 100%;
     -webkit-background-clip: text;
     -moz-background-clip: text;
-    -webkit-text-fill-color: transparent; 
+    -webkit-text-fill-color: transparent;
     -moz-text-fill-color: transparent;
 }
-.nav_btn{
+
+.nav_btn {
     text-decoration: none;
     background-color: rgb(255, 255, 255);
     padding: 8px 15px;
@@ -118,25 +124,30 @@ nav span{
     color: black;
     transition: 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.nav_btn:hover{
+
+.nav_btn:hover {
     padding: 10px 15px;
 }
+
 .nav_btn:nth-child(2) {
     background-color: #FBAB7E;
     color: white;
 }
+
 .nav_btn:nth-child(2):hover {
     background-color: #e4793b;
     color: white;
 }
+
 .nav_btn:nth-child(1) {
     border: 1px solid rgba(128, 128, 128, 0.315);
 }
+
 .nav_btn:nth-child(1):hover {
     background-color: #f2f2f2;
 }
 
-.nav_right{
+.nav_right {
     float: right;
     text-decoration: none;
     margin: 18px 10% 0px 0px;
@@ -144,7 +155,7 @@ nav span{
 
 
 /*EDIT PROFILE*/
-.profilePicture{
+.profilePicture {
     width: 200px;
     height: 200px;
     border-radius: 100%;
