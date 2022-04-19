@@ -10,6 +10,8 @@ class User
         private $email;
         private $password;
         private $profilePicture;
+        private $bio;
+        private $education;
         private $userId;
 
         public function getFirstname()
@@ -72,13 +74,38 @@ class User
                 $this->password = $password;
                 return $this;
         }
-        public function getProfilePicture(){
+
+        public function getProfilePicture()
+        {
                 return $this->profilePicture;
         }
-        
-        public function setProfilePicture($profilePicture){
+
+        public function setProfilePicture($profilePicture)
+        {
                 $this->profilePicture = $profilePicture;
                 return $this->profilePicture;
+        }
+
+        public function getBio()
+        {
+                return $this->bio;
+        }
+
+        public function setBio($bio)
+        {
+                $this->bio = $bio;
+                return $this->bio;
+        }
+
+        public function getEducation()
+        {
+                return $this->education;
+        }
+
+        public function setEducation($education)
+        {
+                $this->education = $education;
+                return $this->education;
         }
 
         public function canLogin()
@@ -88,7 +115,7 @@ class User
                 $statement->bindValue(':email', $this->email);
                 $statement->execute();
                 $user = ($statement->fetch());
-                
+
                 if (!$user) {
                         throw new Exception("User does not exist");
                         return false;
@@ -118,23 +145,24 @@ class User
         }
 
 
-        
-        public static function updatePassword($token,$password){
+
+        public static function updatePassword($token, $password)
+        {
                 $conn = Db::getInstance();
                 $sql = "SELECT * FROM `passwordreset` WHERE `token` = '$token';";
                 $statement = $conn->prepare($sql);
                 $statement->execute();
                 $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-                $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d"), date("Y"));
-                $expDate = date("Y-m-d H:i:s",$expFormat);
-                
+                $expFormat = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
+                $expDate = date("Y-m-d H:i:s", $expFormat);
+
                 if (!$result) {
                         throw new Exception("Link is not usable");
                 }
 
                 $email = $result["email"];
-                
+
                 if ($result["expiry_date"] < $expDate) {
                         throw new Exception("Your link has been expired");
                 }
@@ -150,10 +178,10 @@ class User
                 $statement2->execute();
                 $statement3 = $conn->prepare("DELETE FROM `passwordreset` WHERE `token` = '$token';");
                 $statement3->execute();
-               
         }
 
-        public static function getAll(){
+        public static function getAll()
+        {
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("SELECT email FROM users");
                 $statement->execute();
@@ -161,7 +189,8 @@ class User
                 return $result;
         }
 
-        public static function passwordResetToken($token,$expDate,$email){
+        public static function passwordResetToken($token, $expDate, $email)
+        {
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("INSERT INTO `passwordreset` (`token`, `expiry_date`, `email`) VALUES ('$token', '$expDate', '$email');");
                 return $statement->execute();
@@ -193,7 +222,8 @@ class User
         }
 
 
-        public static function getUserFromEmail($email){
+        public static function getUserFromEmail($email)
+        {
                 $conn = Db::getInstance();
                 $sql = "SELECT * FROM `users` WHERE `email` = '$email';";
                 $statement = $conn->prepare($sql);
@@ -202,7 +232,8 @@ class User
                 return $result;
         }
 
-        public static function getUserFromId($id){
+        public static function getUserFromId($id)
+        {
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("SELECT * FROM users WHERE id = :id");
                 $statement->bindValue(':id', $id);
@@ -211,14 +242,17 @@ class User
                 return $result;
         }
 
-        public function updateUser() {
+        public function updateUser()
+        {
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, profilepicture = :profilepicture WHERE email = :email");
-                
+                $statement = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, profilepicture = :profilepicture, bio = :bio, education = :education WHERE email = :email");
+
 
                 $firstname = $this->getFirstName();
                 $lastname = $this->getLastname();
                 $email = $this->getEmail();
+                $bio = $this->getBio();
+                $education = $this->getEducation();
                 //$profilepicture = $this->getProfilePicture();
 
                 $statement->bindValue(":email", $email);
@@ -229,10 +263,11 @@ class User
                 $statement->execute();
         }
 
-        public function updateProfilePicture($profilepicture, $email) {
+        public function updateProfilePicture($profilepicture, $email)
+        {
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("UPDATE users SET profilepicture = :profilepicture WHERE email = :email");
-                
+
                 $statement->bindValue(":email", $email);
                 $statement->bindValue(":profilepicture", $profilepicture);
 
@@ -241,7 +276,8 @@ class User
                 header('location: usersettings.php');
         }
 
-        public static function changeCurrentPassword($currentpassword, $newpassword, $newpassword2, $email) {
+        public static function changeCurrentPassword($currentpassword, $newpassword, $newpassword2, $email)
+        {
                 $conn = Db::getInstance();
                 $sql = "SELECT * FROM `users` WHERE `email` = '$email';";
                 $statement = $conn->prepare($sql);
@@ -267,6 +303,4 @@ class User
                         return false;
                 }
         }
-
-            
 }

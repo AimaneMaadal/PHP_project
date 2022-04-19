@@ -84,12 +84,10 @@ if (!empty($_POST['update'])) {
     <?php endif; ?>
 
     <form action="" method="POST" enctype="multipart/form-data">
-
         <div>
             <label>Profile picture</label>
             <img class="profilePicture" src="images/profile_pictures/<?php echo $userData['profilepicture']; ?>" alt="Profile picture">
             <input type="file" id="userImage" name="userImage" value=""><br>
-
         </div>
         <input type="submit" name="updateImage" value="Update profile picture">
     </form>
@@ -108,7 +106,6 @@ if (!empty($_POST['update'])) {
     </form>
 
     <a href="register.php">Don't have an account yet?</a>
-
 
 </body>
 
