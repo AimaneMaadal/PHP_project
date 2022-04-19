@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Gegenereerd op: 19 apr 2022 om 09:15
--- Serverversie: 5.7.36
--- PHP-versie: 8.1.3
+-- Host: localhost:3306
+-- Generation Time: Apr 19, 2022 at 01:28 PM
+-- Server version: 5.7.24
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `imdribble`
+-- Database: `brandish`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `passwordreset`
+-- Table structure for table `passwordreset`
 --
 
 CREATE TABLE `passwordreset` (
@@ -34,7 +34,7 @@ CREATE TABLE `passwordreset` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Gegevens worden geëxporteerd voor tabel `passwordreset`
+-- Dumping data for table `passwordreset`
 --
 
 INSERT INTO `passwordreset` (`token`, `expiry_date`, `email`) VALUES
@@ -80,7 +80,7 @@ INSERT INTO `passwordreset` (`token`, `expiry_date`, `email`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -89,36 +89,39 @@ CREATE TABLE `users` (
   `lastname` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  `profilepicture` varchar(300) COLLATE utf8_unicode_ci NOT NULL
+  `profilepicture` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+  `bio` text COLLATE utf8_unicode_ci,
+  `education` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Gegevens worden geëxporteerd voor tabel `users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `profilepicture`) VALUES
-(4, 'Aimane', 'Maadal', 'aimane223@gmail.com', '$2y$12$9eyQpYIdhXBE.RMHeEhMt.ZnSitv4aq1I7hUSAHdxZ7xmSP4z2i1e', '0'),
-(5, 'jan', 'a', 'aimane223@thomasmore.be', '$2y$12$Ywths.GkShTFWK/kIRVu.ORr16QesHoHEyLQH/CEn6ZFtmDetV92e', '');
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `profilepicture`, `bio`, `education`) VALUES
+(4, 'Aimane', 'Maadal', 'aimane223@gmail.com', '$2y$12$9eyQpYIdhXBE.RMHeEhMt.ZnSitv4aq1I7hUSAHdxZ7xmSP4z2i1e', '0', NULL, NULL),
+(5, 'jan', 'a', 'aimane223@thomasmore.be', '$2y$12$Ywths.GkShTFWK/kIRVu.ORr16QesHoHEyLQH/CEn6ZFtmDetV92e', '', NULL, NULL),
+(6, 'Alejandro', 'De Wolf', 'r0851847@student.thomasmore.be', '$2y$12$jUnSDBXPp4SprchX1jk4Su3d2w6ffMLamodmZrTjKW7k/qs51R1IS', 'pexels-photo-2379004.jpeg', NULL, NULL);
 
 --
--- Indexen voor geëxporteerde tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Indexen voor tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT voor geëxporteerde tabellen
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT voor een tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
