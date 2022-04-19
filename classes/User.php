@@ -244,23 +244,15 @@ class User
 
         public function updateUser()
         {
-                $conn = Db::getInstance();
-                $statement = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, profilepicture = :profilepicture, bio = :bio, education = :education WHERE email = :email");
-
-
                 $firstname = $this->getFirstName();
                 $lastname = $this->getLastname();
                 $email = $this->getEmail();
                 $bio = $this->getBio();
                 $education = $this->getEducation();
-                //$profilepicture = $this->getProfilePicture();
 
-                $statement->bindValue(":email", $email);
-                $statement->bindValue(":firstname", $firstname);
-                $statement->bindValue(":lastname", $lastname);
-                $statement->bindValue(":bio", $bio);
-                $statement->bindValue(":education", $education);
-                //$statement->bindValue(":profilepicture", $profilepicture);
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("UPDATE `users` SET `firstname` = '$firstname', `lastname` = '$lastname', `email` = '$email',  `bio` = '$bio', `education` = '$education' WHERE `users`.`email` = '$email';");
+
 
                 $statement->execute();
         }

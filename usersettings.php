@@ -47,7 +47,7 @@ if (!empty($_POST['updateImage'])) {
 
 if (!empty($_POST['update'])) {
     try {
-        $user->setFirstName($firstname = $_POST['updateFirstName']);
+        $user->setFirstName($_POST['updateFirstName']);
         $user->setLastname($_POST['updateLastName']);
         $user->setEmail($_POST['updateEmail']);
         $user->setBio($_POST['updateBio']);
@@ -57,8 +57,9 @@ if (!empty($_POST['update'])) {
         $user->updateUser();
 
         $userData = User::getUserFromEmail($sessionId);
-    } catch (\Throwable $th) {
-        $error = true;
+    }   
+    catch(Throwable $error) {
+        $error = $error->getMessage();
     }
 }
 
@@ -81,9 +82,7 @@ if (!empty($_POST['update'])) {
         <?php include('nav.php'); ?>
     </header>
 
-    <?php if (!empty($error)) : ?>
-        <div>Sorry, Something went wrong</div>
-    <?php endif; ?>
+    <?php if (!empty($error)) {echo $error; } ?>
 
     <form action="" method="POST" enctype="multipart/form-data">
         <div>
@@ -107,16 +106,15 @@ if (!empty($_POST['update'])) {
         <input type="text" name="updateLastName" value="<?php echo htmlspecialchars($userData['lastname']); ?>"><br>
 
         <label>Bio</label>
-        <input type="text" name="updateBio" value=""><br>
+        <input type="text" name="updateBio" value="<?php echo htmlspecialchars($userData['bio']); ?>"><br>
 
         <label>Education</label>
-        <input type="text" name="updateEducation" value=""><br>
+        <input type="text" name="updateEducation" value="<?php echo htmlspecialchars($userData['education']); ?>"><br>
 
         <input type="submit" name="update" value="Update gegevens">
     </form>
 
     <a href="changepassword.php">Change current password</a>
-    <a href="register.php">Don't have an account yet?</a>
     <a href="delete.php">Delete profile</a>
 
 </body>
