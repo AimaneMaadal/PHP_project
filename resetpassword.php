@@ -10,8 +10,7 @@ if (!empty($_POST)) {
         $user = User::getUserFromEmail($email);
 
         if ($user) {
-            $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y"));
-            $expDate = date("Y-m-d H:i:s",$expFormat);
+            $expDate = date("Y-m-d H:i:s",mktime(date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y")));
         
             $token = md5($email."salty".$expDate);
         
@@ -24,7 +23,6 @@ if (!empty($_POST)) {
         }
     }
     catch(Throwable $error) {
-        // if any errors are thrown in the class, they can be caught here
         $error = $error->getMessage();
     }
 
