@@ -118,9 +118,6 @@ if (!empty($_POST['update'])) {
     <a href="changepassword.php">Change current password</a>
     <a href="register.php">Don't have an account yet?</a>
 
-
-    <a href="register.php">Don't have an account yet?</a>
-
 </body>
 
 </html>
