@@ -240,7 +240,33 @@ class User
 
                 header('location: usersettings.php');
         }
-    
+
+        public static function changeCurrentPassword($currentpassword, $newpassword, $newpassword2, $email) {
+                $conn = Db::getInstance();
+                $sql = "SELECT * FROM `users` WHERE `email` = '$email';";
+                $statement = $conn->prepare($sql);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+                $hash = $result["password"];
+                if (password_verify($currentpassword, $hash)) {
+                        if ($newpassword == $newpassword2) {
+                                $options = [
+                                        'cost' => 12
+                                ];
+                                $password = password_hash($newpassword, PASSWORD_BCRYPT, $options);
+                                $statement2 = $conn->prepare("UPDATE `users` SET `password` = '$password' WHERE `users`.`email` = '$email';");
+                                $statement2->execute();
+                                return true;
+                        } else {
+                                throw new Exception("Passwords don't match");
+                                return false;
+                        }
+                } else {
+                        throw new Exception("Passwords don't match");
+                        return false;
+                }
+        }
 
             
 }

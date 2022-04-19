@@ -21,6 +21,7 @@
         session_start();
         $_SESSION['user'] = $user->getEmail();
         $user->register();
+        header("Location: index.php");
 
       }
   }
@@ -67,7 +68,7 @@
       <input type="password" name="password2" class="inputfield"><br>
       
       <input type="checkbox"></input>
-      <span>Remeber me</span>
+      <span>Remember me</span>
 
       <?php if (isset($error)) {
         echo "<div id='error'>".$error."</div>";
