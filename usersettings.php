@@ -108,6 +108,7 @@ if (!empty($_POST['update'])) {
     </form>
 
     <a href="register.php">Don't have an account yet?</a>
+    <a class="nav_btn" href="changepassword.php">Change current password</a>
 
 
 </body>

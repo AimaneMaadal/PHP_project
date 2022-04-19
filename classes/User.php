@@ -249,8 +249,6 @@ class User
                 $statement->execute();
                 $result = $statement->fetch();
 
-                var_dump($result);
-
                 $hash = $result["password"];
                 if (password_verify($currentpassword, $hash)) {
                         if ($newpassword == $newpassword2) {
@@ -262,11 +260,11 @@ class User
                                 $statement2->execute();
                                 return true;
                         } else {
-                                throw new Exception("Passwords don't match");
+                                throw new Exception("New passwords don't match");
                                 return false;
                         }
                 } else {
-                        throw new Exception("Passwords don't match");
+                        throw new Exception("Old password is incorrect");
                         return false;
                 }
         }
