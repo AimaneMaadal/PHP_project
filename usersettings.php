@@ -107,9 +107,9 @@ if (!empty($_POST['update'])) {
         <input type="submit" name="update" value="Update gegevens">
     </form>
 
-    <a href="register.php">Don't have an account yet?</a>
     <a class="nav_btn" href="changepassword.php">Change current password</a>
-
+    <a href="register.php">Don't have an account yet?</a>
+    
 
 </body>
 
