@@ -50,6 +50,8 @@ if (!empty($_POST['update'])) {
         $user->setFirstName($firstname = $_POST['updateFirstName']);
         $user->setLastname($_POST['updateLastName']);
         $user->setEmail($_POST['updateEmail']);
+        $user->setBio($_POST['updateBio']);
+        $user->setEducation($_POST['updateEducation']);
 
         //$user->setProfilePicture($_FILES['updateImage']);
         $user->updateUser();
@@ -92,7 +94,9 @@ if (!empty($_POST['update'])) {
         <input type="submit" name="updateImage" value="Update profile picture">
     </form>
 
-    <form action="" method="post">
+
+
+    <form action="" method="post" class="profile_info">
         <label>Email address</label>
         <input type="email" name="updateEmail" value="<?php echo htmlspecialchars($userData['email']); ?>"><br>
 
@@ -102,8 +106,16 @@ if (!empty($_POST['update'])) {
         <label>Last Name</label>
         <input type="text" name="updateLastName" value="<?php echo htmlspecialchars($userData['lastname']); ?>"><br>
 
+        <label>Bio</label>
+        <input type="text" name="updateBio" value=""><br>
+
+        <label>Education</label>
+        <input type="text" name="updateEducation" value=""><br>
+
         <input type="submit" name="update" value="Update gegevens">
     </form>
+
+
 
     <a href="register.php">Don't have an account yet?</a>
 
