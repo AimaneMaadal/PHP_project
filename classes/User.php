@@ -242,11 +242,14 @@ class User
         }
 
         public static function changeCurrentPassword($currentpassword, $newpassword, $newpassword2, $email) {
+
                 $conn = Db::getInstance();
                 $sql = "SELECT * FROM `users` WHERE `email` = '$email';";
                 $statement = $conn->prepare($sql);
                 $statement->execute();
-                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                $result = $statement->fetch();
+
+                var_dump($result);
 
                 $hash = $result["password"];
                 if (password_verify($currentpassword, $hash)) {

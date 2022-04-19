@@ -5,7 +5,7 @@
     if (isset($_SESSION['user'])) {
         $sessionId = $_SESSION['user'];
         $user = User::getUserFromEmail($sessionId);
-        // echo "Welkom ".$user["firstname"];
+        echo "Welkom ".$user["email"];
         echo "<div class='nav_right'><a class='nav_btn' href='logout.php'>logout</a></div>";
         echo "<div class='nav_right'><a class='nav_btn' href='usersettings.php'>edit profile</a></div>";
     } else {

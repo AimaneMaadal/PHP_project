@@ -2,15 +2,22 @@
 
 include_once("bootstrap.php");
 
+session_start();
+
 if (!empty($_POST)) {
     try {
         $currentpassword = $_POST["currentpassword"];
         $newpassword = $_POST["newpassword"];
         $newpassword2 = $_POST["newpassword2"];
+
+        $sessionId = $_SESSION['user'];
+        $user = User::getUserFromEmail($sessionId);
+        $email = $user["email"];
+        var_dump($email);
         
     
         if ($newpassword === $newpassword2) {
-            User::changeCurrentPassword($email, $currentpassword ,$newpassword, $newpassword2);
+            User::changeCurrentPassword($currentpassword ,$newpassword, $newpassword2, $email);
             header("location: index.php");
         }
         else{
@@ -41,7 +48,7 @@ if (!empty($_POST)) {
     <div id="form">
         <form action="" method="post">
         <br><br>
-            <h1>Current password</h1>
+            <h1>Change current password</h1>
             <label>Current password</label>
             <input type="password" name="currentpassword" class="inputfield"><br>
 
