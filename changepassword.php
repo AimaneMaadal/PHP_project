@@ -9,7 +9,7 @@ if (!empty($_POST)) {
         $newpassword2 = $_POST["newpassword2"];
         
     
-        if ($password1 === $password2) {
+        if ($newpassword === $newpassword2) {
             User::changeCurrentPassword($email, $currentpassword ,$newpassword, $newpassword2);
             header("location: index.php");
         }
