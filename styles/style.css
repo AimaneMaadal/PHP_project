@@ -113,6 +113,20 @@ nav span {
     -moz-text-fill-color: transparent;
 }
 
+.btn {
+    background-color: #FBAB7E;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
 .nav_btn {
     text-decoration: none;
     background-color: rgb(255, 255, 255);
