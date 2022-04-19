@@ -242,6 +242,7 @@ class User
         }
 
         public static function changeCurrentPassword($currentpassword, $newpassword, $newpassword2, $email) {
+    
 
                 $conn = Db::getInstance();
                 $sql = "SELECT * FROM `users` WHERE `email` = '$email';";
