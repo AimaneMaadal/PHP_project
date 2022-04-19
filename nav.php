@@ -6,7 +6,7 @@
         $sessionId = $_SESSION['user'];
         $user = User::getUserFromEmail($sessionId);
         echo "Welkom ".$user["email"];
-        echo "<div class='nav_right'><a class='nav_btn' href='logout.php'>logout</a></div>";
+        echo "<div class='nav_right'><a class='nav_btn' href='logout.php'>Log out</a></div>";
         echo "<div class='nav_right'><a class='nav_btn' href='usersettings.php'>edit profile</a></div>";
     } else {
         echo "<div class='nav_right'><a class='nav_btn' href='login.php'>Inloggen</a> ";
