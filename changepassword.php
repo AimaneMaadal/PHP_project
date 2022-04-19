@@ -13,7 +13,6 @@ if (!empty($_POST)) {
         $sessionId = $_SESSION['user'];
         $user = User::getUserFromEmail($sessionId);
         $email = $user["email"];
-        var_dump($email);
         
     
         if ($newpassword === $newpassword2) {
