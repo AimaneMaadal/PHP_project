@@ -162,3 +162,12 @@ nav span {
     margin-bottom: 20px;
     object-fit: cover;
 }
+
+.profile_info {
+    width: 500px;
+    padding: 1rem;
+}
+
+.profile_info input {
+    margin: .2rem 0;
+}
