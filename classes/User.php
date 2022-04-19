@@ -258,6 +258,8 @@ class User
                 $statement->bindValue(":email", $email);
                 $statement->bindValue(":firstname", $firstname);
                 $statement->bindValue(":lastname", $lastname);
+                $statement->bindValue(":bio", $bio);
+                $statement->bindValue(":education", $education);
                 //$statement->bindValue(":profilepicture", $profilepicture);
 
                 $statement->execute();
