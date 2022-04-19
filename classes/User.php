@@ -305,4 +305,11 @@ class User
                         return false;
                 }
         }
+
+        public static function deleteUser($email)
+        {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = '$email';");
+                $statement->execute();
+        }
 }
