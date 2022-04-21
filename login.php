@@ -47,7 +47,7 @@ if (!empty($_POST)) {
         <input placeholder="Password" type="password" name="password" class="inputfield"><br>
 
         <input type="checkbox"></input>
-        <span>Remeber me</span>
+        <span>Remember me</span>
        
         <a href="resetpassword.php" id="forgotLink">Forgot password?</a><br>
 
