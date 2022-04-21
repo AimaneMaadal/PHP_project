@@ -298,12 +298,14 @@ class User
                         throw new Exception("Old password is incorrect");
                         return false;
                 }
+
         }
 
-        public static function deleteUser($email)
-        {
-                $conn = Db::getInstance();
-                $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = '$email';");
-                $statement->execute();
-        }
+     public static function deleteUser($sessionId) {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = :email");
+        $statement->bindValue(":email", $sessionId);
+        $statement->execute();
+}
+
 }

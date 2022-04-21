@@ -5,8 +5,8 @@
     session_start();
     if (isset($_SESSION['user'])) {
         $sessionId = $_SESSION['user'];
-        $user = User::getUserFromEmail($sessionId);
-        $user->deleteUser();
+        User::deleteUser($sessionId);
+        var_dump($sessionId);
     }
     session_destroy();
     header("Location: register.php");
