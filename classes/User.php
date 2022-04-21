@@ -301,11 +301,10 @@ class User
 
         }
 
-     public static function deleteUser($sessionId) {
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = :email");
-        $statement->bindValue(":email", $sessionId);
-        $statement->execute();
-}
-
-}
+     public static function deleteUser($sessionId) {                   
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = :email");
+                $statement->bindValue(":email", $sessionId);
+                $statement->execute();
+                 }
+     }
