@@ -99,6 +99,9 @@ if (!empty($_POST['update'])) {
         <label>Email address</label>
         <input type="email" name="updateEmail" value="<?php echo htmlspecialchars($userData['email']); ?>"><br>
 
+        <label>Backup email address</label>
+        <input type="email" name="updateBackupmail" value="<?php echo htmlspecialchars($userData['backupmail']); ?>"><br>
+
         <label>First Name</label>
         <input type="text" name="updateFirstName" value="<?php echo htmlspecialchars($userData['firstname']); ?>"><br>
 
