@@ -53,13 +53,14 @@ if (!empty($_POST['update'])) {
         $user->setBackupEmail($_POST['updateBackupEmail']);
         $user->setBio($_POST['updateBio']);
         $user->setEducation($_POST['updateEducation']);
+        $user->setLinkedIn($_POST['updateLinkedIn']);
 
         //$user->setProfilePicture($_FILES['updateImage']);
         $user->updateUser();
 
         $userData = User::getUserFromEmail($sessionId);
 
-        var_dump($userData);
+        // var_dump($userData);
     }   
     catch(Throwable $error) {
         $error = $error->getMessage();
@@ -116,6 +117,9 @@ if (!empty($_POST['update'])) {
 
         <label>Education</label>
         <input type="text" name="updateEducation" value="<?php echo htmlspecialchars($userData['education']); ?>"><br>
+
+        <label>LinkedIn</label>
+        <input type="text" name="updateLinkedIn" value="<?php echo htmlspecialchars($userData['linkedin']); ?>"><br>
 
         <input type="submit" name="update" value="Update gegevens">
     </form>
