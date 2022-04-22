@@ -50,6 +50,7 @@ if (!empty($_POST['update'])) {
         $user->setFirstName($_POST['updateFirstName']);
         $user->setLastname($_POST['updateLastName']);
         $user->setEmail($_POST['updateEmail']);
+        $user->setBackupEmail($_POST['updateBackupEmail']);
         $user->setBio($_POST['updateBio']);
         $user->setEducation($_POST['updateEducation']);
 
@@ -57,6 +58,8 @@ if (!empty($_POST['update'])) {
         $user->updateUser();
 
         $userData = User::getUserFromEmail($sessionId);
+
+        var_dump($userData);
     }   
     catch(Throwable $error) {
         $error = $error->getMessage();
@@ -100,7 +103,7 @@ if (!empty($_POST['update'])) {
         <input type="email" name="updateEmail" value="<?php echo htmlspecialchars($userData['email']); ?>"><br>
 
         <label>Backup email address</label>
-        <input type="email" name="updateBackupmail" value="<?php echo htmlspecialchars($userData['backupmail']); ?>"><br>
+        <input type="email" name="updateBackupEmail" value="<?php echo htmlspecialchars($userData['backupemail']); ?>"><br>
 
         <label>First Name</label>
         <input type="text" name="updateFirstName" value="<?php echo htmlspecialchars($userData['firstname']); ?>"><br>

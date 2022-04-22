@@ -8,6 +8,7 @@ class User
         private $lastname;
         private $username;
         private $email;
+        private $backupEmail;
         private $password;
         private $profilePicture;
         private $bio;
@@ -59,6 +60,17 @@ class User
                 }
                 $this->email = $email;
                 return $this;
+        }
+
+        public function getBackupEmail()
+        {
+                return $this->backupEmail;
+        }
+
+        public function setBackupEmail($backupEmail)
+        {
+                $this->backupEmail = $backupEmail;
+                return $this->backupEmail;
         }
 
         public function getPassword()
@@ -247,11 +259,12 @@ class User
                 $firstname = $this->getFirstName();
                 $lastname = $this->getLastname();
                 $email = $this->getEmail();
+                $backupEmail = $this->getBackupEmail();
                 $bio = $this->getBio();
                 $education = $this->getEducation();
 
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("UPDATE `users` SET `firstname` = '$firstname', `lastname` = '$lastname', `email` = '$email',  `bio` = '$bio', `education` = '$education' WHERE `users`.`email` = '$email';");
+                $statement = $conn->prepare("UPDATE `users` SET `firstname` = '$firstname', `lastname` = '$lastname', `email` = '$email', `backupemail` = '$backupEmail', `bio` = '$bio', `education` = '$education' WHERE `users`.`email` = '$email';");
 
 
                 $statement->execute();
