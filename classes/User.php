@@ -13,6 +13,7 @@ class User
         private $profilePicture;
         private $bio;
         private $education;
+        private $linkedIn;
         private $userId;
 
         public function getFirstname()
@@ -118,6 +119,17 @@ class User
         {
                 $this->education = $education;
                 return $this->education;
+        }
+
+        public function getLinkedIn()
+        {
+                return $this->linkedIn;
+        }
+
+        public function setLinkedIn($linkedIn)
+        {
+                $this->linkedIn = $linkedIn;
+                return $this->linkedIn;
         }
 
         public function canLogin()
@@ -262,9 +274,10 @@ class User
                 $backupEmail = $this->getBackupEmail();
                 $bio = $this->getBio();
                 $education = $this->getEducation();
+                $linkedIn = $this->getLinkedIn();
 
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("UPDATE `users` SET `firstname` = '$firstname', `lastname` = '$lastname', `email` = '$email', `backupemail` = '$backupEmail', `bio` = '$bio', `education` = '$education' WHERE `users`.`email` = '$email';");
+                $statement = $conn->prepare("UPDATE `users` SET `firstname` = '$firstname', `lastname` = '$lastname', `email` = '$email', `backupemail` = '$backupEmail', `bio` = '$bio', `education` = '$education', `linkedin` = '$linkedIn' WHERE `users`.`email` = '$email';");
 
 
                 $statement->execute();
