@@ -289,22 +289,31 @@ class User
                                 $password = password_hash($newpassword, PASSWORD_BCRYPT, $options);
                                 $statement2 = $conn->prepare("UPDATE `users` SET `password` = '$password' WHERE `users`.`email` = '$email';");
                                 $statement2->execute();
-                                return true;
                         } else {
                                 throw new Exception("New passwords don't match");
-                                return false;
                         }
                 } else {
                         throw new Exception("Old password is incorrect");
-                        return false;
                 }
 
         }
 
-     public static function deleteUser($sessionId) {                   
+     public static function deleteUser($sessionId, $currentpassword) { 
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = :email");
-                $statement->bindValue(":email", $sessionId);
+                $sql = "SELECT * FROM `users` WHERE `email` = '$sessionId';";
+                $statement = $conn->prepare($sql);
                 $statement->execute();
-                 }
+                $result = $statement->fetch();
+                $hash = $result["password"];
+                if (password_verify($currentpassword, $hash && !empty($_POST['currentpassword']))) {
+                        $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = :email");
+                        $statement->bindValue(":email", $sessionId);
+                        $statement->execute();
+        }
+                 else {
+                        throw new Exception("Wrong Password");
+                }
+                
+                 
      }
+}

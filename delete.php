@@ -4,12 +4,17 @@
 
     session_start();
     if (isset($_SESSION['user'])) {
-        $sessionId = $_SESSION['user'];
-        User::deleteUser($sessionId);
-        var_dump($sessionId);
+        try {
+            $currentpassword = $_POST["currentpassword"];
+            $sessionId = $_SESSION['user'];
+            User::deleteUser($sessionId, $currentpassword);
+            session_destroy();
+            header("Location: register.php");
+        }
+        catch(Throwable $error) {
+        $error = $error->getMessage();
     }
-    session_destroy();
-    header("Location: register.php");
+    }
 ?>
 
 <!DOCTYPE html>
