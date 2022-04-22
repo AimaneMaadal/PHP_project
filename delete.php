@@ -3,10 +3,10 @@
     include_once("bootstrap.php");
 
     session_start();
-    if (isset($_SESSION['user'])) {
+    if (isset($_SESSION['user']) && !empty($_POST['currentpassword'])) {
         try {
-            $currentpassword = $_POST["currentpassword"];
             $sessionId = $_SESSION['user'];
+            $currentpassword = $_POST["currentpassword"];
             User::deleteUser($sessionId, $currentpassword);
             session_destroy();
             header("Location: register.php");
