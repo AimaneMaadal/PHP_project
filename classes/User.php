@@ -318,7 +318,7 @@ class User
                 $statement->execute();
                 $result = $statement->fetch();
                 $hash = $result["password"];
-                if (password_verify($currentpassword, $hash && !empty($_POST['currentpassword']))) {
+                if (password_verify($currentpassword, $hash)) {
                         $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = :email");
                         $statement->bindValue(":email", $sessionId);
                         $statement->execute();
