@@ -58,6 +58,8 @@ if (!empty($_POST['update'])) {
         $user->updateUser();
 
         $userData = User::getUserFromEmail($sessionId);
+
+        var_dump($userData);
     }   
     catch(Throwable $error) {
         $error = $error->getMessage();
@@ -101,7 +103,7 @@ if (!empty($_POST['update'])) {
         <input type="email" name="updateEmail" value="<?php echo htmlspecialchars($userData['email']); ?>"><br>
 
         <label>Backup email address</label>
-        <input type="email" name="updateBackupEmail" value="<?php echo htmlspecialchars($userData['backupEmail']); ?>"><br>
+        <input type="email" name="updateBackupEmail" value="<?php echo htmlspecialchars($userData['backupemail']); ?>"><br>
 
         <label>First Name</label>
         <input type="text" name="updateFirstName" value="<?php echo htmlspecialchars($userData['firstname']); ?>"><br>
