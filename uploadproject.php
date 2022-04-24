@@ -23,6 +23,9 @@ if (!empty($_POST)) {
         $post->setTitle($title);
         $post->setDescription($description);
         $post->setimgPath($imgPath);
+        $post->setUserId($_SESSION['user']);
+
+        var_dump($post->getUserId());
 
         $post->uploadPost();
     
