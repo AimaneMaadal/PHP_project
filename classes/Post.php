@@ -9,10 +9,6 @@ class Post
     private $imgPath;
     private $description;
 
-    
-
-
-
 
     /**
      * Get the value of description
@@ -29,8 +25,10 @@ class Post
      */ 
     public function setDescription($description)
     {
+        if (empty($description)) {
+            throw new Exception("description cant be empty");
+        }
         $this->description = $description;
-
         return $this;
     }
 
@@ -50,7 +48,6 @@ class Post
     public function setImgPath($imgPath)
     {
         $this->imgPath = $imgPath;
-
         return $this;
     }
 
@@ -69,6 +66,9 @@ class Post
      */ 
     public function setTitle($title)
     {
+        if (empty($title)) {
+            throw new Exception("title cant be empty");
+        }
         $this->title = $title;
 
         return $this;
@@ -92,5 +92,14 @@ class Post
         $this->postId = $postId;
 
         return $this;
+    }
+    public function uploadPost()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("INSERT INTO posts (title, description, imgpath) VALUES (:title, :description, :imgpath)");
+        $statement->bindValue(":title", $this->title);
+        $statement->bindValue(":imgpath", $this->imgPath);
+        $statement->bindValue(":description", $this->description);
+        $statement->execute();
     }
 }
