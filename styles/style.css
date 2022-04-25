@@ -7,6 +7,14 @@
     font-family: lobster;
     src: url(fonts/Lobster-Regular.ttf);
 }
+@font-face {
+    font-family: museo;
+    src: url(fonts/MuseoSans_700.ttf);
+}
+@font-face {
+    font-family: blaak;
+    src: url(fonts/BlaakBlack_PERSONAL.ttf);
+}
 
 body {
     margin: 0;
@@ -97,74 +105,86 @@ body {
 
 /*NAVIGATION*/
 nav {
-    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'museo';
 }
-
-nav span {
-    font-family: 'lobster';
-    font-size: 45px;
-    margin-left: 10%;
-    background-color: #FBAB7E;
-    background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
-    background-size: 100%;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -moz-text-fill-color: transparent;
+.nav_left{
+    float: left;
+    margin-top: 10px;
+    margin: 0px 0px 0px 5%;
+    width: 25%;
 }
-
-.btn {
-    background-color: #FBAB7E;
-    border: none;
-    color: white;
-    padding: 15px 32px;
+.logo{
+    width: 25%;
+    margin-top: 10px;
     text-align: center;
+}
+.nav_left ul{
+    list-style-type: none;
+    padding: 0;
     text-decoration: none;
+}
+.nav_left ul li{
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 20px;
+    margin-right: 6%;
+}
+.nav_left ul li a{
+    text-decoration: none;
+    color: black;
+}
+    
+.nav_right {
+    float: left;
+    text-decoration: none;
+    margin: 0px 5% 0px 0px;
+    width: 25%;
+
 }
 
 .nav_btn {
     text-decoration: none;
     background-color: rgb(255, 255, 255);
-    padding: 8px 15px;
+    padding: 8px 35px;
     margin-left: 10px;
-    border-radius: 25px;
     font-family: 'roboto';
-    font-size: 15px;
+    font-size: 100%;
+    width: 20%;
     color: black;
+    float: right;
+    text-align: center;
     transition: 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.nav_btn:hover {
-    padding: 10px 15px;
-}
+
 
 .nav_btn:nth-child(2) {
-    background-color: #FBAB7E;
-    color: white;
+    background-color: #C0FD00;
+    color: #0600FE;
+    border: 4px solid #C0FD00;
 }
 
 .nav_btn:nth-child(2):hover {
-    background-color: #e4793b;
-    color: white;
+    background-color: #b5db37;
+    color: #4945fd;
+    border: 4px solid #7ca005;
 }
 
 .nav_btn:nth-child(1) {
-    border: 1px solid rgba(128, 128, 128, 0.315);
+    border: 4px solid black;
 }
 
 .nav_btn:nth-child(1):hover {
     background-color: #f2f2f2;
 }
 
-.nav_right {
-    float: right;
-    text-decoration: none;
-    margin: 18px 10% 0px 0px;
+/*CONTENT PAGE*/
+h1{
+    text-align: center;
+    font-family: 'blaak';
+    width: 32%;
+    margin: 100px auto;
 }
 
 

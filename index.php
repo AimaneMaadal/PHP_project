@@ -21,6 +21,8 @@
     <header>
         <?php include('nav.php');?>
     </header>
+    <h1>Share your work, get feedback and inspire others!</h1>
+
 </body>
 
 </html>
