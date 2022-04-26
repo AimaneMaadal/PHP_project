@@ -1,24 +1,24 @@
 <?php
 
-    include_once("bootstrap.php");
+include_once("bootstrap.php");
 
-    session_start();
-    if (isset($_SESSION['user']) && !empty($_POST['currentpassword'])) {
-        try {
-            $sessionId = $_SESSION['user'];
-            $currentpassword = $_POST["currentpassword"];
-            User::deleteUser($sessionId, $currentpassword);
-            session_destroy();
-            header("Location: register.php");
-        }
-        catch(Throwable $error) {
+session_start();
+if (isset($_SESSION['user']) && !empty($_POST['currentpassword'])) {
+    try {
+        $sessionId = $_SESSION['user'];
+        $currentpassword = $_POST["currentpassword"];
+        User::deleteUser($sessionId, $currentpassword);
+        session_destroy();
+        header("Location: register.php");
+    } catch (Throwable $error) {
         $error = $error->getMessage();
     }
-    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,18 +26,19 @@
     <title>Creative Minds</title>
     <link rel="stylesheet" href="styles/style.css">
 </head>
+
 <body>
-<img id="logo_mini" src="images/logo_mini.svg">
-<div id="form">
+    <img id="logo_mini" src="images/logo_mini.svg">
+    <div id="form">
         <form action="" method="post">
-        <br><br>
+            <br><br>
             <h1>Are you sure you want to delete your account?</h1>
             <label>Current password</label>
             <input type="password" name="currentpassword" class="inputfield"><br>
 
             <?php if (isset($error)) {
-                echo "<div id='error'>".$error."</div>";
-            }?>
+                echo "<div id='error'>" . $error . "</div>";
+            } ?>
             <button type="submit">Submit</button><br>
         </form>
     </div>

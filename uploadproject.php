@@ -1,9 +1,9 @@
-
 <?php
 
 include_once("bootstrap.php");
 
 require 'vendor/autoload.php';
+
 use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
 
@@ -14,11 +14,14 @@ $config = parse_ini_file("config/config.ini");
 
 Configuration::instance([
     'cloud' => [
-      'cloud_name' => $config['cloud_name'], 
-      'api_key' => $config['api_key'], 
-      'api_secret' => $config['api_secret']],
+        'cloud_name' => $config['cloud_name'],
+        'api_key' => $config['api_key'],
+        'api_secret' => $config['api_secret']
+    ],
     'url' => [
-      'secure' => true]]);
+        'secure' => true
+    ]
+]);
 
 session_start();
 
@@ -62,10 +65,10 @@ if (!empty($_POST)) {
                         $post->setTitle($title);
                         $post->setDescription($description);
 
-                        
+
                         $data = (new UploadApi())->upload($fileNewName);
                         unlink($fileNewName);
-                        echo $data['secure_url']."<br>".$title."<br>".$description;
+                        echo $data['secure_url'] . "<br>" . $title . "<br>" . $description;
 
                         $imgPath = $data['secure_url'];
 
@@ -74,23 +77,19 @@ if (!empty($_POST)) {
                         $post->setUserId($_SESSION['user']);
 
                         $post->uploadPost();
-
                     }
-                }
-                else {
+                } else {
                     throw new Exception("File is to big max 50mb");
                 }
-            }
-            else {
+            } else {
                 throw new Exception("File must be a jpg or png");
             }
-        }
-        else {
+        } else {
             throw new Exception("Image is required");
         }
     } catch (Exception $e) {
         echo $e->getMessage();
-    } 
+    }
 }
 
 
@@ -112,7 +111,9 @@ if (!empty($_POST)) {
 <body>
 
 
-    <?php if (!empty($error)) {echo $error; } ?>
+    <?php if (!empty($error)) {
+        echo $error;
+    } ?>
 
     <form action="" method="POST" enctype="multipart/form-data">
         <div>
@@ -126,15 +127,16 @@ if (!empty($_POST)) {
     </form>
 
 
-<script>
-userImage.onchange = evt => {
-    const [file] = userImage.files
-  if (file) {
-    imagePreview.src = URL.createObjectURL(file);
-  }
-}
-</script>
-  
+    <script>
+        userImage.onchange = evt => {
+            const [file] = userImage.files
+            if (file) {
+                imagePreview.src = URL.createObjectURL(file);
+            }
+        }
+    </script>
+
 
 </body>
+
 </html>

@@ -1,7 +1,7 @@
 <?php
 //insert code here
 if (!empty($_POST)) {
-    try{ 
+    try {
         $email = $_POST["email"];
         $password = $_POST["password"];
 
@@ -15,13 +15,13 @@ if (!empty($_POST)) {
             $_SESSION["user"] = $email;
             header("Location: index.php");
         }
-    }
-    catch(Throwable $error) {
+    } catch (Throwable $error) {
         $error = $error->getMessage();
     }
 }
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -36,29 +36,29 @@ if (!empty($_POST)) {
 
     <img id="logo_mini" src="images/logo_mini.svg">
     <div id="form">
-    <form action="" method="post">
-        <br><br>
+        <form action="" method="post">
+            <br><br>
 
-        <h1>Login account</h1>
-        <label>Email address</label><br>
-        <input placeholder="Email" type="email" name="email" class="inputfield"><br>
+            <h1>Login account</h1>
+            <label>Email address</label><br>
+            <input placeholder="Email" type="email" name="email" class="inputfield"><br>
 
-        <label>Password</label><br>
-        <input placeholder="Password" type="password" name="password" class="inputfield"><br>
+            <label>Password</label><br>
+            <input placeholder="Password" type="password" name="password" class="inputfield"><br>
 
-        <input type="checkbox"></input>
-        <span>Remember me</span>
-       
-        <a href="resetpassword.php" id="forgotLink">Forgot password?</a><br>
+            <input type="checkbox"></input>
+            <span>Remember me</span>
 
-        <?php if (isset($error)) {
-        echo "<div id='error'>".$error."</div>";
-        }?>
+            <a href="resetpassword.php" id="forgotLink">Forgot password?</a><br>
 
-        <button type="submit">Login</button>
-    </form>
+            <?php if (isset($error)) {
+                echo "<div id='error'>" . $error . "</div>";
+            } ?>
 
-    <a href="register.php" id="noAccountLink">Don't have an account yet?</a><br>
+            <button type="submit">Login</button>
+        </form>
+
+        <a href="register.php" id="noAccountLink">Don't have an account yet?</a><br>
     </div>
 
 </body>

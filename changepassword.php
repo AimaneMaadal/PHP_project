@@ -13,19 +13,17 @@ if (!empty($_POST)) {
         $sessionId = $_SESSION['user'];
         $user = User::getUserFromEmail($sessionId);
         $email = $user["email"];
-        
-    
+
+
         if ($newpassword === $newpassword2) {
-            User::changeCurrentPassword($currentpassword ,$newpassword, $newpassword2, $email);
+            User::changeCurrentPassword($currentpassword, $newpassword, $newpassword2, $email);
             header("location: index.php");
-        }
-        else{
+        } else {
             throw new Exception("Passwords dont match each other");
         }
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         $error = $e->getMessage();
-    }    
+    }
 }
 
 
@@ -42,11 +40,11 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-<img id="logo_mini" src="images/logo_mini.svg">
+    <img id="logo_mini" src="images/logo_mini.svg">
 
     <div id="form">
         <form action="" method="post">
-        <br><br>
+            <br><br>
             <h1>Change current password</h1>
             <label>Current password</label>
             <input type="password" name="currentpassword" class="inputfield"><br>
@@ -58,10 +56,10 @@ if (!empty($_POST)) {
             <input type="password" name="newpassword2" class="inputfield"><br>
 
 
-            
+
             <?php if (isset($error)) {
-                echo "<div id='error'>".$error."</div>";
-            }?>
+                echo "<div id='error'>" . $error . "</div>";
+            } ?>
 
             <button type="submit">Submit</button><br>
 

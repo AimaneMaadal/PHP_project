@@ -1,37 +1,35 @@
 <?php
 
- if(!empty($_POST)){
-    try{   
-      include_once("bootstrap.php");
-      $firstname = $_POST['firstname'];
-      $lastname = $_POST['lastname'];
-      $email = $_POST['email'];
-      $password = $_POST['password'];
-      $password2 = $_POST['password2'];
-      
-      $user = new User();
+if (!empty($_POST)) {
+  try {
+    include_once("bootstrap.php");
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $password2 = $_POST['password2'];
 
-      $user->setEmail($email);
-      $user->setPassword($password);
-      $user->setFirstname($firstname);
-      $user->setLastname($lastname);
+    $user = new User();
 
-      if($user->canRegister($password,$password2)){
-        echo "SESSION HAS STARTED";
-        session_start();
-        $_SESSION['user'] = $user->getEmail();
-        $user->register();
-        header("Location: index.php");
+    $user->setEmail($email);
+    $user->setPassword($password);
+    $user->setFirstname($firstname);
+    $user->setLastname($lastname);
 
-      }
-  }
-  catch(Throwable $error) {
+    if ($user->canRegister($password, $password2)) {
+      echo "SESSION HAS STARTED";
+      session_start();
+      $_SESSION['user'] = $user->getEmail();
+      $user->register();
+      header("Location: index.php");
+    }
+  } catch (Throwable $error) {
     // if any errors are thrown in the class, they can be caught here
     $error = $error->getMessage();
   }
 }
 
- 
+
 
 ?>
 <!DOCTYPE html>
@@ -46,11 +44,11 @@
 </head>
 
 <body>
-<img id="logo_mini" src="images/logo_mini.svg">
+  <img id="logo_mini" src="images/logo_mini.svg">
   <div id="form">
     <form action="" method="post">
-    <br><br>
-    <h1>Create account</h1>
+      <br><br>
+      <h1>Create account</h1>
 
       <label>First name</label>
       <input type="text" name="firstname" class="inputfield"><br>
@@ -66,13 +64,13 @@
 
       <label>Confirm password</label>
       <input type="password" name="password2" class="inputfield"><br>
-      
+
       <input type="checkbox"></input>
       <span>Remember me</span>
 
       <?php if (isset($error)) {
-        echo "<div id='error'>".$error."</div>";
-        }?>
+        echo "<div id='error'>" . $error . "</div>";
+      } ?>
 
       <button type="submit">Submit</button>
       <a href="login.php" id="noAccountLink">I already have an account</a><br>

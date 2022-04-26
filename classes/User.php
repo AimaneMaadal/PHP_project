@@ -321,10 +321,10 @@ class User
                 } else {
                         throw new Exception("Old password is incorrect");
                 }
-
         }
 
-     public static function deleteUser($sessionId, $currentpassword) { 
+        public static function deleteUser($sessionId, $currentpassword)
+        {
                 $conn = Db::getInstance();
                 $sql = "SELECT * FROM `users` WHERE `email` = '$sessionId';";
                 $statement = $conn->prepare($sql);
@@ -335,11 +335,31 @@ class User
                         $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = :email");
                         $statement->bindValue(":email", $sessionId);
                         $statement->execute();
-        }
-                 else {
+                } else {
                         throw new Exception("Wrong Password");
                 }
-                
-                 
-     }
+        }
+
+        //public function that checks email availability with ajaxtype
+        public static function checkEmailAvailability($email, $ajaxtype)
+        {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
+                $statement->bindValue(":email", $email);
+                $statement->execute();
+                $result = $statement->fetch();
+                if ($ajaxtype == "check") {
+                        if ($result) {
+                                echo "false";
+                        } else {
+                                echo "true";
+                        }
+                } else {
+                        if ($result) {
+                                return false;
+                        } else {
+                                return true;
+                        }
+                }
+        }
 }

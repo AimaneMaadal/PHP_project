@@ -1,28 +1,28 @@
 <?php
 
-	require 'includes/PHPMailer.php';
-	require 'includes/SMTP.php';
-	require 'includes/Exception.php';
+require 'includes/PHPMailer.php';
+require 'includes/SMTP.php';
+require 'includes/Exception.php';
 
-	use PHPMailer\PHPMailer\PHPMailer;
-	use PHPMailer\PHPMailer\SMTP;
-	use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
-	$token = $_GET["token"];
-	$email = $_GET["email"];
+$token = $_GET["token"];
+$email = $_GET["email"];
 
-	$mail = new PHPMailer();
-	$mail->isSMTP();
-	$mail->Host = "smtp.hostinger.com";
-	$mail->SMTPAuth = true;
-	$mail->SMTPSecure = "ssl";
-	$mail->Port = "465";
-	$mail->Username = "imd@brandish.space";
-	$mail->Password = "Brandish.123";
-	$mail->Subject = "Reset Password";
-	$mail->setFrom('imd@brandish.space');
-	$mail->isHTML(true);
-	$mail->Body = '<body background-color: #f2f3f8;">
+$mail = new PHPMailer();
+$mail->isSMTP();
+$mail->Host = "smtp.hostinger.com";
+$mail->SMTPAuth = true;
+$mail->SMTPSecure = "ssl";
+$mail->Port = "465";
+$mail->Username = "imd@brandish.space";
+$mail->Password = "Brandish.123";
+$mail->Subject = "Reset Password";
+$mail->setFrom('imd@brandish.space');
+$mail->isHTML(true);
+$mail->Body = '<body background-color: #f2f3f8;">
     <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#f2f3f8">
         <tr>
             <td>
@@ -59,7 +59,7 @@
                                             password has been generated for you. To reset your password, click the
                                             following link and follow the instructions.
                                         </p>
-                                        <a href="http://brandish.space/newpassword.php?token='.$token.'"
+                                        <a href="http://brandish.space/newpassword.php?token=' . $token . '"
                                             style="background-color:#FBAB7E;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
                                             Password</a>
                                     </td>
@@ -83,8 +83,8 @@
         </tr>
     </table>
 </body>';
-	$mail->addAddress($email);
-	if ( $mail->send() ) {
-		echo "Email Sent to <b>$email</b> check ur mail";
-	}
-	$mail->smtpClose();
+$mail->addAddress($email);
+if ($mail->send()) {
+    echo "Email Sent to <b>$email</b> check ur mail";
+}
+$mail->smtpClose();

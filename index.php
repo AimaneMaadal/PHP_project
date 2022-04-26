@@ -1,12 +1,13 @@
 <?php
 
-    include_once("bootstrap.php");
+include_once("bootstrap.php");
 
-    session_start();
+session_start();
 
-    
 
-?><!DOCTYPE html>
+
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -19,7 +20,7 @@
 
 <body>
     <header>
-        <?php include('nav.php');?>
+        <?php include('nav.php'); ?>
     </header>
     <h1>Share your work, get feedback and inspire others!</h1>
 

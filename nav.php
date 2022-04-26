@@ -1,17 +1,17 @@
 <nav>
 
     <div class="nav_left">
-    <ul>
-        <li><a href="index.php">Home</a></li>
-        <li><a href="about.php">About</a></li>
-        <li><a href="contact.php">Contact</a></li>     
-    </ul>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="contact.php">Contact</a></li>
+        </ul>
     </div>
 
     <div class="logo">
-        <img src="images/logo.svg" style="width: 80%;"/>
+        <img src="images/logo.svg" style="width: 80%;" />
     </div>
-  
+
 
     <?php
     if (isset($_SESSION['user'])) {

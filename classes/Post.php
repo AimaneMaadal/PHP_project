@@ -13,7 +13,7 @@ class Post
 
     /**
      * Get the value of description
-     */ 
+     */
     public function getDescription()
     {
         return $this->description;
@@ -23,7 +23,7 @@ class Post
      * Set the value of description
      *
      * @return  self
-     */ 
+     */
     public function setDescription($description)
     {
         if (empty($description)) {
@@ -35,7 +35,7 @@ class Post
 
     /**
      * Get the value of imgPath
-     */ 
+     */
     public function getImgPath()
     {
         return $this->imgPath;
@@ -45,7 +45,7 @@ class Post
      * Set the value of imgPath
      *
      * @return  self
-     */ 
+     */
     public function setImgPath($imgPath)
     {
         $this->imgPath = $imgPath;
@@ -54,7 +54,7 @@ class Post
 
     /**
      * Get the value of title
-     */ 
+     */
     public function getTitle()
     {
         return $this->title;
@@ -64,7 +64,7 @@ class Post
      * Set the value of title
      *
      * @return  self
-     */ 
+     */
     public function setTitle($title)
     {
         if (empty($title)) {
@@ -77,7 +77,7 @@ class Post
 
     /**
      * Get the value of postId
-     */ 
+     */
     public function getPostId()
     {
         return $this->postId;
@@ -87,7 +87,7 @@ class Post
      * Set the value of postId
      *
      * @return  self
-     */ 
+     */
     public function setPostId($postId)
     {
         $this->postId = $postId;
@@ -97,7 +97,7 @@ class Post
 
     /**
      * Get the value of userId
-     */ 
+     */
     public function getUserId()
     {
         return $this->userId;
@@ -107,7 +107,7 @@ class Post
      * Set the value of userId
      *
      * @return  self
-     */ 
+     */
     public function setUserId($userId)
     {
         $this->userId = $userId;

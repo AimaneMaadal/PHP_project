@@ -4,32 +4,25 @@ include_once("bootstrap.php");
 
 
 if (!empty($_POST)) {
-    try{
+    try {
         $email = $_POST["email"];
 
         $user = User::getUserFromEmail($email);
 
         if ($user) {
-            $expDate = date("Y-m-d H:i:s",mktime(date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y")));
-        
-            $token = md5($email."salty".$expDate);
-        
-            User::passwordResetToken($token,$expDate,$email);
+            $expDate = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d") + 1, date("Y")));
+
+            $token = md5($email . "salty" . $expDate);
+
+            User::passwordResetToken($token, $expDate, $email);
 
             header("Location: mail.php?token=$token&email=$email");
-        }
-        else{
+        } else {
             throw new Exception("User not found");
         }
-    }
-    catch(Throwable $error) {
+    } catch (Throwable $error) {
         $error = $error->getMessage();
     }
-
-
-
-    
-    
 }
 
 
@@ -46,7 +39,7 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-<img id="logo_mini" src="images/logo_mini.svg">
+    <img id="logo_mini" src="images/logo_mini.svg">
 
     <div id="form">
         <form action="" method="post">
@@ -57,8 +50,8 @@ if (!empty($_POST)) {
 
 
             <?php if (isset($error)) {
-            echo "<div id='error'>".$error."</div>";
-            }?>
+                echo "<div id='error'>" . $error . "</div>";
+            } ?>
 
             <button type="submit">Submit</button>
             <br>

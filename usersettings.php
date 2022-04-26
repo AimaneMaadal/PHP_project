@@ -61,8 +61,7 @@ if (!empty($_POST['update'])) {
         $userData = User::getUserFromEmail($sessionId);
 
         // var_dump($userData);
-    }   
-    catch(Throwable $error) {
+    } catch (Throwable $error) {
         $error = $error->getMessage();
     }
 }
@@ -86,7 +85,9 @@ if (!empty($_POST['update'])) {
         <?php include('nav.php'); ?>
     </header>
 
-    <?php if (!empty($error)) {echo $error; } ?>
+    <?php if (!empty($error)) {
+        echo $error;
+    } ?>
 
     <form action="" method="POST" enctype="multipart/form-data">
         <div>
