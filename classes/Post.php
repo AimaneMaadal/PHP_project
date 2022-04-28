@@ -9,7 +9,7 @@ class Post
     private $imgPath;
     private $description;
     private $userId;
-
+    private $tags;
 
     /**
      * Get the value of description
@@ -114,14 +114,37 @@ class Post
 
         return $this;
     }
+    //create function to upload post
+
     public function uploadPost()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("INSERT INTO posts (title, description, imgpath, userid) VALUES (:title, :description, :imgpath, :userid)");
+        $statement = $conn->prepare("INSERT INTO posts (title, description, tags, imgpath, userid) VALUES (:title, :description,:tags , :imgpath, :userid)");
         $statement->bindValue(":title", $this->title);
         $statement->bindValue(":imgpath", $this->imgPath);
         $statement->bindValue(":description", $this->description);
         $statement->bindValue(":userid", $this->userId);
+        $statement->bindValue(":tags", $this->tags);
         $statement->execute();
+    }
+
+    /**
+     * Get the value of tags
+     */ 
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set the value of tags
+     *
+     * @return  self
+     */ 
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
     }
 }
