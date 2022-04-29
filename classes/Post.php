@@ -147,4 +147,54 @@ class Post
 
         return $this;
     }
+
+    public static function getAllPosts()
+        {
+                $conn = Db::getInstance();
+                $sql = "SELECT * FROM `posts`;";
+                $statement = $conn->prepare($sql);
+                $statement->execute();
+                $result = $statement->fetchAll();
+                return $result;
+        }
+
+        
+
+    public static function getAllPostsLimit(){
+        global $page;
+        global $total_pages;
+
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+        } else {
+            $page = 1;
+        }
+        $conn = Db::getInstance();
+
+        // pagination 
+        $limit = 6;
+        $offset = ($page-1) * $limit; 
+
+
+        // totaal aantal pagina's nemen
+        $stmt = $conn->query("SELECT count(*) FROM `posts`;");
+        $total_results = $stmt->fetchColumn();
+        $total_pages = ceil($total_results / $limit);
+
+        
+        $sql = "SELECT * FROM `posts` ORDER BY `time_posted` DESC LIMIT $offset, $limit;";
+        $statement = $conn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    public function getUserByPostId($postId){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM users INNER JOIN posts ON users.id = posts.userid WHERE posts.id = :postId");
+        $statement->bindValue(':postId', $postId);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
