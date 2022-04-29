@@ -205,3 +205,45 @@ h1{
 .profile_info input {
     margin: .2rem 0;
 }
+
+/*POSTS FEED*/
+.posts {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 2em;
+    justify-content: center;
+}
+
+.post {
+    margin: 1em 4em;
+}
+
+.post_userinfo {
+    display: flex;
+    font-family: 'museo';
+}
+
+.profilePicture_small {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.post_image {
+    width: 250px;
+    height: 200px;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.post_username {
+    padding-left: 1em;
+}
+
+.pages {
+    text-align: center;
+    margin: 2em 0em;
+}
+

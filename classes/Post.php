@@ -149,7 +149,7 @@ class Post
         $conn = Db::getInstance();
 
         // pagination 
-        $limit = 5;
+        $limit = 6;
         $offset = ($page-1) * $limit; 
 
 
@@ -163,6 +163,15 @@ class Post
         $statement = $conn->prepare($sql);
         $statement->execute();
         $result = $statement->fetchAll();
+        return $result;
+    }
+
+    public function getUserByPostId($postId){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM users INNER JOIN posts ON users.id = posts.userid WHERE posts.id = :postId");
+        $statement->bindValue(':postId', $postId);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 }

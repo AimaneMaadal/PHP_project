@@ -36,7 +36,12 @@
         <div class="post">
 
             <div class="post_head">
-                <img class="post_image" src="<?php echo $post->getAllPosts['img_path']; ?>" alt="">
+                <img class="post_image" src="<?php echo $p['imgpath']; ?>" alt="">
+            </div>
+
+            <div class="post_userinfo">
+                <img class="profilePicture_small" src="images/profile_pictures/<?php echo $post->getUserByPostId($p['id'])['profilepicture'] ?>" alt="">
+                <p class="post_username"><?php echo $post->getUserByPostId($p['id'])['firstname'] . " " . $post->getUserByPostId($p['id'])['lastname']; ?></p>      
             </div>
 
             <div class="post_content">
@@ -45,12 +50,14 @@
             </div>
         </div>
         <?php endforeach; ?>
-
-        <?php for ($pages=1; $pages <= $total_pages ; $pages++):?>
-            <a href='<?php echo "?page=$pages"; ?>' class="links"><?php  echo $pages; ?></a>
-        <?php endfor; ?>
-
     </div>
+
+    <div class="pages">
+       <?php for ($pages=1; $pages <= $total_pages ; $pages++):?>
+            <a href='<?php echo "?page=$pages"; ?>' class="links"><?php  echo $pages; ?></a>
+        <?php endfor; ?> 
+    </div>
+    
 
 </body>
 </html>
