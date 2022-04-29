@@ -1,1 +1,5 @@
 config/
+composer.phar
+vendor/
+composer.json
+composer.lock
