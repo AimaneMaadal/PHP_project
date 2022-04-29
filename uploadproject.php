@@ -36,11 +36,11 @@ if (!isset($_SESSION['user'])) {
 
 if (!empty($_POST)) {
     try {
-        $imageName = $_FILES['userImage']['name'];
-        $fileType  = $_FILES['userImage']['type'];
-        $fileSize  = $_FILES['userImage']['size'];
-        $fileTmpName = $_FILES['userImage']['tmp_name'];
-        $fileError = $_FILES['userImage']['error'];
+        $imageName = $_FILES['projectImage']['name'];
+        $fileType  = $_FILES['projectImage']['type'];
+        $fileSize  = $_FILES['projectImage']['size'];
+        $fileTmpName = $_FILES['projectImage']['tmp_name'];
+        $fileError = $_FILES['projectImage']['error'];
 
         $title = $_POST['title'];
         $description = $_POST['description'];
@@ -58,13 +58,10 @@ if (!empty($_POST)) {
                 //check if file is correct type
                 //check file size
                 if ($fileSize < 5000000) {
-
                     $fileNewName = "images/" . basename($imageName);
                     $uploaded = move_uploaded_file($fileTmpName, $fileNewName);
 
                     if ($uploaded) {
-
-
                         $post = new Post();
 
                         $post->setTitle($title);
@@ -117,52 +114,114 @@ if (!empty($_POST)) {
 
 <body>
 
-
+    <header>
+        <?php include('nav.php'); ?>
+    </header>
     <?php if (!empty($error)) {
-        echo $error;
-    } ?>
+    echo $error;
+} ?>
 
     <form action="" method="POST" enctype="multipart/form-data">
-        <div>
-            <label>Create Post</label><br>
-            <img id="imagePreview" src="#" alt="your image" /><br>
-            <input type="file" id="userImage" name="userImage" value="" onchange="preview()"><br>
-            <input type="text" placeholder="Title" name="title" value=""><br>
-            <input type="text" placeholder="Description" name="description" value=""><br>
+        <div class="uploadProjectForm">
+            <h1>Upload project</h1><br>
+            <div class="uploadzone">
+                Upload a file by draging your image, or click to select one:
+                <input type="file" name="projectImage" class="uploadzoneInput">
+            </div>
+            <div class="inputFields">
+                <input type="text" placeholder="Title" name="title" value="" class="inputField1"><br>
+                <input type="text" placeholder="Description" name="description" value="" class="inputField2">
+                
+                <br><h2>tags</h2><a href="javascript:void(0);" class="add_button" title="Add field">+</a><br>
+                    <div class="field_wrapper">
+                        <div>
+                            <input type="text" name="tags[]" class="tagsInput" value="" required="required"/>
+                            <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a> 
+                        </div>
+                    </div>
+                    <input type="submit" class="postButton" value="Upload project">
+            </div>
+           
 
            
-            <br>tags
-
-            <div class="field_wrapper">
-            <div>
-                <input type="text" name="tags[]" value="" required="required"/>
-                <a href="javascript:void(0);" class="add_button" title="Add field">+</a>
-            </div>
-</div>
+            
 				
-			
+
+   
         </div>
-        <input type="submit">
     </form>
 
 
     <script>
-        userImage.onchange = evt => {
-            const [file] = userImage.files
-            if (file) {
-                imagePreview.src = URL.createObjectURL(file);
+        document.querySelectorAll(".uploadzoneInput").forEach((inputElement) => {
+        const dropZoneElement = inputElement.closest(".uploadzone");
+        dropZoneElement.addEventListener("click", (e) => {
+            inputElement.click();
+        });
+        inputElement.addEventListener("change", (e) => {
+            if (inputElement.files.length) {
+            updateThumbnail(dropZoneElement, inputElement.files[0]);
             }
+        });
+        dropZoneElement.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropZoneElement.classList.add("uploadzoneHover");
+        });
+        ["dragleave", "dragend"].forEach((type) => {
+            dropZoneElement.addEventListener(type, (e) => {
+            dropZoneElement.classList.remove("uploadzoneHover");
+            });
+        });
+        dropZoneElement.addEventListener("drop", (e) => {
+            e.preventDefault();
+        if (e.dataTransfer.files.length) {
+            inputElement.files = e.dataTransfer.files;
+            updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+            }
+        dropZoneElement.classList.remove("uploadzoneHover");
+        });
+        });
+        function updateThumbnail(dropZoneElement, file) {
+        let thumbnailElement = dropZoneElement.querySelector(".uploadzonePreview");
+        // First time - remove the prompt
+        if (dropZoneElement.querySelector(".uploadzone__prompt")) {
+            dropZoneElement.querySelector(".uploadzone__prompt").remove();
+        }
+        // First time - there is no thumbnail element, so lets create it
+        if (!thumbnailElement) {
+            thumbnailElement = document.createElement("div");
+            thumbnailElement.classList.add("uploadzonePreview");
+            dropZoneElement.appendChild(thumbnailElement);
+        }
+        thumbnailElement.dataset.label = file.name;
+        // Show thumbnail for image files
+        if (file.type.startsWith("image/")) {
+            const reader = new FileReader();
+        reader.readAsDataURL(file);
+            reader.onload = () => {
+            thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+            };
+        } else {
+            thumbnailElement.style.backgroundImage = null;
+        }
+        } 
+        function test() {
+            alert();
+            document.getElementByName("projectImage").value = null;
         }
 
         $(document).ready(function(){
             var maxField = 5; 
             var addButton = $('.add_button');
             var wrapper = $('.field_wrapper'); 
-            var fieldHTML = '<div><input type="text" name="tags[]" value="" required="required"/><a href="javascript:void(0);" class="remove_button">-</a></div>';
+            var fieldHTML = '<div><input type="text" name="tags[]" class="tagsInput" value="" required="required"/> <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a></div>';
             var x = 1; 
+            
             
             $(addButton).click(function(){
                 if(x < maxField){ 
+                    $( ".field_wrapper div:nth-child("+x+") input" ).prop( "disabled", true );
+                    $( ".field_wrapper div:nth-child("+x+") a" ).css("display", "inline");
                     x++;
                     $(wrapper).append(fieldHTML); 
                 }
@@ -174,6 +233,7 @@ if (!empty($_POST)) {
                 x--;
             });
         });
+        
 </script>
         
 
