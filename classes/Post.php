@@ -180,8 +180,6 @@ class Post
         $stmt = $conn->query("SELECT count(*) FROM `posts`;");
         $total_results = $stmt->fetchColumn();
         $total_pages = ceil($total_results / $limit);
-
-        
         $sql = "SELECT * FROM `posts` ORDER BY `time_posted` DESC LIMIT $offset, $limit;";
         $statement = $conn->prepare($sql);
         $statement->execute();

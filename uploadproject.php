@@ -77,7 +77,10 @@ if (!empty($_POST)) {
 
 
                         $post->setimgPath($imgPath);
-                        $post->setUserId($_SESSION['user']);
+
+                        $userData = User::getUserFromEmail($sessionId);
+                        $post->setUserId($userData['id']);
+
 
                         $post->uploadPost();
                     }
@@ -132,13 +135,14 @@ if (!empty($_POST)) {
                 <input type="text" placeholder="Title" name="title" value="" class="inputField1"><br>
                 <input type="text" placeholder="Description" name="description" value="" class="inputField2">
                 
-                <br><h2>tags</h2><a href="javascript:void(0);" class="add_button" title="Add field">+</a><br>
+                <br><h2>tags</h2>
                     <div class="field_wrapper">
-                        <div>
-                            <input type="text" name="tags[]" class="tagsInput" value="" required="required"/>
+                        <div class="tagField">
+                            <input type="text" name="tags[]" class="tagsInput" value=""/>
                             <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a> 
                         </div>
                     </div>
+                    <br><a href="javascript:void(0);" class="add_button" title="Add field">Add tag +</a>
                     <input type="submit" class="postButton" value="Upload project">
             </div>
            
@@ -153,6 +157,37 @@ if (!empty($_POST)) {
 
 
     <script>
+        $(document).ready(function(){
+            var maxField = 5; 
+            var addButton = $('.add_button');
+            var wrapper = $('.field_wrapper'); 
+            var fieldHTML = '<div class="tagField"><input type="text" name="tags[]" class="tagsInput" value="" required="required"/> <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a></div>';
+            var x = 1; 
+
+            
+            
+            $(addButton).click(function(){
+                if(x < maxField){ 
+                    var input = $( ".field_wrapper div:nth-child("+x+") input" ).val();
+                    if(input != ""){
+                        alert(input);
+                        $( ".field_wrapper div:nth-child("+x+") input" ).val("#"+input);
+                        $( ".field_wrapper div:nth-child("+x+") input" ).prop( "disabled", true );
+                        $( ".field_wrapper div:nth-child("+x+") a" ).css("display", "inline");
+                        x++;
+                        $(wrapper).append(fieldHTML); 
+                    }
+
+                }
+            });
+            
+            $(wrapper).on('click', '.remove_button', function(e){
+                e.preventDefault();
+                $(this).parent('div').remove(); 
+                x--;
+            });
+        });
+
         document.querySelectorAll(".uploadzoneInput").forEach((inputElement) => {
         const dropZoneElement = inputElement.closest(".uploadzone");
         dropZoneElement.addEventListener("click", (e) => {
@@ -209,30 +244,6 @@ if (!empty($_POST)) {
             alert();
             document.getElementByName("projectImage").value = null;
         }
-
-        $(document).ready(function(){
-            var maxField = 5; 
-            var addButton = $('.add_button');
-            var wrapper = $('.field_wrapper'); 
-            var fieldHTML = '<div><input type="text" name="tags[]" class="tagsInput" value="" required="required"/> <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a></div>';
-            var x = 1; 
-            
-            
-            $(addButton).click(function(){
-                if(x < maxField){ 
-                    $( ".field_wrapper div:nth-child("+x+") input" ).prop( "disabled", true );
-                    $( ".field_wrapper div:nth-child("+x+") a" ).css("display", "inline");
-                    x++;
-                    $(wrapper).append(fieldHTML); 
-                }
-            });
-            
-            $(wrapper).on('click', '.remove_button', function(e){
-                e.preventDefault();
-                $(this).parent('div').remove(); 
-                x--;
-            });
-        });
         
 </script>
         
