@@ -44,6 +44,11 @@ if (!empty($_POST)) {
 
         $title = $_POST['title'];
         $description = $_POST['description'];
+        $tags = $_POST['tags'];
+
+        $tags = json_encode($tags);
+
+
 
         $fileData = explode('/', $fileType);
         $fileExtension = $fileData[count($fileData) - 1];
@@ -64,6 +69,7 @@ if (!empty($_POST)) {
 
                         $post->setTitle($title);
                         $post->setDescription($description);
+                        $post->setTags($tags);
 
 
                         $data = (new UploadApi())->upload($fileNewName);
@@ -106,6 +112,7 @@ if (!empty($_POST)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creative Minds</title>
     <link rel="stylesheet" href="styles/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -122,6 +129,18 @@ if (!empty($_POST)) {
             <input type="file" id="userImage" name="userImage" value="" onchange="preview()"><br>
             <input type="text" placeholder="Title" name="title" value=""><br>
             <input type="text" placeholder="Description" name="description" value=""><br>
+
+           
+            <br>tags
+
+            <div class="field_wrapper">
+            <div>
+                <input type="text" name="tags[]" value="" required="required"/>
+                <a href="javascript:void(0);" class="add_button" title="Add field">+</a>
+            </div>
+</div>
+				
+			
         </div>
         <input type="submit">
     </form>
@@ -134,7 +153,32 @@ if (!empty($_POST)) {
                 imagePreview.src = URL.createObjectURL(file);
             }
         }
-    </script>
+
+        $(document).ready(function(){
+            var maxField = 5; 
+            var addButton = $('.add_button');
+            var wrapper = $('.field_wrapper'); 
+            var fieldHTML = '<div><input type="text" name="tags[]" value="" required="required"/><a href="javascript:void(0);" class="remove_button">-</a></div>';
+            var x = 1; 
+            
+            $(addButton).click(function(){
+                if(x < maxField){ 
+                    x++;
+                    $(wrapper).append(fieldHTML); 
+                }
+            });
+            
+            $(wrapper).on('click', '.remove_button', function(e){
+                e.preventDefault();
+                $(this).parent('div').remove(); 
+                x--;
+            });
+        });
+</script>
+        
+
+
+
 
 
 </body>
