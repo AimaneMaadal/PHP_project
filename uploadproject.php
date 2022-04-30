@@ -46,8 +46,7 @@ if (!empty($_POST)) {
         $description = $_POST['description'];
         $tags = $_POST['tags'];
 
-        $tags = json_encode($tags);
-
+        $tags = json_encode(array_filter($tags));
 
 
         $fileData = explode('/', $fileType);
@@ -161,7 +160,7 @@ if (!empty($_POST)) {
             var maxField = 5; 
             var addButton = $('.add_button');
             var wrapper = $('.field_wrapper'); 
-            var fieldHTML = '<div class="tagField"><input type="text" name="tags[]" class="tagsInput" value="" required="required"/> <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a></div>';
+            var fieldHTML = '<div class="tagField"><input type="text" name="tags[]" class="tagsInput" value="" /> <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a></div>';
             var x = 1; 
 
             
@@ -170,9 +169,8 @@ if (!empty($_POST)) {
                 if(x < maxField){ 
                     var input = $( ".field_wrapper div:nth-child("+x+") input" ).val();
                     if(input != ""){
-                        alert(input);
+                        $( ".field_wrapper div:nth-child("+x+") input" ).prop( "readonly", true );
                         $( ".field_wrapper div:nth-child("+x+") input" ).val("#"+input);
-                        $( ".field_wrapper div:nth-child("+x+") input" ).prop( "disabled", true );
                         $( ".field_wrapper div:nth-child("+x+") a" ).css("display", "inline");
                         x++;
                         $(wrapper).append(fieldHTML); 

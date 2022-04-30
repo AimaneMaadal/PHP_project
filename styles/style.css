@@ -262,12 +262,12 @@ h1{
     margin: 30px auto;
 }
 .inputField1{
-    width: 96%;
+    width: 100%;
     padding: 10px 25px;
     border: 4px solid #0600FE;
 } 
 .inputField2{
-    width: 96%;
+    width: 100%;
     padding: 10px 25px;
     height: 300px;
     border: 4px solid #0600FE;
@@ -278,12 +278,12 @@ h1{
     align-items: flex-end;
 }    
 .tagsInput{
-    width: 90%;
+    width: 100%;
     padding: 10px 25px;
     border: 4px solid #0600FE;
     margin-top: 20px;
 }
-.tagsInput:disabled {
+.tagsInput:read-only {
     background-color: #0600FE;
     color: white;
     font-size: 20px;
