@@ -38,6 +38,7 @@
             <div class="post_head">
                 <img class="post_image" src="<?php echo $p['imgpath']; ?>" alt="">
             </div>
+            <?php echo $p['user.id'];?>
 
             <div class="post_userinfo">
                 <img class="profilePicture_small" src="images/profile_pictures/<?php echo $post->getUserByPostId($p['id'])['profilepicture'] ?>" alt="">

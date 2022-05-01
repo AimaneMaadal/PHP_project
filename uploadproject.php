@@ -78,6 +78,7 @@ if (!empty($_POST)) {
                         $post->setimgPath($imgPath);
 
                         $userData = User::getUserFromEmail($sessionId);
+
                         $post->setUserId($userData['id']);
 
 
