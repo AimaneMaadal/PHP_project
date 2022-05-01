@@ -5,11 +5,12 @@
             <li><a href="index.php">Home</a></li>
             <li><a href="contact.php">Contact</a></li>
             <li><a href="uploadproject.php">Upload project</a></li>
+            <li><a href="projectfeed.php">Explore</a></li>
         </ul>
     </div>
 
     <div class="logo">
-        <img src="images/logo.svg" style="width: 80%;" />
+        <img src="images/logo.svg" style="width: 60%;" />
     </div>
 
 
