@@ -3,7 +3,6 @@
 include_once("bootstrap.php");
 
 $id = $_GET['id'];
-
 $userData = user::getUserFromId($id);
 
 $email = $userData['email'];

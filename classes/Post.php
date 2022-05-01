@@ -130,7 +130,7 @@ class Post
 
     /**
      * Get the value of tags
-     */ 
+     */
     public function getTags()
     {
         return $this->tags;
@@ -140,7 +140,7 @@ class Post
      * Set the value of tags
      *
      * @return  self
-     */ 
+     */
     public function setTags($tags)
     {
         $this->tags = $tags;
@@ -149,18 +149,19 @@ class Post
     }
 
     public static function getAllPosts()
-        {
-                $conn = Db::getInstance();
-                $sql = "SELECT * FROM `posts`;";
-                $statement = $conn->prepare($sql);
-                $statement->execute();
-                $result = $statement->fetchAll();
-                return $result;
-        }
+    {
+        $conn = Db::getInstance();
+        $sql = "SELECT * FROM `posts`;";
+        $statement = $conn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
 
-        
 
-    public static function getAllPostsLimit(){
+
+    public static function getAllPostsLimit()
+    {
         global $page;
         global $total_pages;
 
@@ -173,7 +174,7 @@ class Post
 
         // pagination 
         $limit = 6;
-        $offset = ($page-1) * $limit; 
+        $offset = ($page - 1) * $limit;
 
 
         // totaal aantal pagina's nemen
@@ -187,12 +188,23 @@ class Post
         return $result;
     }
 
-    public function getUserByPostId($postId){
+    public function getUserByPostId($postId)
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM users INNER JOIN posts ON users.id = posts.userid WHERE posts.id = :postId");
         $statement->bindValue(':postId', $postId);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public static function getPostsByUserId($userId)
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM posts WHERE userid = :userId");
+        $statement->bindValue(':userId', $userId);
+        $statement->execute();
+        $result = $statement->fetchAll();
         return $result;
     }
 }
