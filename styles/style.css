@@ -7,18 +7,22 @@
     font-family: lobster;
     src: url(fonts/Lobster-Regular.ttf);
 }
-@font-face {
-    font-family: museo;
-    src: url(fonts/MuseoSans_700.ttf);
-}
+
 @font-face {
     font-family: blaak;
     src: url(fonts/BlaakBlack_PERSONAL.ttf);
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     background-color: #f2f3f8;
+    width: 100%;
+    font-family: museo-sans;
+    font-weight: normal;
 }
 
 /*LOGIN*/
@@ -108,33 +112,40 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'museo';
+    font-family: museo-sans;
+    font-weight: normal;
 }
-.nav_left{
+
+.nav_left {
     float: left;
     margin-top: 10px;
     margin: 0px 0px 0px 5%;
     width: 25%;
 }
-.logo{
+
+.logo {
     width: 25%;
     margin-top: 10px;
     text-align: center;
 }
-.nav_left ul{
+
+.nav_left ul {
     list-style-type: none;
     padding: 0;
     text-decoration: none;
 }
-.nav_left ul li{
+
+.nav_left ul li {
     display: inline-block;
     margin-right: 6%;
 }
-.nav_left ul li a{
+
+.nav_left ul li a {
     text-decoration: none;
     color: black;
+    font-size: 1rem;
 }
-    
+
 .nav_right {
     float: left;
     text-decoration: none;
@@ -145,11 +156,11 @@ nav {
 .nav_btn {
     text-decoration: none;
     background-color: rgb(255, 255, 255);
-    padding: 8px 35px;
+    padding: .6rem 1.4rem;
     margin-left: 10px;
     font-family: 'roboto';
     font-size: 100%;
-    width: 20%;
+    width: 40%;
     color: black;
     float: right;
     text-align: center;
@@ -160,7 +171,7 @@ nav {
 
 .nav_btn:nth-child(2) {
     background-color: #C0FD00;
-    color: #0600FE;
+    color: black;
     border: 4px solid #C0FD00;
 }
 
@@ -179,11 +190,15 @@ nav {
 }
 
 /*CONTENT PAGE*/
-h1{
+h1 {
+    font-family: 'blaak';
+}
+
+.landingTitle {
     text-align: center;
     font-family: 'blaak';
     width: 32%;
-    margin: 100px auto;
+    margin: 4rem auto;
 }
 
 
@@ -209,85 +224,96 @@ h1{
 /*UPLOAD PROJECT*/
 
 .uploadzone {
-  width: 80%;
-  margin: 0 auto;
-  height: 500px;
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-family: "Quicksand", sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  cursor: pointer;
-  background-color: #eeeeee; ;
-  border: 4px dashed #C0FD00;
-  border-radius: 10px;
-  position: relative;
+    width: 80%;
+    margin: 0 auto;
+    height: 500px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #eeeeee;
+    ;
+    border: 4px dashed #C0FD00;
+    border-radius: 10px;
+    position: relative;
 }
+
 .uploadzoneHover {
-  border-style: solid;
+    border-style: solid;
 }
+
 .uploadzoneInput {
-  display: none;
+    display: none;
 }
+
 .uploadzonePreview {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #cccccc;
-  background-size: cover;
-  position: relative;
-  position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #cccccc;
+    background-size: cover;
+    position: relative;
+    position: absolute;
 }
+
 .uploadzonePreview::after {
-  content: attr(data-label);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 5px 0;
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0.75);
-  font-size: 14px;
-  text-align: center;
+    content: attr(data-label);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.75);
+    font-size: 14px;
+    text-align: center;
 }
 
 
-.inputFields{
+.inputFields {
     width: 80%;
     margin: 30px auto;
 }
-.inputField1{
+
+.inputField1 {
     width: 100%;
     padding: 10px 25px;
     border: 4px solid #0600FE;
-} 
-.inputField2{
+}
+
+.inputField2 {
     width: 100%;
     padding: 10px 25px;
     height: 300px;
     border: 4px solid #0600FE;
     margin-top: 20px;
 }
-.tagField{
+
+.tagField {
     display: flex;
     align-items: flex-end;
-}    
-.tagsInput{
+}
+
+.tagsInput {
     width: 100%;
     padding: 10px 25px;
     border: 4px solid #0600FE;
     margin-top: 20px;
 }
+
 .tagsInput:read-only {
     background-color: #0600FE;
     color: white;
     font-size: 20px;
 }
-.add_button{
+
+.add_button {
     background-color: #0600FE;
     color: white;
     text-decoration: none;
@@ -301,6 +327,7 @@ h1{
     height: 40px;
     line-height: 40px;
 }
+
 .remove_button {
     background-color: #0600FE;
     color: white;
@@ -313,7 +340,8 @@ h1{
     height: 51px;
     float: right;
 }
-.postButton{
+
+.postButton {
     background-color: #D8000C;
     margin-top: 40px;
     text-decoration: none;
@@ -369,4 +397,78 @@ h1{
 .pages {
     text-align: center;
     margin: 2em 0em;
+}
+
+
+/*OTHER USER PROFILE*/
+.profileContainer {
+    width: 90%;
+    margin: 5rem auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.profileCard {
+    width: 30%;
+    border: 4px solid black;
+    padding: 3rem;
+}
+
+.profilePicture--small {
+    display: block;
+    margin: 0 auto;
+}
+
+.profileCard_username {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 1rem 0 .6rem;
+    color: #0600FE;
+}
+
+.profileCard_education {
+    text-align: center;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+p {
+    font-family: museo-sans;
+    font-weight: normal;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.profilePosts {
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.project {
+    border: 4px solid black;
+    width: 45%;
+    height: 16rem;
+    display: block;
+    overflow: hidden;
+
+}
+
+.profilePosts h1 {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.project img {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
 }
