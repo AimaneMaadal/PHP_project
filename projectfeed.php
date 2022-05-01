@@ -40,10 +40,10 @@
             </div>
             <?php echo $p['user.id'];?>
 
-            <div class="post_userinfo">
+            <a href="userdata.php?id=<?php echo $p['userid']?>" class="post_userinfo">
                 <img class="profilePicture_small" src="images/profile_pictures/<?php echo $post->getUserByPostId($p['id'])['profilepicture'] ?>" alt="">
-                <p class="post_username"><?php echo $post->getUserByPostId($p['id'])['firstname'] . " " . $post->getUserByPostId($p['id'])['lastname']; ?></p>      
-            </div>
+                <p class="post_username"><?php echo $post->getUserByPostId($p['id'])['firstname'] . " " . $post->getUserByPostId($p['id'])['lastname']; ?></p>
+            </a>
 
             <div class="post_content">
                 <p><?php echo $p['title']; ?></p>
