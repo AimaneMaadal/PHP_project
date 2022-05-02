@@ -23,6 +23,11 @@ session_start();
         <?php include('nav.php'); ?>
     </header>
     <h1 class="landingTitle">Share your work, get feedback and inspire others!</h1>
+    
+    <form action="projectfeed.php" method="get">
+        <input type="text" name="search" placeholder="Search">
+        <input type="submit" value="Search">
+    </form>
 
 </body>
 

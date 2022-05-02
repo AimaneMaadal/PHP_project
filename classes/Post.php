@@ -189,6 +189,33 @@ class Post
         $result = $statement->fetchAll();
         return $result;
     }
+    public static function getAllPostsLimitFiltered($filter)
+    {
+        global $page;
+        global $total_pages;
+
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+        } else {
+            $page = 1;
+        }
+        $conn = Db::getInstance();
+
+        // pagination 
+        $limit = 6;
+        $offset = ($page - 1) * $limit;
+
+
+        // totaal aantal pagina's nemen
+        $stmt = $conn->query("SELECT count(*) FROM `posts` WHERE `tags` LIKE '%$filter%'");
+        $total_results = $stmt->fetchColumn();
+        $total_pages = ceil($total_results / $limit);
+        $sql = "SELECT * FROM `posts` WHERE `title` LIKE '%$filter%';";
+        $statement = $conn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
 
     public function getUserByPostId($postId)
     {
@@ -209,6 +236,7 @@ class Post
         $result = $statement->fetchAll();
         return $result;
     }
+    
     public function getTimePosted()
     {
         return $this->timePosted;

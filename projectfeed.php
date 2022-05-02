@@ -10,8 +10,17 @@ if (!isset($_SESSION['user'])) {
     $userData = User::getUserFromEmail($sessionId);
 }
 
-$post = new Post;
-$allPosts = $post->getAllPostsLimit();
+
+if (isset($_GET['search'])) {
+    $post = new Post;
+    $allPosts = $post->getAllPostsLimitFiltered($_GET['search']);
+}
+else {
+    $post = new Post;
+    $allPosts = $post->getAllPostsLimit();
+}
+
+
 //var_dump($allPosts);
 
 
@@ -55,11 +64,13 @@ $allPosts = $post->getAllPostsLimit();
         <?php endforeach; ?>
     </div>
 
+    <?php if (!isset($_GET['search'])) : ?>
     <div class="pages">
         <?php for ($pages = 1; $pages <= $total_pages; $pages++) : ?>
             <a href='<?php echo "?page=$pages"; ?>' class="links"><?php echo $pages; ?></a>
         <?php endfor; ?>
     </div>
+    <?php endif; ?>
 
 
 </body>
