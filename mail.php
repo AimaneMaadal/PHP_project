@@ -1,28 +1,28 @@
 <?php
 
-require 'includes/PHPMailer.php';
-require 'includes/SMTP.php';
-require 'includes/Exception.php';
+	require 'includes/PHPMailer.php';
+	require 'includes/SMTP.php';
+	require 'includes/Exception.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+	use PHPMailer\PHPMailer\PHPMailer;
+	use PHPMailer\PHPMailer\SMTP;
+	use PHPMailer\PHPMailer\Exception;
 
-$token = $_GET["token"];
-$email = $_GET["email"];
+	$token = $_GET["token"];
+    $email = $_GET["email"];
 
-$mail = new PHPMailer();
-$mail->isSMTP();
-$mail->Host = "smtp.hostinger.com";
-$mail->SMTPAuth = true;
-$mail->SMTPSecure = "ssl";
-$mail->Port = "465";
-$mail->Username = "imd@brandish.space";
-$mail->Password = "Brandish.123";
-$mail->Subject = "Reset Password";
-$mail->setFrom('imd@brandish.space');
-$mail->isHTML(true);
-$mail->Body = '<body background-color: #f2f3f8;">
+	$mail = new PHPMailer();
+	$mail->isSMTP();
+	$mail->Host = "smtp.gmail.com";
+	$mail->SMTPAuth = true;
+	$mail->SMTPSecure = "tls";
+	$mail->Port = "587";
+	$mail->Username = "brandish.imd@gmail.com";
+	$mail->Password = "Brandish.123";
+	$mail->Subject = "Password reset";
+	$mail->setFrom('brandish.imd@gmail.com');
+	$mail->isHTML(true);
+	$mail->Body = '<body background-color: #f2f3f8;">
     <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#f2f3f8">
         <tr>
             <td>
@@ -83,8 +83,8 @@ $mail->Body = '<body background-color: #f2f3f8;">
         </tr>
     </table>
 </body>';
-$mail->addAddress($email);
-if ($mail->send()) {
-    echo "Email Sent to <b>$email</b> check ur mail";
-}
-$mail->smtpClose();
+	$mail->addAddress($email);
+	if ( $mail->send() ) {
+		echo "Email Sent..!$email";
+	}
+	$mail->smtpClose();
