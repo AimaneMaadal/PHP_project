@@ -359,10 +359,6 @@ class User
                 } else {
                         return false;
                 }
-<<<<<<< HEAD
-     }
-}
-=======
         }
 
         /**
@@ -425,4 +421,3 @@ class User
                 return $this;
         }
 }
->>>>>>> ce941b3fbce58d3b3bc65257b56176fb151f064b
