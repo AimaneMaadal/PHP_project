@@ -22,7 +22,7 @@ session_start();
     <header>
         <?php include('nav.php'); ?>
     </header>
-    <h1>Share your work, get feedback and inspire others!</h1>
+    <h1 class="landingTitle">Share your work, get feedback and inspire others!</h1>
 
 </body>
 

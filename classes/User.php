@@ -14,6 +14,8 @@ class User
         private $bio;
         private $education;
         private $linkedIn;
+        private $behance;
+        private $dribble;
         private $userId;
 
         public function getFirstname()
@@ -266,22 +268,25 @@ class User
                 return $result;
         }
 
+        // function to update user in database with new values
+        
         public function updateUser()
         {
-                $firstname = $this->getFirstName();
-                $lastname = $this->getLastname();
-                $email = $this->getEmail();
-                $backupEmail = $this->getBackupEmail();
-                $bio = $this->getBio();
-                $education = $this->getEducation();
-                $linkedIn = $this->getLinkedIn();
-
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("UPDATE `users` SET `firstname` = '$firstname', `lastname` = '$lastname', `email` = '$email', `backupemail` = '$backupEmail', `bio` = '$bio', `education` = '$education', `linkedin` = '$linkedIn' WHERE `users`.`email` = '$email';");
-
-
-                $statement->execute();
+                $statement = $conn->prepare("UPDATE `users` SET `firstname` = :firstname, `lastname` = :lastname, `backupemail` = :backupemail, `bio` = :bio, `education` = :education, `linkedin` = :linkedin, `behance` = :behance, `dribble` = :dribble  WHERE `users`.`id` = :id;");
+                $statement->bindvalue(':firstname', $this->firstname);
+                $statement->bindvalue(':lastname', $this->lastname);
+                $statement->bindvalue(':backupemail', $this->backupEmail);
+                $statement->bindvalue(':bio', $this->bio);
+                $statement->bindvalue(':education', $this->education);
+                $statement->bindvalue(':linkedin', $this->linkedIn);
+                $statement->bindvalue(':behance', $this->behance);
+                $statement->bindvalue(':dribble', $this->dribble);
+                $statement->bindvalue(':id', $this->userId);
+                return $statement->execute();
         }
+
+
 
         public function updateProfilePicture($profilepicture, $email)
         {
@@ -321,10 +326,10 @@ class User
                 } else {
                         throw new Exception("Old password is incorrect");
                 }
+
         }
 
-        public static function deleteUser($sessionId, $currentpassword)
-        {
+     public static function deleteUser($sessionId, $currentpassword) { 
                 $conn = Db::getInstance();
                 $sql = "SELECT * FROM `users` WHERE `email` = '$sessionId';";
                 $statement = $conn->prepare($sql);
@@ -335,31 +340,84 @@ class User
                         $statement = $conn->prepare("DELETE FROM `users` WHERE `email` = :email");
                         $statement->bindValue(":email", $sessionId);
                         $statement->execute();
-                } else {
+        }
+                 else {
                         throw new Exception("Wrong Password");
+                }
+                
+                 
+     }
+
+     public static function checkEmail($email) {
+                $conn = Db::getInstance();
+                $sql = "SELECT * FROM `users` WHERE `email` = '$email';";
+                $statement = $conn->prepare($sql);
+                $statement->execute();
+                $result = $statement->fetch();
+                if ($result) {
+                        return true;
+                } else {
+                        return false;
                 }
         }
 
-        //public function that checks email availability with ajaxtype
-        public static function checkEmailAvailability($email, $ajaxtype)
+        /**
+         * Get the value of behance
+         */ 
+        public function getBehance()
         {
-                $conn = Db::getInstance();
-                $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
-                $statement->bindValue(":email", $email);
-                $statement->execute();
-                $result = $statement->fetch();
-                if ($ajaxtype == "check") {
-                        if ($result) {
-                                echo "false";
-                        } else {
-                                echo "true";
-                        }
-                } else {
-                        if ($result) {
-                                return false;
-                        } else {
-                                return true;
-                        }
-                }
+                return $this->behance;
+        }
+
+        /**
+         * Set the value of behance
+         *
+         * @return  self
+         */ 
+        public function setBehance($behance)
+        {
+                $this->behance = $behance;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of dribble
+         */ 
+        public function getDribble()
+        {
+                return $this->dribble;
+        }
+
+        /**
+         * Set the value of dribble
+         *
+         * @return  self
+         */ 
+        public function setDribble($dribble)
+        {
+                $this->dribble = $dribble;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of userId
+         */ 
+        public function getUserId()
+        {
+                return $this->userId;
+        }
+
+        /**
+         * Set the value of userId
+         *
+         * @return  self
+         */ 
+        public function setUserId($userId)
+        {
+                $this->userId = $userId;
+
+                return $this;
         }
 }

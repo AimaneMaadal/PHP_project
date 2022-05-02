@@ -27,6 +27,8 @@ if (!empty($_POST)) {
     // if any errors are thrown in the class, they can be caught here
     $error = $error->getMessage();
   }
+  
+
 }
 
 

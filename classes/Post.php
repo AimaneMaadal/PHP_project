@@ -9,7 +9,8 @@ class Post
     private $imgPath;
     private $description;
     private $userId;
-
+    private $tags;
+    private $timePosted;
 
     /**
      * Get the value of description
@@ -114,14 +115,114 @@ class Post
 
         return $this;
     }
+    //create function to upload post
+
     public function uploadPost()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("INSERT INTO posts (title, description, imgpath, userid) VALUES (:title, :description, :imgpath, :userid)");
+        $statement = $conn->prepare("INSERT INTO posts (title, description, tags, imgpath, userid, time_posted) VALUES (:title, :description,:tags , :imgpath, :userid, :time_posted)");
         $statement->bindValue(":title", $this->title);
         $statement->bindValue(":imgpath", $this->imgPath);
         $statement->bindValue(":description", $this->description);
         $statement->bindValue(":userid", $this->userId);
+        $statement->bindValue(":tags", $this->tags);
+        $statement->bindValue(":time_posted", $this->timePosted);
         $statement->execute();
+    }
+
+    /**
+     * Get the value of tags
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set the value of tags
+     *
+     * @return  self
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    public static function getAllPosts()
+    {
+        $conn = Db::getInstance();
+        $sql = "SELECT * FROM `posts`;";
+        $statement = $conn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+
+
+    public static function getAllPostsLimit()
+    {
+        global $page;
+        global $total_pages;
+
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+        } else {
+            $page = 1;
+        }
+        $conn = Db::getInstance();
+
+        // pagination 
+        $limit = 6;
+        $offset = ($page - 1) * $limit;
+
+
+        // totaal aantal pagina's nemen
+        $stmt = $conn->query("SELECT count(*) FROM `posts`;");
+        $total_results = $stmt->fetchColumn();
+        $total_pages = ceil($total_results / $limit);
+        $sql = "SELECT * FROM `posts` ORDER BY `time_posted` DESC LIMIT $offset, $limit;";
+        $statement = $conn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    public function getUserByPostId($postId)
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM users INNER JOIN posts ON users.id = posts.userid WHERE posts.id = :postId");
+        $statement->bindValue(':postId', $postId);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public static function getPostsByUserId($userId)
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM posts WHERE userid = :userId");
+        $statement->bindValue(':userId', $userId);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+    public function getTimePosted()
+    {
+        return $this->timePosted;
+    }
+
+    /**
+     * Set the value of timePosted
+     *
+     * @return  self
+     */ 
+    public function setTimePosted($timePosted)
+    {
+        $this->timePosted = $timePosted;
+
+        return $this;
     }
 }
