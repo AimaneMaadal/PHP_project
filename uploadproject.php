@@ -3,15 +3,12 @@
 include_once("bootstrap.php");
 
 require 'vendor/autoload.php';
+require 'includes/uploadToCloud.php';
 
 use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
 
 $config = parse_ini_file("config/config.ini");
-
-
-
-
 Configuration::instance([
     'cloud' => [
         'cloud_name' => $config['cloud_name'],
@@ -36,68 +33,50 @@ if (!isset($_SESSION['user'])) {
 
 if (!empty($_POST)) {
     try {
-        $imageName = $_FILES['projectImage']['name'];
-        $fileType  = $_FILES['projectImage']['type'];
-        $fileSize  = $_FILES['projectImage']['size'];
-        $fileTmpName = $_FILES['projectImage']['tmp_name'];
-        $fileError = $_FILES['projectImage']['error'];
-
         $title = $_POST['title'];
         $description = $_POST['description'];
         $tags = $_POST['tags'];
 
         $tags = json_encode(array_filter($tags));
 
+        $imgPath = uploadFileCloud($_FILES['projectImage']);
 
-        $fileData = explode('/', $fileType);
-        $fileExtension = $fileData[count($fileData) - 1];
-
-        if (!empty($imageName)) {
-            if ($fileExtension == 'jpg' || $fileExtension == 'jpeg' || $fileExtension == 'png') {
-                //check if file is correct type
-                //check file size
-                if ($fileSize < 5000000) {
-                    $fileNewName = "images/" . basename($imageName);
-                    $uploaded = move_uploaded_file($fileTmpName, $fileNewName);
-
-                    if ($uploaded) {
-                        $post = new Post();
-
-                        $post->setTitle($title);
-                        $post->setDescription($description);
-                        $post->setTags($tags);
+        if(isset($imgPath)){
+            $post = new Post();
+            $post->setTitle($title);
+            $post->setDescription($description);
+            $post->setTags($tags);
 
 
-                        $data = (new UploadApi())->upload($fileNewName);
-                        unlink($fileNewName);
-                        echo $data['secure_url'] . "<br>" . $title . "<br>" . $description;
 
-                        $imgPath = $data['secure_url'];
+            $link = uploadFileCloud($_FILES['projectImage']);
+            $post->setImgPath($link);
 
+           
 
-                        $post->setimgPath($imgPath);
+            var_dump($link);
+         
+            $post->setImgPath(uploadFileCloud($_FILES['projectImage']));
+            $post->setTimePosted(date("Y-m-d H:i:s"));
 
-                        $userData = User::getUserFromEmail($sessionId);
+            $userData = User::getUserFromEmail($sessionId);
+            $post->setUserId($userData['id']);
+           
+            $post->uploadPost();
 
-                        $post->setUserId($userData['id']);
-
-
-                        $post->uploadPost();
-                    }
-                } else {
-                    throw new Exception("File is to big max 50mb");
-                }
-            } else {
-                throw new Exception("File must be a jpg or png");
+             
+            $uploadedImage = "images/".$_FILES['projectImage']['name'];
+            if (file_exists($uploadedImage)) {
+               unlink($uploadedImage);
             }
-        } else {
-            throw new Exception("Image is required");
+
+            header('location: http://localhost/PHP_project/userdata.php?id='.$userData['id']);
+
         }
     } catch (Exception $e) {
         echo $e->getMessage();
     }
 }
-
 
 
 

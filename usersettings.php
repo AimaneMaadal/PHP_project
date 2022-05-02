@@ -2,6 +2,12 @@
 
 include_once("bootstrap.php");
 
+require 'includes/uploadToCloud.php';
+require 'vendor/autoload.php';
+
+use Cloudinary\Configuration\Configuration;
+use Cloudinary\Api\Upload\UploadApi;
+
 session_start();
 if (!isset($_SESSION['user'])) {
     header('location: login.php');
@@ -11,39 +17,43 @@ if (!isset($_SESSION['user'])) {
     $userData = User::getUserFromEmail($sessionId);
 }
 
+$config = parse_ini_file("config/config.ini");
+Configuration::instance([
+    'cloud' => [
+        'cloud_name' => $config['cloud_name'],
+        'api_key' => $config['api_key'],
+        'api_secret' => $config['api_secret']
+    ],
+    'url' => [
+        'secure' => true
+    ]
+]);
+
+
 if (!empty($_POST['updateImage'])) {
+    try {
+        if (isset($_FILES['userImage'])) {
+            $file = $_FILES['userImage'];
 
-
-    $imageName = $_FILES['userImage']['name'];
-    $fileType  = $_FILES['userImage']['type'];
-    $fileSize  = $_FILES['userImage']['size'];
-    $fileTmpName = $_FILES['userImage']['tmp_name'];
-    $fileError = $_FILES['userImage']['error'];
-
-    $fileData = explode('/', $fileType);
-    $fileExtension = $fileData[count($fileData) - 1];
-
-    if ($fileExtension == 'jpg' || $fileExtension == 'jpeg' || $fileExtension == 'png') {
-        //check if file is correct type
-        //check file size
-        if ($fileSize < 5000000) {
-
-            $fileNewName = "images/profile_pictures/" . basename($imageName);
-            $uploaded = move_uploaded_file($fileTmpName, $fileNewName);
-
-            if ($uploaded) {
-                $profilePicture = basename($imageName);
-                $user->setProfilePicture($profilePicture);
-                $user->updateProfilePicture($profilePicture, $sessionId);
+            echo uploadFileCloud($file);
+    
+            $imagePath = uploadFileCloud($file);
+            
+            $user->setProfilePicture($imagePath);
+            $user->updateProfilePicture($imagePath, $sessionId);
+    
+    
+            $uploadedImage = "images/".$_FILES['userImage']['name'];
+            if (file_exists($uploadedImage)) {
+               unlink($uploadedImage);
             }
-        } else {
-            echo ("too big");
         }
-    } else {
-        echo ("no");
+
+    }
+    catch (Exception $e) {
+        echo $e->getMessage();
     }
 }
-
 
 if (!empty($_POST['update'])) {
     try {
@@ -54,9 +64,13 @@ if (!empty($_POST['update'])) {
         $user->setBio($_POST['updateBio']);
         $user->setEducation($_POST['updateEducation']);
         $user->setLinkedIn($_POST['updateLinkedIn']);
+        $user->setBehance($_POST['updateBehance']);
+        $user->setDribble($_POST['updateDribble']);
+        $user->setUserId($userData['id']);
 
-        //$user->setProfilePicture($_FILES['updateImage']);
+
         $user->updateUser();
+
 
         $userData = User::getUserFromEmail($sessionId);
 
@@ -89,44 +103,89 @@ if (!empty($_POST['update'])) {
         echo $error;
     } ?>
 
+
+    <h1 class="editHeader"><span>Mijn profiel</span> &nbsp; &nbsp; Mijn gegevens</h1>
+    
     <form action="" method="POST" enctype="multipart/form-data">
-        <div>
-            <label>Profile picture</label>
-            <img class="profilePicture" src="images/profile_pictures/<?php echo $userData['profilepicture']; ?>" alt="Profile picture">
-            <input type="file" id="userImage" name="userImage" value=""><br>
+        <div class="editProfilePic">
+            <img id="profilePic" class="profilePicture" src="<?php echo $userData['profilepicture']; ?>" alt="Profile picture">
+            <label>Wijzig profiel foto<input type="file" id="userImage" name="userImage" value=""></label><br>
+            <label>Upload image<input type="submit"id="userImageButton" name="updateImage" value="Update profile picture"></label>
         </div>
-        <input type="submit" name="updateImage" value="Update profile picture">
     </form>
 
 
 
-    <form action="" method="post" class="profile_info">
-        <label>Email address</label>
-        <input type="email" name="updateEmail" value="<?php echo htmlspecialchars($userData['email']); ?>"><br>
-
-        <label>Backup email address</label>
-        <input type="email" name="updateBackupEmail" value="<?php echo htmlspecialchars($userData['backupemail']); ?>"><br>
-
-        <label>First Name</label>
-        <input type="text" name="updateFirstName" value="<?php echo htmlspecialchars($userData['firstname']); ?>"><br>
-
-        <label>Last Name</label>
-        <input type="text" name="updateLastName" value="<?php echo htmlspecialchars($userData['lastname']); ?>"><br>
-
-        <label>Bio</label>
-        <input type="text" name="updateBio" value="<?php echo htmlspecialchars($userData['bio']); ?>"><br>
-
-        <label>Education</label>
-        <input type="text" name="updateEducation" value="<?php echo htmlspecialchars($userData['education']); ?>"><br>
-
-        <label>LinkedIn</label>
-        <input type="text" name="updateLinkedIn" value="<?php echo htmlspecialchars($userData['linkedin']); ?>"><br>
-
-        <input type="submit" name="update" value="Update gegevens">
-    </form>
+<form action="" method="post" class="profile_info">
+    <table class="profileTable">
+        <tbody>
+            <tr>
+                <td> 
+                    <label>First Name</label><br>
+                    <input class="updateProfileInput" type="text" name="updateFirstName" value="<?php echo htmlspecialchars($userData['firstname']); ?>">
+                </td>
+                    <td><label>Last Name</label><br>
+                    <input class="updateProfileInput" type="text" name="updateLastName" value="<?php echo htmlspecialchars($userData['lastname']); ?>">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Email address</label><br>
+                    <input class="updateProfileInput" type="email" name="updateEmail" value="<?php echo htmlspecialchars($userData['email']); ?>" readonly>
+                </td>
+                <td>
+                    <label>Backup email address</label><br>
+                    <input class="updateProfileInput" type="email" name="updateBackupEmail" value="<?php echo htmlspecialchars($userData['backupemail']); ?>">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Education</label><br>
+                    <input class="updateProfileInput" type="text" name="updateEducation" value="<?php echo htmlspecialchars($userData['education']); ?>">
+                </td>
+                <td>
+                    <label>LinkedIn</label><br>
+                    <input class="updateProfileInput" type="text" name="updateLinkedIn" value="<?php echo htmlspecialchars($userData['linkedin']); ?>">
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">
+                    <label>Bio</label><br>
+                    <input class="updateProfileInput" type="text" style="height: 130px;" name="updateBio" value="<?php echo htmlspecialchars($userData['bio']); ?>">
+                </td>
+                <td>
+                    <label>Behance</label><br>
+                    <input class="updateProfileInput" type="text" name="updateBehance" value="<?php echo htmlspecialchars($userData['behance']); ?>">
+            </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Dribble</label><br>
+                    <input class="updateProfileInput" type="text" name="updateDribble" value="<?php echo htmlspecialchars($userData['dribble']); ?>">
+            </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input class="updateProfileButton"type="submit" name="update" value="Update gegevens">
+                </td>
+        </tbody>
+    </table>
+       
+</form>
 
     <a href="changepassword.php">Change current password</a>
     <a href="delete.php">Delete profile</a>
+
+
+
+<script>
+userImage.onchange = evt => {
+  const [file] = userImage.files
+  if (file) {
+    profilePic.src = URL.createObjectURL(file)
+  }
+}
+</script>
 
 </body>
 

@@ -204,20 +204,73 @@ h1 {
 
 /*EDIT PROFILE*/
 .profilePicture {
-    width: 200px;
-    height: 200px;
+    width: 140px;
+    height: 140px;
     border-radius: 100%;
     margin-bottom: 20px;
     object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+.editHeader{
+    margin: 40px 0px 70px 5%;
+}
+.editHeader span{
+    color: #0600FE;
+}
+.editProfilePic{
+    width: 20%;
+    float: left;
+    margin-top: 40px;
+}
+.editProfilePic label{
+    text-align: center;
+    display: block;
+    margin: 10px auto;
 }
 
-.profile_info {
-    width: 500px;
-    padding: 1rem;
+.editProfilePic label:nth-child(1){
+    text-align: center;
+    display: block;
+    margin: 100px auto;
 }
+.editProfilePic input{
+    text-align: center;
+    display: block;
+    margin: 10px auto;
+    background-color: none;
+}
+#userImage{
+    display: none;
+}
+#userImageButton{
+    display: none;  
+}
+
 
 .profile_info input {
     margin: .2rem 0;
+}
+.profileTable{
+    width: 80%;
+    float: left;
+}
+
+
+
+.updateProfileButton{
+    width: 40%;
+    padding: 12px 20px;
+    background-color: #0600FE;
+    color: white;
+    font-family: 'Blaak';
+    border: none;
+}
+
+.updateProfileInput{
+    width: 80%;
+    padding: 12px 20px;
+    border: 1px solid #bcbcbc;
 }
 
 

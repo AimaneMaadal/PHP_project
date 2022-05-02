@@ -41,10 +41,10 @@ $allPosts = $post->getAllPostsLimit();
                 <div class="post_head">
                     <img class="post_image" src="<?php echo $p['imgpath']; ?>" alt="">
                 </div>
-
+            
                 <a href="userdata.php?id=<?php echo $p['userid'] ?>" class="post_userinfo">
-                    <img class="profilePicture_small" src="images/profile_pictures/<?php echo $post->getUserByPostId($p['id'])['profilepicture'] ?>" alt="">
-                    <p class="post_username"><?php echo $post->getUserByPostId($p['id'])['firstname'] . " " . $post->getUserByPostId($p['id'])['lastname']; ?></p>
+                    <img class="profilePicture_small" src="<?php echo $post->getUserByPostId($p['id'])['profilepicture'] ?>" alt="">
+                    <p class="post_username"><?php echo $post->getUserByPostId($p['id'])['firstname'] ?></p>
                 </a>
 
                 <div class="post_content">

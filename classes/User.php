@@ -14,6 +14,8 @@ class User
         private $bio;
         private $education;
         private $linkedIn;
+        private $behance;
+        private $dribble;
         private $userId;
 
         public function getFirstname()
@@ -266,22 +268,25 @@ class User
                 return $result;
         }
 
+        // function to update user in database with new values
+        
         public function updateUser()
         {
-                $firstname = $this->getFirstName();
-                $lastname = $this->getLastname();
-                $email = $this->getEmail();
-                $backupEmail = $this->getBackupEmail();
-                $bio = $this->getBio();
-                $education = $this->getEducation();
-                $linkedIn = $this->getLinkedIn();
-
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("UPDATE `users` SET `firstname` = '$firstname', `lastname` = '$lastname', `email` = '$email', `backupemail` = '$backupEmail', `bio` = '$bio', `education` = '$education', `linkedin` = '$linkedIn' WHERE `users`.`email` = '$email';");
-
-
-                $statement->execute();
+                $statement = $conn->prepare("UPDATE `users` SET `firstname` = :firstname, `lastname` = :lastname, `backupemail` = :backupemail, `bio` = :bio, `education` = :education, `linkedin` = :linkedin, `behance` = :behance, `dribble` = :dribble  WHERE `users`.`id` = :id;");
+                $statement->bindvalue(':firstname', $this->firstname);
+                $statement->bindvalue(':lastname', $this->lastname);
+                $statement->bindvalue(':backupemail', $this->backupEmail);
+                $statement->bindvalue(':bio', $this->bio);
+                $statement->bindvalue(':education', $this->education);
+                $statement->bindvalue(':linkedin', $this->linkedIn);
+                $statement->bindvalue(':behance', $this->behance);
+                $statement->bindvalue(':dribble', $this->dribble);
+                $statement->bindvalue(':id', $this->userId);
+                return $statement->execute();
         }
+
+
 
         public function updateProfilePicture($profilepicture, $email)
         {
@@ -361,5 +366,65 @@ class User
                                 return true;
                         }
                 }
+        }
+
+        /**
+         * Get the value of behance
+         */ 
+        public function getBehance()
+        {
+                return $this->behance;
+        }
+
+        /**
+         * Set the value of behance
+         *
+         * @return  self
+         */ 
+        public function setBehance($behance)
+        {
+                $this->behance = $behance;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of dribble
+         */ 
+        public function getDribble()
+        {
+                return $this->dribble;
+        }
+
+        /**
+         * Set the value of dribble
+         *
+         * @return  self
+         */ 
+        public function setDribble($dribble)
+        {
+                $this->dribble = $dribble;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of userId
+         */ 
+        public function getUserId()
+        {
+                return $this->userId;
+        }
+
+        /**
+         * Set the value of userId
+         *
+         * @return  self
+         */ 
+        public function setUserId($userId)
+        {
+                $this->userId = $userId;
+
+                return $this;
         }
 }

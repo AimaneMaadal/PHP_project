@@ -40,7 +40,7 @@ $allPosts = Post::getPostsByUserId($id);
     <div class="profileContainer">
         <div class="profileCard">
             <div class="profileCard_head">
-                <img class="profilePicture profilePicture--small" src="images/profile_pictures/<?php echo $profilePicture ?>" alt="">
+                <img class="profilePicture profilePicture--small" src="<?php echo $profilePicture ?>" alt="">
             </div>
 
             <div class="profileCard_content">

@@ -10,6 +10,7 @@ class Post
     private $description;
     private $userId;
     private $tags;
+    private $timePosted;
 
     /**
      * Get the value of description
@@ -119,12 +120,13 @@ class Post
     public function uploadPost()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("INSERT INTO posts (title, description, tags, imgpath, userid) VALUES (:title, :description,:tags , :imgpath, :userid)");
+        $statement = $conn->prepare("INSERT INTO posts (title, description, tags, imgpath, userid, time_posted) VALUES (:title, :description,:tags , :imgpath, :userid, :time_posted)");
         $statement->bindValue(":title", $this->title);
         $statement->bindValue(":imgpath", $this->imgPath);
         $statement->bindValue(":description", $this->description);
         $statement->bindValue(":userid", $this->userId);
         $statement->bindValue(":tags", $this->tags);
+        $statement->bindValue(":time_posted", $this->timePosted);
         $statement->execute();
     }
 
@@ -206,5 +208,21 @@ class Post
         $statement->execute();
         $result = $statement->fetchAll();
         return $result;
+    }
+    public function getTimePosted()
+    {
+        return $this->timePosted;
+    }
+
+    /**
+     * Set the value of timePosted
+     *
+     * @return  self
+     */ 
+    public function setTimePosted($timePosted)
+    {
+        $this->timePosted = $timePosted;
+
+        return $this;
     }
 }
