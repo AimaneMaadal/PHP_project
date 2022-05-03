@@ -411,6 +411,11 @@ h1 {
     border: none;
 }
 
+.bin {
+    float: right;
+    width: 3%;
+}
+
 /*POSTS FEED*/
 .posts {
     display: flex;

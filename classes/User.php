@@ -348,20 +348,7 @@ class User
                  
      }
 
-     public static function checkEmail($email) {
-                $conn = Db::getInstance();
-                $sql = "SELECT * FROM `users` WHERE `email` = '$email';";
-                $statement = $conn->prepare($sql);
-                $statement->execute();
-                $result = $statement->fetch();
-                if ($result) {
-                        return true;
-                } else {
-                        return false;
-                }
-        }
-
-        /**
+     /**
          * Get the value of behance
          */ 
         public function getBehance()

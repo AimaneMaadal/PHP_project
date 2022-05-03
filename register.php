@@ -1,4 +1,6 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <?php
+require_once("bootstrap.php");
 
 if (!empty($_POST)) {
   try {
@@ -9,7 +11,7 @@ if (!empty($_POST)) {
     $password = $_POST['password'];
     $password2 = $_POST['password2'];
 
-    $user = new User();
+      $user = new User();
 
     $user->setEmail($email);
     $user->setPassword($password);
@@ -27,8 +29,6 @@ if (!empty($_POST)) {
     // if any errors are thrown in the class, they can be caught here
     $error = $error->getMessage();
   }
-  
-
 }
 
 

@@ -245,6 +245,14 @@ class Post
         $result = $statement->fetchAll();
         return $result;
     }
+
+    public static function deletePostByPostId($id)
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("DELETE FROM posts WHERE id = :postId");
+        $statement->bindValue(':postId', $id);
+        $statement->execute();
+    }
     
     public function getTimePosted()
     {

@@ -55,7 +55,8 @@ $allPosts = Post::getPostsByUserId($id);
 
             <?php foreach ($allPosts as $p) : ?>
                 <a href="#" class="project"><img src="<?php echo $p["imgpath"] ?>" alt=""></a>
-            <?php endforeach; ?>
+                <a href="deletepost.php?id=<?php echo $p['id'] ?>"><img class="bin" src="images/bin.png" alt="bin"></a>
+                <?php endforeach; ?>
         </div>
 
 
