@@ -207,15 +207,24 @@ class Post
 
 
         // totaal aantal pagina's nemen
-        $stmt = $conn->query("SELECT count(*) FROM `posts` WHERE `tags` LIKE '%$filter%'");
-        $total_results = $stmt->fetchColumn();
-        $total_pages = ceil($total_results / $limit);
-        $sql = "SELECT * FROM `posts` WHERE `title` LIKE '%$filter%';";
+        $sql = "SELECT * FROM `posts` WHERE `title` LIKE '%$filter%' OR  `tags` LIKE '%$filter%' ;";
         $statement = $conn->prepare($sql);
         $statement->execute();
         $result = $statement->fetchAll();
         return $result;
     }
+    // function to get all posts by user tags
+
+    public static function getAllPostsByUserTags($postId)
+    {
+        $conn = Db::getInstance();
+        $sql = "SELECT tags FROM `posts` WHERE `id` = $postId;";
+        $statement = $conn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return json_decode($result[0]['tags']);
+    }
+   
 
     public function getUserByPostId($postId)
     {

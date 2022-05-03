@@ -11,6 +11,8 @@ if (isset($_SESSION['user'])) {
 if (isset($_GET['search'])) {
     $post = new Post;
     $allPosts = $post->getAllPostsLimitFiltered($_GET['search']);
+    $tags = $post->getAllPostsByUserTags(150); 
+    var_dump($tags);
 }
 else {
     $post = new Post;
