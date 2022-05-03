@@ -10,7 +10,6 @@ if (!empty($_POST)) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $password2 = $_POST['password2'];
-    $available =
 
       $user = new User();
 
