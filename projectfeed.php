@@ -2,14 +2,11 @@
 include_once("bootstrap.php");
 
 session_start();
-if (!isset($_SESSION['user'])) {
-    header('location: login.php');
-} else {
+if (isset($_SESSION['user'])) {
     $user = new User();
     $sessionId = $_SESSION['user'];
     $userData = User::getUserFromEmail($sessionId);
 }
-
 
 if (isset($_GET['search'])) {
     $post = new Post;
@@ -50,16 +47,17 @@ else {
                 <div class="post_head">
                     <img class="post_image" src="<?php echo $p['imgpath']; ?>" alt="">
                 </div>
-            
+
+                <?php if (isset($_SESSION['user'])) : ?>
                 <a href="userdata.php?id=<?php echo $p['userid'] ?>" class="post_userinfo">
                     <img class="profilePicture_small" src="<?php echo $post->getUserByPostId($p['id'])['profilepicture'] ?>" alt="">
                     <p class="post_username"><?php echo $post->getUserByPostId($p['id'])['firstname'] ?></p>
                 </a>
-
                 <div class="post_content">
                     <p><?php echo $p['title']; ?></p>
                     <p><?php echo $p['description']; ?></p>
                 </div>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
     </div>
