@@ -11,7 +11,7 @@ if (!empty($_POST)) {
     $password = $_POST['password'];
     $password2 = $_POST['password2'];
 
-      $user = new User();
+    $user = new User();
 
     $user->setEmail($email);
     $user->setPassword($password);
@@ -59,7 +59,31 @@ if (!empty($_POST)) {
       <input type="text" name="lastname" class="inputfield"><br>
 
       <label>Email address</label>
-      <input type="email" name="email" class="inputfield"><br>
+      <input id="search-email" type="email" name="email" class="inputfield"><br>
+      <div id="search-result"></div>
+      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+      <script>
+        $(document).ready(function() {
+          $('#search-email').blur(function() {
+            var value = $(this).val();
+            liveCheckEmail(value);
+          });
+        });
+
+        function liveCheckEmail(val) {
+          $.post('process.php', {
+            'search-email': val
+          }, function(data) {
+            if (data == "Found") {
+              $('#search-result').html("<span>Email already exists</span>");
+            } else {
+              $('#search-result').html("<span>Email available</span>");
+            }
+          }).fail(function(xhr, ajaxOptions, throwError) {
+            alert(throwError);
+          });
+        }
+      </script>
 
       <label>Password</label>
       <input type="password" name="password" class="inputfield"><br>

@@ -530,3 +530,8 @@ p {
     margin: 0 auto;
     display: block;
 }
+
+#search-result {
+    padding: 5px;
+    width: 400px;
+}

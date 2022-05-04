@@ -348,6 +348,28 @@ class User
                  
      }
 
+     public function searchData($value) {
+        try {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT email FROM `users` WHERE `email` = :value");
+            $statement->bindParam(':value', $value, PDO::PARAM_STR);
+        //     var_dump($value);
+            $statement->execute();
+            $count = $statement->rowCount();
+            $result = 0;
+            if ($count > 0) {
+                $result = "Found";
+            } else {
+                $result = "Not Found";
+            }
+            return $result;
+        }
+        catch (PDOException $e) {
+            echo 'Connection failed' . $e->getMessage();
+
+        }
+     }
+
      /**
          * Get the value of behance
          */ 
