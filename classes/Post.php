@@ -279,4 +279,38 @@ class Post
 
         return $this;
     }
+
+    public static function getPost($postId)
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM posts WHERE id = :id");
+        $statement->bindValue(':id', $postId);
+        $statement->execute();
+        $result = $statement->fetch();
+        return $result;
+    }
+
+    public function updatePost()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("UPDATE `posts` SET `title` = :title, `description` = :description, `tags` = :tags WHERE `posts`.`id` = :id;");
+        $statement->bindvalue(':title', $this->title);
+        $statement->bindvalue(':description', $this->description);
+        $statement->bindvalue(':tags', $this->tags);
+        $statement->bindvalue(':id', $this->postId);
+        return $statement->execute();
+    }
+
+    public function updateProjectPicture($projectpicture, $postId)
+        {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("UPDATE `posts` SET `imgpath` = :imgpath WHERE `posts`.`id` = :id;");
+
+                $statement->bindValue(":id", $postId);
+                $statement->bindValue(":imgpath", $projectpicture);
+
+                $statement->execute();
+
+                //header('location: updateproject.php');
+        }
 }

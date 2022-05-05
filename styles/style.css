@@ -601,6 +601,7 @@ p {
     width: 400px;
 }
 
+<<<<<<< HEAD
 
 /*USERDATA*/
 #followButton{
@@ -623,4 +624,20 @@ p {
     border: 4px solid #0600FE;
     margin: 0px auto;
     display: block;
+=======
+.editProjectPic {
+    
+    float: center;
+    margin-top: 40px;
+}
+
+.projectPicture{
+    width: 250px;
+    height: 200px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+>>>>>>> 413afee62bb962f4a3c89fafa3676e00620c08b6
 }

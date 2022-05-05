@@ -57,6 +57,7 @@ $allPosts = Post::getPostsByUserId($id);
             <?php foreach ($allPosts as $p) : ?>
                 <div class="project" style=" background-image: url('<?php echo $p["imgpath"] ?>');">
                     <a href="deletepost.php?id=<?php echo $p['id'] ?>"><i class="fa-solid fa-trash-can"></i></a>
+                    <a href="updateproject.php?id=<?php echo $p['id'] ?>">Update</a>
                     <?php
                         if ($p['showcase'] == 1) {
                             echo '<input type="button" data-id="'.$p['id'].'" class="add" id="addShow" name="showcase"  value="add showcase"/>';
