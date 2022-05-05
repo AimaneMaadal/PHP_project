@@ -7,6 +7,13 @@ session_start();
 $id = $_GET['id'];
 $userData = user::getUserFromId($id);
 
+$user = user::getUserFromEmail($_SESSION['user']);
+
+
+if($user['id'] == $id){
+    header("Location: profilepage.php");
+}
+
 $profilePicture = $userData['profilepicture'];
 $firstname = $userData['firstname'];
 $lastname = $userData['lastname'];
@@ -17,6 +24,9 @@ $bio = $userData['bio'];
 // var_dump(user::getUserFromId($id));
 
 $allPosts = Post::getPostsByUserId($id);
+
+$currentUser = user::getUserFromEmail($_SESSION['user'])['id'];
+
 
 ?>
 <!DOCTYPE html>
@@ -36,7 +46,7 @@ $allPosts = Post::getPostsByUserId($id);
     <header>
         <?php include('nav.php'); ?>
     </header>
-
+    <div id='showcase-success'></div>
     <div class="profileContainer">
         <div class="profileCard">
             <div class="profileCard_head">
@@ -45,6 +55,18 @@ $allPosts = Post::getPostsByUserId($id);
 
             <div class="profileCard_content">
                 <p class="profileCard_username"><?php echo $fullname; ?></p>
+                <?php
+                
+                // echo $user['id']." ". $id;
+                if(user::checkFollow($user['id'], $id) == 2){
+                    echo '<input type="button" data-id="'.$id.'" class="add" id="followButton" name="follow"  value="folllow"/ >';
+                    echo '<input type="button" data-id="'.$id.'" class="remove" id="unfollowButton" name="follow"  value="unfolllow" style="display:none"/>';
+                }
+                else{
+                    echo '<input type="button" data-id="'.$id.'" class="add" id="followButton" name="follow"  value="folllow" style="display:none"/>';
+                    echo '<input type="button" data-id="'.$id.'" class="remove" id="unfollowButton" name="follow"  value="unfolllow" />';            
+                }
+                ?>
                 <p class="profileCard_education"><?php echo $education; ?></p>
                 <p class="profileCard_description"><?php echo $bio; ?></p>
             </div>
@@ -62,7 +84,40 @@ $allPosts = Post::getPostsByUserId($id);
         </div>
 
 
-
 </body>
-
+<script>  
+ $(document).on("click","#followButton",function(){
+    $("#unfollowButton").show();
+    $("#followButton").hide();
+    $.ajax({  
+        url:"ajax/add_following.php",  
+        method:"POST",  
+        data:{
+            followed: $(this).attr("data-id"),
+            follower: <?php echo $currentUser?> 
+          
+        },  
+        success:function(data){ 
+            $('#showcase-success').html(data); 
+            $('#showcase-success').addClass("show");
+        } 
+    }); 
+ }); 
+ $(document).on("click","#unfollowButton",function(){
+    $("#followButton").show();
+    $("#unfollowButton").hide();
+     $.ajax({  
+        url:"ajax/remove_following.php",  
+        method:"POST",  
+        data:{
+            followed: $(this).attr("data-id"),
+            follower: <?php echo $currentUser?> 
+        },  
+        success:function(data){ 
+            $('#showcase-success').html(data); 
+            $('#showcase-success').addClass("show");
+        } 
+     }); 
+ }); 
+ </script>  
 </html>

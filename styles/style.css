@@ -600,3 +600,27 @@ p {
     padding: 5px;
     width: 400px;
 }
+
+
+/*USERDATA*/
+#followButton{
+    background-color: #0600FE;
+    font-size: 15px;
+    height: 25px;
+    padding: 0px 10px;
+    font-family: 'blaak';
+    color: white;
+    border: none;
+    margin: 0px auto;
+    display: block;
+}
+#unfollowButton{
+    font-size: 15px;
+    height: 25px;
+    padding: 0px 10px;
+    color: #0600FE;
+    font-family: 'blaak';
+    border: 4px solid #0600FE;
+    margin: 0px auto;
+    display: block;
+}
