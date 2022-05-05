@@ -600,3 +600,19 @@ p {
     padding: 5px;
     width: 400px;
 }
+
+.editProjectPic {
+    
+    float: center;
+    margin-top: 40px;
+}
+
+.projectPicture{
+    width: 250px;
+    height: 200px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
