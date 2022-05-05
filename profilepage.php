@@ -27,8 +27,7 @@ $allPosts = Post::getPostsByUserId($id);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creative Minds</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="https://use.typekit.net/ppk1taf.css">
+    <link rel="stylesheet" href="styles/style.css">  
 </head>
 
 <body>
@@ -36,7 +35,7 @@ $allPosts = Post::getPostsByUserId($id);
     <header>
         <?php include('nav.php'); ?>
     </header>
-
+    <div id='showcase-success'></div>
     <div class="profileContainer">
         <div class="profileCard">
             <div class="profileCard_head">
@@ -50,17 +49,55 @@ $allPosts = Post::getPostsByUserId($id);
             </div>
         </div>
 
+    
         <div class="profilePosts">
-            <h1>Werk van <?php echo $firstname ?></h1>
+            <h1>Werk van <span><?php echo $firstname ?></span></h1>
 
+           
             <?php foreach ($allPosts as $p) : ?>
-                <a href="#" class="project"><img src="<?php echo $p["imgpath"] ?>" alt=""></a>
-                <a href="deletepost.php?id=<?php echo $p['id'] ?>"><img class="bin" src="images/bin.png" alt="bin"></a>
-                <?php endforeach; ?>
+                <div class="project" style=" background-image: url('<?php echo $p["imgpath"] ?>');">
+                    <a href="deletepost.php?id=<?php echo $p['id'] ?>"><i class="fa-solid fa-trash-can"></i></a>
+                    <?php
+                        if ($p['showcase'] == 1) {
+                            echo '<input type="button" data-id="'.$p['id'].'" class="add" id="addShow" name="showcase"  value="add showcase"/>';
+                        }
+                        else {
+                            echo '<input type="button" data-id="'.$p['id'].'" class="remove" id="addShow" name="showcase" value="remove showcase" />';
+                        }
+                    ?>
+                </div>    
+            <?php endforeach; ?>
         </div>
 
 
 
 </body>
+<script>  
+ $(document).on("click","#addShow",function(){
+     if ($(this).hasClass("add")) {
+          $(this).removeClass("add");
+          $(this).addClass("remove");
+          $(this).val("remove showcase");
+     }
+     else{
+          $(this).removeClass("remove");
+          $(this).addClass("add");
+          $(this).val("add showcase");
+     }
+     $.ajax({  
+        url:"ajax/add_showcase.php",  
+        method:"POST",  
+        data:{
+        showcase: 2, 
+        postid: $(this).attr("data-id") 
+        },  
+        success:function(data){ 
+            $('#showcase-success').html(data); 
+            $('#showcase-success').addClass("show");
+        } 
+     }); 
+      
+ }); 
+ </script>  
 
 </html>

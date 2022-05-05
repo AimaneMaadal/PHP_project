@@ -16,7 +16,7 @@ $bio = $userData['bio'];
 
 // var_dump(user::getUserFromId($id));
 
-$allPosts = Post::getPostsByUserId($id);
+$allPosts = Post::getPostsByUserIdShowcased($id);
 
 ?>
 <!DOCTYPE html>
@@ -38,25 +38,13 @@ $allPosts = Post::getPostsByUserId($id);
     </header>
 
     <div class="profileContainer">
-        <div class="profileCard">
-            <div class="profileCard_head">
-                <img class="profilePicture profilePicture--small" src="<?php echo $profilePicture ?>" alt="">
-            </div>
-
-            <div class="profileCard_content">
-                <p class="profileCard_username"><?php echo $fullname; ?></p>
-                <p class="profileCard_education"><?php echo $education; ?></p>
-                <p class="profileCard_description"><?php echo $bio; ?></p>
-            </div>
-        </div>
-
         <div class="profilePosts">
-            <h1>Werk van <span><?php echo $firstname ?></span></h1>
+            <h1>Showcase <span><?php echo $firstname ?></span></h1>
 
            
             <?php foreach ($allPosts as $p) : ?>
                 <div class="project" style=" background-image: url('<?php echo $p["imgpath"] ?>');">
-                    <a href="#"><i class="fa-solid fa-bookmark"></i></i></a>
+                
                 </div>    
             <?php endforeach; ?>
         </div>

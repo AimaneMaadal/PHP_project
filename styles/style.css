@@ -212,53 +212,61 @@ h1 {
     display: block;
     margin: 0 auto;
 }
-.editHeader{
+
+.editHeader {
     margin: 40px 0px 70px 5%;
 }
-.editHeader span{
+
+.editHeader span {
     color: #0600FE;
 }
-.editProfilePic{
+
+.editProfilePic {
     width: 20%;
     float: left;
     margin-top: 40px;
 }
-.editProfilePic label{
+
+.editProfilePic label {
     text-align: center;
     display: block;
     margin: 10px auto;
 }
 
-.editProfilePic label:nth-child(1){
+.editProfilePic label:nth-child(1) {
     text-align: center;
     display: block;
     margin: 100px auto;
 }
-.editProfilePic input{
+
+.editProfilePic input {
     text-align: center;
     display: block;
     margin: 10px auto;
     background-color: none;
 }
-#userImage{
+
+#userImage {
     display: none;
 }
-#userImageButton{
-    display: none;  
+
+#userImageButton {
+    display: none;
 }
 
 
 .profile_info input {
     margin: .2rem 0;
 }
-.profileTable{
+
+.profileTable {
     width: 80%;
     float: left;
 }
 
 
 
-.updateProfileButton{
+.updateProfileButton {
     width: 40%;
     padding: 12px 20px;
     background-color: #0600FE;
@@ -267,7 +275,7 @@ h1 {
     border: none;
 }
 
-.updateProfileInput{
+.updateProfileInput {
     width: 80%;
     padding: 12px 20px;
     border: 1px solid #bcbcbc;
@@ -514,8 +522,60 @@ p {
     height: 16rem;
     display: block;
     overflow: hidden;
-
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
+
+.project a {
+    background-color: #eeeeee;
+    width: 40px;
+    height: 40px;
+    padding: 12px 12px;
+    text-align: center;
+    color: red;
+    float: left;
+}
+
+.project i {
+    margin-top: 0px;
+}
+
+#addShow {
+    height: 40px;
+    float: right;
+    font-family: 'blaak';
+    border: none;
+    background-color: white;
+    padding: 2px 30px;
+}
+
+.add {}
+
+.remove {}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+#showcase-success{
+    background-color: #B5DB37;
+    width: 30%;
+    opacity: 0;
+    margin: 30px 0px 0px 5%;
+    /* font-family: 'blaak'; */
+    padding: 10px 15px;
+}
+.show{
+    animation: show 0.2s ease-in;
+    animation-fill-mode: forwards;
+}
+
+
 
 .profilePosts h1 {
     width: 100%;
@@ -523,12 +583,17 @@ p {
     margin: 0;
     padding: 0;
 }
-
-.project img {
+.profilePosts h1 span{
+    color: #1C00FE;
+}
+.profilePosts h3 {
     width: 100%;
     height: auto;
-    margin: 0 auto;
-    display: block;
+    margin: 0;
+    padding: 0;
+}
+.profilePosts h3 span{
+    color: #94fe00;
 }
 
 #search-result {

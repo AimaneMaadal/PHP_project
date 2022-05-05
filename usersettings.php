@@ -109,7 +109,7 @@ if (!empty($_POST['update'])) {
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="editProfilePic">
             <img id="profilePic" class="profilePicture" src="<?php echo $userData['profilepicture']; ?>" alt="Profile picture">
-            <label>Wijzig profiel foto<input type="file" id="userImage" name="userImage" value=""></label><br>
+            <label>Wijzig profiel foto<input type="file" id="userImag e" name="userImage" value=""></label><br>
             <label>Upload image<input type="submit"id="userImageButton" name="updateImage" value="Update profile picture"></label>
         </div>
     </form>

@@ -245,6 +245,15 @@ class Post
         $result = $statement->fetchAll();
         return $result;
     }
+    public static function getPostsByUserIdShowcased($userId)
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM posts WHERE userid = :userId AND showcase = 2");
+        $statement->bindValue(':userId', $userId);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
 
     public static function deletePostByPostId($id)
     {
