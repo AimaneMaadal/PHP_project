@@ -353,7 +353,6 @@ class User
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT email FROM `users` WHERE `email` = :value");
             $statement->bindParam(':value', $value, PDO::PARAM_STR);
-        //     var_dump($value);
             $statement->execute();
             $count = $statement->rowCount();
             $result = 0;
