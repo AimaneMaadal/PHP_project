@@ -13,9 +13,11 @@
     src: url(fonts/BlaakBlack_PERSONAL.ttf);
 }
 
-* {
-    box-sizing: border-box;
-}
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; color: #0600FE;}
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }
+
 
 body {
     margin: 0;
@@ -160,10 +162,11 @@ nav {
     margin-left: 10px;
     font-family: 'roboto';
     font-size: 100%;
-    width: 40%;
+    width: 25%;
     color: black;
     float: right;
     text-align: center;
+    font-size: 1rem;
     transition: 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -477,7 +480,6 @@ h1 {
 
 .profileCard {
     width: 30%;
-    border: 4px solid black;
     padding: 3rem;
 }
 
@@ -516,18 +518,47 @@ p {
     justify-content: space-between;
 }
 
+
+
+
+/*USERDATA*/
+#followButton{
+    background-color: #0600FE;
+    font-size: 15px;
+    height: 25px;
+    padding: 0px 10px;
+    font-family: 'blaak';
+    color: white;
+    border: none;
+    margin: 0px auto;
+    display: block;
+}
+#unfollowButton{
+    font-size: 15px;
+    height: 25px;
+    padding: 0px 10px;
+    color: #0600FE;
+    font-family: 'blaak';
+    border: 4px solid #0600FE;
+    margin: 0px auto;
+    display: block;
+}
+
+
+/*PAGE: PROFILEPAGE*/
+
 .project {
-    border: 4px solid black;
     width: 45%;
     height: 16rem;
     display: block;
     overflow: hidden;
-    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-size: cover;
+    box-shadow: rgba(22, 46, 12, 0.15) 0px 48px 100px 0px;
 }
 
-.project a {
+/* .project a {
     background-color: #eeeeee;
     width: 40px;
     height: 40px;
@@ -535,24 +566,21 @@ p {
     text-align: center;
     color: red;
     float: left;
-}
+} */
 
 .project i {
     margin-top: 0px;
 }
 
-#addShow {
+/* #addShow {
     height: 40px;
     float: right;
     font-family: 'blaak';
     border: none;
     background-color: white;
     padding: 2px 30px;
-}
+} */
 
-.add {}
-
-.remove {}
 
 @keyframes show {
     0% {
@@ -600,44 +628,40 @@ p {
     padding: 5px;
     width: 400px;
 }
-
-<<<<<<< HEAD
-
-/*USERDATA*/
-#followButton{
-    background-color: #0600FE;
-    font-size: 15px;
-    height: 25px;
-    padding: 0px 10px;
-    font-family: 'blaak';
-    color: white;
-    border: none;
-    margin: 0px auto;
-    display: block;
+.projectSettings {
+    width: 29%;
+    background-color: #ffffff;
+    text-align: right;
+    margin-right: 2%;
+    list-style: none;
+    padding-right: 3%;
+    float: right;
+    height: 100px;
+    font-weight: 600;
 }
-#unfollowButton{
-    font-size: 15px;
-    height: 25px;
-    padding: 0px 10px;
+.projectSettings li{
+    margin-top: 10px;
+    width: 100%;
     color: #0600FE;
-    font-family: 'blaak';
-    border: 4px solid #0600FE;
-    margin: 0px auto;
-    display: block;
-=======
-.editProjectPic {
-    
-    float: center;
-    margin-top: 40px;
+    font-size: 14px;
+    text-decoration: none;
 }
 
-.projectPicture{
-    width: 250px;
-    height: 200px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto;
->>>>>>> 413afee62bb962f4a3c89fafa3676e00620c08b6
+.projectSettings li input{
+    background-color: #0400fe00;
+    text-align: right;
+    color: #0600FE;
+    border: none;
+    font-weight: 600;
+    background-repeat: no-repeat;
+    background-position: left;
+    padding-left: 22px;
+    padding-right: 0;
 }
+.removeFollow{
+    background-image: url('../images/star-solid.svg');
+}
+.addFollow{
+    background-image: url('../images/star-regular.svg');
+}
+

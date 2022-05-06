@@ -267,8 +267,18 @@ class User
                 $result = $statement->fetch();
                 return $result;
         }
+ 
+        public static function countFollowers($id)
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT COUNT(*) FROM followers WHERE id_followed = :id");
+            $statement->bindValue(':id', $id);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result["COUNT(*)"];
+        }
 
-        // function to update user in database with new values
+        
         
         public function updateUser()
         {
