@@ -17,6 +17,10 @@
     box-sizing: border-box;
 }
 
+#postPicture {
+    width: 100%;
+}
+
 body {
     margin: 0;
     background-color: #f2f3f8;
@@ -550,19 +554,17 @@ p {
     padding: 2px 30px;
 }
 
-.add {}
-
-.remove {}
-
 @keyframes show {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
 }
-#showcase-success{
+
+#showcase-success {
     background-color: #B5DB37;
     width: 30%;
     opacity: 0;
@@ -570,7 +572,8 @@ p {
     /* font-family: 'blaak'; */
     padding: 10px 15px;
 }
-.show{
+
+.show {
     animation: show 0.2s ease-in;
     animation-fill-mode: forwards;
 }
@@ -583,16 +586,19 @@ p {
     margin: 0;
     padding: 0;
 }
-.profilePosts h1 span{
+
+.profilePosts h1 span {
     color: #1C00FE;
 }
+
 .profilePosts h3 {
     width: 100%;
     height: auto;
     margin: 0;
     padding: 0;
 }
-.profilePosts h3 span{
+
+.profilePosts h3 span {
     color: #94fe00;
 }
 
@@ -602,12 +608,12 @@ p {
 }
 
 .editProjectPic {
-    
+
     float: center;
     margin-top: 40px;
 }
 
-.projectPicture{
+.projectPicture {
     width: 250px;
     height: 200px;
     border-radius: 10px;
@@ -615,4 +621,65 @@ p {
     object-fit: cover;
     display: block;
     margin: 0 auto;
+}
+
+
+/* PROJECT */
+.postContainer {
+    width: 90%;
+    margin: 5rem auto 0;
+}
+
+.posterContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.posterImgContainer {
+    width: 10%;
+    display: block;
+}
+
+.posterImg {
+    width: 100%;
+    display: block;
+    border: 4px solid #94fe00;
+}
+
+.posterName {
+    width: 88%;
+    display: block;
+}
+
+.postImgContainer {
+    width: 100%;
+}
+
+.postImg {
+    width: 100%;
+}
+
+.comment {
+    font-family: 'roboto';
+    padding: 5px;
+    font-size: 1em;
+    margin-bottom: 1em;
+}
+
+.btn {
+    text-decoration: none;
+    background-color: #94fe00;
+    padding: 0.6rem 1.4rem;
+    font-family: 'roboto';
+    font-size: 100%;
+    width: 40%;
+    color: black;
+    text-align: center;
+    transition: 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+    cursor: pointer;
+    display: block;
 }
