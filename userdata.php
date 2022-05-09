@@ -53,11 +53,11 @@ $allPosts = Post::getPostsByUserId($id);
         <div class="profilePosts">
             <h1>Werk van <span><?php echo $firstname ?></span></h1>
 
-           
+
             <?php foreach ($allPosts as $p) : ?>
                 <div class="project" style=" background-image: url('<?php echo $p["imgpath"] ?>');">
                     <a href="#"><i class="fa-solid fa-bookmark"></i></i></a>
-                </div>    
+                </div>
             <?php endforeach; ?>
         </div>
 
