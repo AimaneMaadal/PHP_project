@@ -224,9 +224,9 @@ class Post
         $result = $statement->fetchAll();
         return json_decode($result[0]['tags']);
     }
-   
 
-    public function getUserByPostId($postId)
+
+    public static function getUserByPostId($postId)
     {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM users INNER JOIN posts ON users.id = posts.userid WHERE posts.id = :postId");
@@ -262,7 +262,7 @@ class Post
         $statement->bindValue(':postId', $id);
         $statement->execute();
     }
-    
+
     public function getTimePosted()
     {
         return $this->timePosted;
@@ -272,7 +272,7 @@ class Post
      * Set the value of timePosted
      *
      * @return  self
-     */ 
+     */
     public function setTimePosted($timePosted)
     {
         $this->timePosted = $timePosted;
@@ -302,15 +302,15 @@ class Post
     }
 
     public function updateProjectPicture($projectpicture, $postId)
-        {
-                $conn = Db::getInstance();
-                $statement = $conn->prepare("UPDATE `posts` SET `imgpath` = :imgpath WHERE `posts`.`id` = :id;");
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("UPDATE `posts` SET `imgpath` = :imgpath WHERE `posts`.`id` = :id;");
 
-                $statement->bindValue(":id", $postId);
-                $statement->bindValue(":imgpath", $projectpicture);
+        $statement->bindValue(":id", $postId);
+        $statement->bindValue(":imgpath", $projectpicture);
 
-                $statement->execute();
+        $statement->execute();
 
-                //header('location: updateproject.php');
-        }
+        //header('location: updateproject.php');
+    }
 }
