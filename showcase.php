@@ -7,12 +7,8 @@ session_start();
 $id = $_GET['id'];
 $userData = user::getUserFromId($id);
 
-$profilePicture = $userData['profilepicture'];
+
 $firstname = $userData['firstname'];
-$lastname = $userData['lastname'];
-$fullname = $userData['firstname'] . " " . $userData['lastname'];
-$education = $userData['education'];
-$bio = $userData['bio'];
 
 // var_dump(user::getUserFromId($id));
 

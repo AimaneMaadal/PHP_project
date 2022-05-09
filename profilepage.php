@@ -46,6 +46,8 @@ $allPosts = Post::getPostsByUserId($id);
                 <p class="profileCard_username"><?php echo $fullname; ?></p>
                 <p class="profileCard_education"><?php echo $education; ?></p>
                 <p class="profileCard_description"><?php echo $bio; ?></p>
+                <p class="profileCard_description">Followers : <?php echo User::countFollowers($id); ?></p>
+                
             </div>
         </div>
 
@@ -56,17 +58,19 @@ $allPosts = Post::getPostsByUserId($id);
            
             <?php foreach ($allPosts as $p) : ?>
                 <div class="project" style=" background-image: url('<?php echo $p["imgpath"] ?>');">
-                    <a href="deletepost.php?id=<?php echo $p['id'] ?>"><i class="fa-solid fa-trash-can"></i></a>
-                    <a href="updateproject.php?id=<?php echo $p['id'] ?>">Update</a>
-                    <?php
-                        if ($p['showcase'] == 1) {
-                            echo '<input type="button" data-id="'.$p['id'].'" class="add" id="addShow" name="showcase"  value="add showcase"/>';
-                        }
-                        else {
-                            echo '<input type="button" data-id="'.$p['id'].'" class="remove" id="addShow" name="showcase" value="remove showcase" />';
-                        }
-                    ?>
-                </div>    
+                    <ul class="projectSettings">
+                        <li><a href="deletepost.php?id=<?php echo $p['id'] ?>"><i class="fa-solid fa-trash-can"></i> Delete</a></li>
+                        <li><a href="updateproject.php?id=<?php echo $p['id'] ?>"><i class="fa-solid fa-pen-to-square"></i> Update</a></li>
+                        <?php
+                            if ($p['showcase'] == 1) {
+                                echo '<li><input type="button" data-id="'.$p['id'].'" class="addFollow" id="addShow" name="showcase"  value="add showcase"></li>';
+                            }
+                            else {
+                                echo '<li><input type="button" data-id="'.$p['id'].'" class="removeFollow" id="addShow" name="showcase" value="remove showcase"/></li>';
+                            }
+                        ?>
+                    </ul>    
+                </div>   
             <?php endforeach; ?>
         </div>
 
@@ -75,14 +79,14 @@ $allPosts = Post::getPostsByUserId($id);
 </body>
 <script>  
  $(document).on("click","#addShow",function(){
-     if ($(this).hasClass("add")) {
-          $(this).removeClass("add");
-          $(this).addClass("remove");
+     if ($(this).hasClass("addFollow")) {
+          $(this).removeClass("addFollow");
+          $(this).addClass("removeFollow");
           $(this).val("remove showcase");
      }
      else{
-          $(this).removeClass("remove");
-          $(this).addClass("add");
+          $(this).removeClass("addFollow");
+          $(this).addClass("addFollow");
           $(this).val("add showcase");
      }
      $.ajax({  

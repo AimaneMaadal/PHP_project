@@ -267,8 +267,18 @@ class User
                 $result = $statement->fetch();
                 return $result;
         }
+ 
+        public static function countFollowers($id)
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT COUNT(*) FROM followers WHERE id_followed = :id");
+            $statement->bindValue(':id', $id);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result["COUNT(*)"];
+        }
 
-        // function to update user in database with new values
+        
         
         public function updateUser()
         {
@@ -368,6 +378,19 @@ class User
 
         }
      }
+     //function check database if i follow other user
+        public static function checkFollow($id_follower, $id_followed) {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("SELECT * FROM `followers` WHERE `id_follower` = $id_follower AND `id_followed` = $id_followed");
+                $statement->execute();
+                $result = $statement->fetch();
+                if ($result) {
+                        return 1;
+                } else {
+                        return 2;
+                }
+        }
+        // function get
 
      /**
          * Get the value of behance
