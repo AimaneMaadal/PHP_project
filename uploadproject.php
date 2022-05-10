@@ -22,13 +22,6 @@ Configuration::instance([
 
 session_start();
 
-if (!isset($_SESSION['user'])) {
-    header('location: login.php');
-} else {
-    $user = new User();
-    $sessionId = $_SESSION['user'];
-    $userData = User::getUserFromEmail($sessionId);
-}
 
 
 if (!empty($_POST)) {

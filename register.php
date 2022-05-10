@@ -62,28 +62,6 @@ if (!empty($_POST)) {
       <input id="search-email" type="email" name="email" class="inputfield"><br>
       <label id="search-result"></label>
       <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-      <script>
-        $(document).ready(function() {
-          $('#search-email').blur(function() {
-            var value = $(this).val();
-            liveCheckEmail(value);
-          });
-        });
-
-        function liveCheckEmail(val) {
-          $.post('process.php', {
-            'search-email': val
-          }, function(data) {
-            if (data == "Found") {
-              $('#search-result').html("<span>Email already exists</span>");
-            } else {
-              $('#search-result').html("<span>Email available</span>");
-            }
-          }).fail(function(xhr, ajaxOptions, throwError) {
-            alert(throwError);
-          });
-        }
-      </script>
 
       <label>Password</label>
       <input type="password" name="password" class="inputfield"><br>
@@ -103,7 +81,34 @@ if (!empty($_POST)) {
     </form>
   </div>
 
+<script>
 
+$(document).on("blur", "#search-email", function () {
+  var username = $(this).val();
+  if (username == "") {
+      alert("ok");
+  }
+  $.ajax({
+      url: 'ajax/check_email.php',
+      type: 'POST',
+      data: {username: username},
+      dataType: 'json',
+      success: function (data) {
+          if (data.result == "success") {
+              $("#search-result").html(data.msg);
+              $("#search-result").removeClass('err_red').addClass('succ_green');
+          } else {
+              $("#search-result").html(data.msg);
+              $("#search-result").removeClass('succ_green').addClass('err_red');
+          }
+      }
+  });
+});
+
+
+
+
+</script>
 
 
 </body>
