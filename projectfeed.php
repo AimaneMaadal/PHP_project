@@ -11,10 +11,9 @@ if (isset($_SESSION['user'])) {
 if (isset($_GET['search'])) {
     $post = new Post;
     $allPosts = $post->getAllPostsLimitFiltered($_GET['search']);
-    $tags = $post->getAllPostsByUserTags(150); 
+    $tags = $post->getAllPostsByUserTags(150);
     var_dump($tags);
-}
-else {
+} else {
     $post = new Post;
     $allPosts = $post->getAllPostsLimit();
 }
@@ -46,30 +45,30 @@ else {
 
             <div class="post">
 
-                <div class="post_head">
+                <a href="project.php?id=<?php echo $p['id'] ?>" class="post_head">
                     <img class="post_image" src="<?php echo $p['imgpath']; ?>" alt="">
-                </div>
+                </a>
 
                 <?php if (isset($_SESSION['user'])) : ?>
-                <a href="userdata.php?id=<?php echo $p['userid'] ?>" class="post_userinfo">
-                    <img class="profilePicture_small" src="<?php echo $post->getUserByPostId($p['id'])['profilepicture'] ?>" alt="">
-                    <p class="post_username"><?php echo $post->getUserByPostId($p['id'])['firstname'] ?></p>
-                </a>
-                <div class="post_content">
-                    <p><?php echo $p['title']; ?></p>
-                    <p><?php echo $p['description']; ?></p>
-                </div>
+                    <a href="userdata.php?id=<?php echo $p['userid'] ?>" class="post_userinfo">
+                        <img class="profilePicture_small" src="<?php echo $post->getUserByPostId($p['id'])['profilepicture'] ?>" alt="">
+                        <p class="post_username"><?php echo $post->getUserByPostId($p['id'])['firstname'] ?></p>
+                    </a>
+                    <div class="post_content">
+                        <p><?php echo $p['title']; ?></p>
+                        <p><?php echo $p['description']; ?></p>
+                    </div>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
     </div>
 
     <?php if (!isset($_GET['search'])) : ?>
-    <div class="pages">
-        <?php for ($pages = 1; $pages <= $total_pages; $pages++) : ?>
-            <a href='<?php echo "?page=$pages"; ?>' class="links"><?php echo $pages; ?></a>
-        <?php endfor; ?>
-    </div>
+        <div class="pages">
+            <?php for ($pages = 1; $pages <= $total_pages; $pages++) : ?>
+                <a href='<?php echo "?page=$pages"; ?>' class="links"><?php echo $pages; ?></a>
+            <?php endfor; ?>
+        </div>
     <?php endif; ?>
 
 
