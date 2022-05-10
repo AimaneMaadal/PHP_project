@@ -67,6 +67,16 @@ $currentUser = user::getUserFromEmail($_SESSION['user'])['id'];
                     echo '<input type="button" data-id="'.$id.'" class="remove" id="unfollowButton" name="follow"  value="unfolllow" />';            
                 }
                 ?>
+
+                <?php
+                if(user::checkReported($user['id'], $id) == 2){
+                    echo '<input type="button" data-id="'.$id.'" class="add" id="reportButton" name="report"  value="report"/ >';
+                    }
+                else{
+                    echo '<input type="button" data-id="'.$id.'" class="add" id="reportButton" name="report"  value="reported"/>';
+                    }
+                ?>
+
                 <p class="profileCard_education"><?php echo $education; ?></p>
                 <p class="profileCard_description"><?php echo $bio; ?></p>
             </div>
@@ -112,6 +122,23 @@ $currentUser = user::getUserFromEmail($_SESSION['user'])['id'];
         data:{
             followed: $(this).attr("data-id"),
             follower: <?php echo $currentUser?> 
+        },  
+        success:function(data){ 
+            $('#showcase-success').html(data); 
+            $('#showcase-success').addClass("show");
+        } 
+     }); 
+ }); 
+
+ $(document).on("click","#reportButton",function(){
+    $("#reportButton").show();
+    $("#reportButton").hide();
+     $.ajax({  
+        url:"ajax/report.php",  
+        method:"POST",  
+        data:{
+            reported: $(this).attr("data-id"),
+            reporter: <?php echo $currentUser?> 
         },  
         success:function(data){ 
             $('#showcase-success').html(data); 

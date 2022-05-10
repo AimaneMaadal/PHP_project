@@ -390,6 +390,18 @@ class User
                         return 2;
                 }
         }
+
+        public static function checkReported($id_reported, $id_reporter) {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("SELECT * FROM `reportusers` WHERE `id_reported` = $id_reported AND `id_reporter` = $id_reporter");
+                $statement->execute();
+                $result = $statement->fetch();
+                if ($result) {
+                        return 1;
+                } else {
+                        return 2;
+                }
+        }
         // function get
 
      /**
