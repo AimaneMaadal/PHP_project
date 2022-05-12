@@ -719,7 +719,7 @@ p {
     padding: 0.6rem 1.4rem;
     font-family: 'roboto';
     font-size: 100%;
-    width: 40%;
+    width: 10em;
     color: black;
     text-align: center;
     transition: 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
