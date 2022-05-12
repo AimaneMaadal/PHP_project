@@ -33,6 +33,22 @@ $fullnameCommenter = $firstNameCommenter . " " . $lastNameCommenter;
 // echo "</pre>";
 
 
+// COMMENTS MET AJAX
+//controleer of er een update wordt verzonden
+if (!empty($_POST)) {
+    try {
+        $comment = new Comment();
+        $comment->setText($_POST['comment']);
+        $comment->saveComment();
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+}
+
+//altijd alle laatste activiteiten ophalen
+$comments = Comment::getAll();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,9 +98,7 @@ $fullnameCommenter = $firstNameCommenter . " " . $lastNameCommenter;
         </form>
     </div>
 
-
-
-
+    <script src="js/app.js"></script>
 </body>
 
 </html>
