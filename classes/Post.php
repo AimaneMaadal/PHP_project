@@ -10,7 +10,7 @@ class Post
     private $description;
     private $userId;
     private $tags;
-    private $timePosted;
+    private $timePosted; //meer controle over, je hebt overal variablen die public zijn
 
     /**
      * Get the value of description
@@ -255,11 +255,12 @@ class Post
         return $result;
     }
 
-    public static function deletePostByPostId($id)
+    public static function deletePostByPostId($id, $userId)
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("DELETE FROM posts WHERE id = :postId");
+        $statement = $conn->prepare("DELETE FROM posts WHERE userid = :userId AND id = :postId");
         $statement->bindValue(':postId', $id);
+        $statement->bindValue(':userId', $userId);
         $statement->execute();
     }
 

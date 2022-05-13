@@ -1,13 +1,32 @@
-<?php
-require_once '../classes/Db.php';
-if (isset($_POST['username'])) {
-    $conn = Db::getInstance();
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $query = mysqli_query($conn, "select name,email,username from users where LCASE(username)='" . strtolower($username) . "'");
-    if ($query->num_rows > 0) {
-        echo "ok";
-    } else {
-        echo "no";
+<?php 
+    require_once("../bootstrap.php");
+
+    if (!empty($_POST['email'])) {
+        $email = $_POST['email'];
+
+        try {
+            $conn =Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
+            $statement->bindValue(':email', $email);
+            $statement->execute();
+            $count = $statement->rowCount();
+            if ($count > 0) {
+                $result = [
+                    'status' => 'Success',
+                    'message' => 'Email is already in use'
+                ];
+            } else {
+                $result = [
+                    'status' => 'Success',
+                    'message' => 'Email is available'
+                ];
+            }
+        } catch (throwable $e) {
+            $result = [
+                'status' => 'Error',
+                'message' => $e->getMessage()
+            ];
+        }
+
+        echo json_encode($result);
     }
-}
-?>
