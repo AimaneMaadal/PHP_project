@@ -23,8 +23,8 @@
             }
         } catch (throwable $e) {
             $result = [
-                'status' => 'Error',
-                'message' => $e->getMessage()
+                "status" => "error",
+                "message" => "Something went wrong."
             ];
         }
 

@@ -63,28 +63,27 @@ if (!empty($_POST)) {
 
       <label class="emailLabel">Email</label>
       <input id="emailInput" type="email" name="email" class="inputfield" oninput="checkEmail(this)"><br>
-      <label id="search-result"></label>
-      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
+      
       <label>Password</label>
       <input type="password" name="password" class="inputfield"><br>
-
+      
       <label>Confirm password</label>
       <input type="password" name="password2" class="inputfield"><br>
-
+      
       <input type="checkbox"></input>
       <span>Remember me</span>
-
+      
       <?php if (isset($error)) {
         echo "<div id='error'>" . $error . "</div>";
       } ?>
 
-      <button type="submit">Submit</button>
-      <a href="login.php" id="noAccountLink">I already have an account</a><br>
-    </form>
-  </div>
+<button type="submit">Submit</button>
+<a href="login.php" id="noAccountLink">I already have an account</a><br>
+</form>
+</div>
 
-  <script src="./js/app.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="./js/app.js"></script>
 
 
 </body>
