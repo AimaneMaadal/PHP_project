@@ -21,7 +21,7 @@ Configuration::instance([
 ]);
 
 session_start();
-
+$sessionId = $_SESSION['user'];
 
 
 if (!empty($_POST)) {

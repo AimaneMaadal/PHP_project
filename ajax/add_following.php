@@ -1,28 +1,23 @@
 <?php
 
- $host = "localhost";
- $username = "root";
- $password = "usbw";
- $database = "imdribble";
- $teller = 0;
- 
-$connect = new PDO("mysql:host=$host;dbname=$database", $username, $password);
-$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+include "../classes/DB.php";
+include "../classes/Follow.php";
+include "../classes/User.php";
 
 if (isset($_POST["followed"])) {
 
     $followed = $_POST["followed"];
-    $follower = $_POST["follower"];
+    $follower = user::getUserFromEmail($_SESSION['user'])['id'];
 
-    $sql = "INSERT  INTO followers (id_follower, id_followed) VALUES ('$follower', '$followed')";
-    $statement = $connect->prepare($sql);
-    $statement->execute();    
+    $follow = new Follow();
+    $follow->setFollowed($followed);
+    $follow->setFollower($follower);
+    $follow->addFollow();
     
-    $statement2 = $connect->prepare("SELECT * FROM users WHERE id = :id");
-    $statement2->bindValue(':id', $followed);
-    $statement2->execute();
-    $result = $statement2->fetch();
-    echo "You have followed ".$result["firstname"];
+    
+    $user = User::getUserFromId($followed);
+
+    echo "You have followed <b>".json_encode($user["firstname"])."</b>";
 }
 else{
     echo "something went wrong";

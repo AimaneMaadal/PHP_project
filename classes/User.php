@@ -215,10 +215,11 @@ class User
                 return $result;
         }
 
-        public static function passwordResetToken($token, $expDate, $email)
+        public function passwordResetToken($token, $expDate, $email)
         {
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("INSERT INTO `passwordreset` (`token`, `expiry_date`, `email`) VALUES ('$token', '$expDate', '$email');");
+                $statement = $conn->prepare("INSERT INTO `passwordreset` (`token`, `expiry_date`, `email`) VALUES ('$token', '$expDate', :email);");
+                $statement->bindValue(":email", $this->email);
                 return $statement->execute();
         }
 

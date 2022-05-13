@@ -10,6 +10,7 @@ if (!empty($_POST)) {
         $user = User::getUserFromEmail($email);
 
         if ($user) {
+
             $expDate = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d") + 1, date("Y")));
 
             $token = md5($email . "salty" . $expDate);
