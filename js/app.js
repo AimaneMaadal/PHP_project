@@ -17,8 +17,8 @@
                     data.message == "Email is already in use"
                 ) {
                     emailLabel.innerHTML = "Email is already in use";
-                    emailLabel.classList.toggle("error_red");
-                    emailInput.classList.toggle("err_red");
+                    emailLabel.classList.add("error_red");
+                    emailInput.classList.add("err_red");
                 } else {
                     emailLabel.innerHTML = "Email";
                     emailLabel.classList.remove("error_red");
@@ -31,31 +31,31 @@
         );
     }
 
-    // document.querySelector("#btnSubmit").addEventListener("click", e => {
-    //     //tekst uitlezen
-    //     let comment = document.querySelector("#comment").value;
-    //     let postId = 1;
+    document.querySelector("#btnSubmit").addEventListener("click", e => {
+        //tekst uitlezen
+        let comment = document.querySelector("#comment").value;
+        let postId = 1;
     
-    //     // via ajax naar server posten
-    //     let data = new FormData();
-    //     data.append("comment", comment);
-    //     data.append("postId", postId);
+        // via ajax naar server posten
+        let data = new FormData();
+        data.append("comment", comment);
+        data.append("postId", postId);
     
-    //     fetch('ajax/save_comment.php', {
-    //         method: 'POST', // or 'PUT'
-    //         body: data,
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             //console.log('Success:', data);
-    //             if (data.status === "success") {
-    //                 let li = `<li class="animate__animated animate__bounce">${data.data.comment}</li>`;
-    //                 document.querySelector("#listupdates").innerHTML += li;
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //         });
+        fetch('ajax/save_comment.php', {
+            method: 'POST', // or 'PUT'
+            body: data,
+        })
+            .then(response => response.json())
+            .then(data => {
+                //console.log('Success:', data);
+                if (data.status === "success") {
+                    let li = `<li class="animate__animated animate__bounce">${data.data.comment}</li>`;
+                    document.querySelector("#listupdates").innerHTML += li;
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     
-    //     e.preventDefault();
-    // });
+        e.preventDefault();
+    });
