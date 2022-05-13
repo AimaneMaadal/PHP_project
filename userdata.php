@@ -50,11 +50,11 @@ $currentUser = user::getUserFromEmail($_SESSION['user'])['id'];
     <div class="profileContainer">
         <div class="profileCard">
             <div class="profileCard_head">
-                <img class="profilePicture profilePicture--small" src="<?php echo $profilePicture ?>" alt="">
+                <img class="profilePicture profilePicture--small" src="<?php echo htmlspecialchars($profilePicture) ?>" alt="">
             </div>
 
             <div class="profileCard_content">
-                <p class="profileCard_username"><?php echo $fullname; ?></p>
+                <p class="profileCard_username"><?php echo htmlspecialchars($fullname) ; ?></p>
                 <?php
                 
                 // echo $user['id']." ". $id;
@@ -77,17 +77,17 @@ $currentUser = user::getUserFromEmail($_SESSION['user'])['id'];
                     }
                 ?>
 
-                <p class="profileCard_education"><?php echo $education; ?></p>
-                <p class="profileCard_description"><?php echo $bio; ?></p>
+                <p class="profileCard_education"><?php echo htmlspecialchars($education) ; ?></p>
+                <p class="profileCard_description"><?php echo htmlspecialchars($bio) ; ?></p>
             </div>
         </div>
 
         <div class="profilePosts">
-            <h1>Werk van <span><?php echo $firstname ?></span></h1>
+            <h1>Werk van <span><?php echo htmlspecialchars($firstname) ?></span></h1>
 
 
             <?php foreach ($allPosts as $p) : ?>
-                <div class="project" style=" background-image: url('<?php echo $p["imgpath"] ?>');">
+                <div class="project" style=" background-image: url('<?php echo htmlspecialchars($p["imgpath"]) ?>');">
                     <a href="#"><i class="fa-solid fa-bookmark"></i></i></a>
                 </div>
             <?php endforeach; ?>
@@ -104,7 +104,7 @@ $currentUser = user::getUserFromEmail($_SESSION['user'])['id'];
         method:"POST",  
         data:{
             followed: $(this).attr("data-id"),
-            follower: <?php echo $currentUser?> 
+            follower: <?php echo htmlspecialchars($currentUser) ?> 
           
         },  
         success:function(data){ 
@@ -121,7 +121,7 @@ $currentUser = user::getUserFromEmail($_SESSION['user'])['id'];
         method:"POST",  
         data:{
             followed: $(this).attr("data-id"),
-            follower: <?php echo $currentUser?> 
+            follower: <?php echo htmlspecialchars($currentUser) ?> 
         },  
         success:function(data){ 
             $('#showcase-success').html(data); 
@@ -138,7 +138,7 @@ $currentUser = user::getUserFromEmail($_SESSION['user'])['id'];
         method:"POST",  
         data:{
             reported: $(this).attr("data-id"),
-            reporter: <?php echo $currentUser?> 
+            reporter: <?php echo htmlspecialchars($currentUser) ?> 
         },  
         success:function(data){ 
             $('#showcase-success').html(data); 

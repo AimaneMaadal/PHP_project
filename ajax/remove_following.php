@@ -23,7 +23,7 @@ if (isset($_POST["followed"])) {
     $statement2->bindValue(':id', $followed);
     $statement2->execute();
     $result = $statement2->fetch();
-    echo "You have unfollowed ".$result["firstname"];
+    echo "You have unfollowed ".json_encode($result["firstname"]);
 
   
 }

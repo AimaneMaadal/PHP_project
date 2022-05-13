@@ -4,6 +4,9 @@ include_once("bootstrap.php");
 
 session_start();
 $sessionId = $_SESSION['user'];
+
+echo $sessionId;
+
 $userData = User::getUserFromEmail($sessionId);
 
 $profilePicture = $userData['profilepicture'];

@@ -9,8 +9,7 @@ abstract class Db
             // connection found, return connection
             return self::$conn;
         } else {
-            $config = parse_ini_file("./config/config.ini");
-            self::$conn = new PDO('mysql:host=' . $config['db_host'] . ';dbname=' . $config['db_name'], $config['db_user'], $config['db_password']);
+            self::$conn = new PDO('mysql:host=' . 'localhost' . ';dbname=' . 'imdribble', 'root', 'usbw');
             return self::$conn;
         }
     }
