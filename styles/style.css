@@ -123,6 +123,14 @@ body {
     padding: 7px;
 }
 
+.err_red {
+    border: 1px solid red;
+}
+
+.error_red {
+    color: red;
+}
+
 
 
 /*NAVIGATION*/

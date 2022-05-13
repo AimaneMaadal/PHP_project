@@ -2,6 +2,7 @@
 <?php
 require_once("bootstrap.php");
 
+
 if (!empty($_POST)) {
   try {
     include_once("bootstrap.php");
@@ -33,6 +34,8 @@ if (!empty($_POST)) {
 
 
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,8 +61,8 @@ if (!empty($_POST)) {
       <label>Last name</label>
       <input type="text" name="lastname" class="inputfield"><br>
 
-      <label>Email address</label>
-      <input id="search-email" type="email" name="email" class="inputfield"><br>
+      <label class="emailLabel">Email</label>
+      <input id="emailInput" type="email" name="email" class="inputfield" oninput="checkEmail(this)"><br>
       <label id="search-result"></label>
       <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
@@ -81,34 +84,7 @@ if (!empty($_POST)) {
     </form>
   </div>
 
-<script>
-
-$(document).on("blur", "#search-email", function () {
-  var username = $(this).val();
-  if (username == "") {
-      alert("ok");
-  }
-  $.ajax({
-      url: 'ajax/check_email.php',
-      type: 'POST',
-      data: {username: username},
-      dataType: 'json',
-      success: function (data) {
-          if (data.result == "success") {
-              $("#search-result").html(data.msg);
-              $("#search-result").removeClass('err_red').addClass('succ_green');
-          } else {
-              $("#search-result").html(data.msg);
-              $("#search-result").removeClass('succ_green').addClass('err_red');
-          }
-      }
-  });
-});
-
-
-
-
-</script>
+  <script src="./js/app.js"></script>
 
 
 </body>

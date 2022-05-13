@@ -9,7 +9,7 @@ abstract class Db
             // connection found, return connection
             return self::$conn;
         } else {
-            self::$conn = new PDO('mysql:host=' . 'localhost' . ';dbname=' . 'imdribble', 'root', 'usbw');
+            self::$conn = new PDO('mysql:host=' . 'localhost' . ';dbname=' . 'Brandish', 'root', 'root');
             return self::$conn;
         }
     }
