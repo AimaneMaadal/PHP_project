@@ -373,8 +373,7 @@ class User
                 $result = "Not Found";
             }
             return $result;
-            var_dump($result);
-        }
+            var_dump($result);        }
         catch (PDOException $e) {
             echo 'Connection failed' . $e->getMessage();
 
