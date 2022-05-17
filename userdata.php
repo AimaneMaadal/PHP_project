@@ -1,6 +1,7 @@
 <?php
 
 include_once("bootstrap.php");
+include_once("classes/User.php");
 
 session_start();
 

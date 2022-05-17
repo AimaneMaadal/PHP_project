@@ -16,7 +16,6 @@
                     data.status == "Success" &&
                     data.message == "Email is already in use"
                     ) {
-                        alert();
                     emailLabel.innerHTML = "Email is already in use";
                     emailLabel.classList.add("error_red");
                     emailInput.classList.add("err_red");
