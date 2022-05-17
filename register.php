@@ -2,9 +2,7 @@
 <?php
 require_once("bootstrap.php");
 
-if(!isset($sessionId)){
-  header('Location: register.php');
-}
+
 
 if (!empty($_POST)) {
   try {
