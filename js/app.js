@@ -6,7 +6,7 @@ function checkEmail(e) {
   let data = new FormData();
   data.append("email", email);
 
-  fetch("./classes/User.php", {
+  fetch("./ajax/check_email.php", {
     method: "POST",
     body: data,
   })
