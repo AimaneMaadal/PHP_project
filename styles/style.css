@@ -124,6 +124,7 @@ body {
 }
 
 .err_red {
+    color: red;
     border: 1px solid red;
 }
 
