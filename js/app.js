@@ -6,33 +6,7 @@ function checkEmail(e) {
   let data = new FormData();
   data.append("email", email);
 
-<<<<<<< HEAD
-        fetch('./ajax/check_email.php', {
-            method: 'POST',
-            body: data,
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (
-                    data.status == "Success" &&
-                    data.message == "Email is already in use"
-                    ) {
-                    emailLabel.innerHTML = "Email is already in use";
-                    emailLabel.classList.add("error_red");
-                    emailInput.classList.add("err_red");
-                } else {
-                    emailLabel.innerHTML = "Email";
-                    emailLabel.classList.remove("error_red");
-                    emailInput.classList.remove("err_red");
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            }
-        );
-    }
-=======
-  fetch("./ajax/check_email.php", {
+  fetch("./classes/User.php", {
     method: "POST",
     body: data,
   })
@@ -55,7 +29,6 @@ function checkEmail(e) {
       console.error("Error:", error);
     });
 }
->>>>>>> 8bc7deda4e758e74ce60c8c4959977fd84827aac
 
 document.querySelector("#btnSubmit").addEventListener("click", (e) => {
   //tekst uitlezen
