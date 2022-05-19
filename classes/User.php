@@ -465,7 +465,7 @@ class User
                 return $this;
         }
 
-        public function checkEmail($email) {
+        public static function checkLiveEmail($email) {
                             $conn =Db::getInstance();
                             $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
                             $statement->bindValue(':email', $email);
