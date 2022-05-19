@@ -308,6 +308,15 @@ h1 {
     padding: 12px 20px;
     border: 1px solid #bcbcbc;
 }
+.searchbar{
+    display: block;
+    width: 50%;
+    margin: 0px auto;
+    height: 40px;
+    border: 5px solid #C0FD00;
+    padding: 10px 30px;
+    font-size: 30px;
+}
 
 
 /*UPLOAD PROJECT*/

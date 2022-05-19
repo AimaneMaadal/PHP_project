@@ -4,7 +4,8 @@ include_once("bootstrap.php");
 
 session_start();
 
-
+$post = new Post;
+$allPosts = $post->getAllPostsLimit();
 
 ?>
 <!DOCTYPE html>
@@ -25,9 +26,34 @@ session_start();
     <h1 class="landingTitle">Share your work, get feedback and inspire others!</h1>
     
     <form action="projectfeed.php" method="get">
-        <input type="text" name="search" placeholder="Search">
-        <input type="submit" value="Search">
+        <input class="searchbar" type="text" name="search" placeholder="Search">
     </form>
+    <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+        <option value="">Chronological</option>
+        <option value="https://google.com">Following</option>
+    </select>
+    <div class="posts">
+        <?php foreach ($allPosts as $p) : ?>
+
+            <div class="post">
+
+                <a href="project.php?id=<?php echo $p['id'] ?>" class="post_head">
+                    <img class="post_image" src="<?php echo $p['imgpath']; ?>" alt="">
+                </a>
+
+                <?php if (isset($_SESSION['user'])) : ?>
+                    <a href="userdata.php?id=<?php echo $p['userid'] ?>" class="post_userinfo">
+                        <img class="profilePicture_small" src="<?php echo $post->getUserByPostId($p['id'])['profilepicture'] ?>" alt="">
+                        <p class="post_username"><?php echo $post->getUserByPostId($p['id'])['firstname'] ?></p>
+                    </a>
+                    <div class="post_content">
+                        <p><?php echo $p['title']; ?></p>
+                        <p><?php echo $p['description']; ?></p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
 </body>
 

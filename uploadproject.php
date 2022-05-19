@@ -8,9 +8,6 @@ require 'includes/uploadToCloud.php';
 use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
 
-if(!isset($sessionId)){
-    header('Location: register.php');
-}
 
 $config = parse_ini_file("config/config.ini");
 Configuration::instance([
@@ -26,6 +23,11 @@ Configuration::instance([
 
 session_start();
 $sessionId = $_SESSION['user'];
+
+
+if(!isset($sessionId)){
+    header('Location: register.php');
+}
 
 
 if (!empty($_POST)) {

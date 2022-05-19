@@ -213,8 +213,18 @@ class Post
         $result = $statement->fetchAll();
         return $result;
     }
-    // function to get all posts by user tags
-
+    // get all posts by paralater user ids array
+    public static function getAllPostsByUserId($userId)
+    {
+        $conn = Db::getInstance();
+        $sql = "SELECT * FROM `posts` WHERE `userid` = :userid;";
+        $statement = $conn->prepare($sql);
+        $statement->bindValue(":userid", $userId);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+    
     public static function getAllPostsByUserTags($postId)
     {
         $conn = Db::getInstance();
@@ -222,7 +232,17 @@ class Post
         $statement = $conn->prepare($sql);
         $statement->execute();
         $result = $statement->fetchAll();
-        return json_decode($result[0]['tags']);
+        return $result;
+    }
+
+    public static function getAllPostsFromUsersIFollow($userId)
+    {
+        $conn = Db::getInstance();
+        $sql = "SELECT * FROM `posts` WHERE `userid` IN (SELECT `followed_id` FROM `follows` WHERE `follower_id` = $userId);";
+        $statement = $conn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
     }
 
 
