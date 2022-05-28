@@ -2,31 +2,30 @@
 require_once('../bootstrap.php');
 
 if (!empty($_POST)) {
-    $text = $_POST['comment'];
-
     try {
         //new comment
         $c = new Comment();
-        $c->setText($text);
+        $c->setText($_POST['comment']);
+        $c->setPostId($_POST['postId']);
+        $c->setUserId(user::getUserFromEmail($_SESSION['user'])['id']);
 
         //save comment
         $c->saveComment();
 
-        // success
+        //success
         $result = [
             "status" => "success",
+            "body" => htmlspecialchars($c->getText()),
             "message" => "Comment was saved.",
-            "data" => [
-                "comment" => htmlspecialchars($text)
-            ]
         ];
     } catch (Throwable $t) {
-        // error
+        //error
         $result = [
             "status" => "error",
             "message" => "Something went wrong."
         ];
     }
 
-    echo json_encode($result);
+    header('Content-Type: application/json');
+    echo json_encode($result); // json object wordt aangemaakt met result in
 }

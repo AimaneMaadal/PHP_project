@@ -2,25 +2,8 @@
 class Comment
 {
     private $text;
-
-    public static function getAll()
-    {
-        $conn = Db::getInstance();
-        $result = $conn->query("select * from comments order by id asc");
-
-        // fetch all records from the database and return them as objects of this __CLASS__ (Post)
-        return $result->fetchAll(PDO::FETCH_CLASS, __CLASS__);
-    }
-
-    public function saveComment()
-    {
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("insert into comments (postid, userid, text) values (:postid, :userid, :text)");
-        $statement->bindValue(":postid", 1);
-        $statement->bindValue(":userid", 1);
-        $statement->bindValue(":text", $this->getText());
-        return $statement->execute();
-    }
+    private $postId;
+    private $userId;
 
     /**
      * Get the value of text
@@ -40,5 +23,72 @@ class Comment
         $this->text = $text;
 
         return $this;
+    }
+
+
+    /**
+     * Get the value of postId
+     */
+    public function getPostId()
+    {
+        return $this->postId;
+    }
+
+    /**
+     * Set the value of postId
+     *
+     * @return  self
+     */
+    public function setPostId($postId)
+    {
+        $this->postId = $postId;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of userId
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set the value of userId
+     *
+     * @return  self
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    public static function getAll($postId)
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->query("select * from comments where postid = $postId");
+        $statement = $statement->fetchAll(PDO::FETCH_CLASS, "Comment");
+        return $statement;
+    }
+
+    public function saveComment()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("insert into comments (postid, userid, text) values (:postid, :userid, :text)");
+
+        $text = $this->getText();
+        $postId = $this->getPostId();
+        $userId = $this->getUserId();
+
+        $statement->bindValue(":postid", $postId);
+        $statement->bindValue(":userid", $userId);
+        $statement->bindValue(":text", $text);
+
+        $result = $statement->execute();
+        return $result;
     }
 }

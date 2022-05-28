@@ -31,9 +31,11 @@ function checkEmail(e) {
 }
 
 document.querySelector("#btnSubmit").addEventListener("click", (e) => {
+  console.log("clicked");
   //tekst uitlezen
   let comment = document.querySelector("#comment").value;
-  let postId = 1;
+  //get post id from dataset
+  let postId = this.dataset.postid;
 
   // via ajax naar server posten
   let data = new FormData();
