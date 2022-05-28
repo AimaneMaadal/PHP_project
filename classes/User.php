@@ -215,11 +215,11 @@ class User
                 return $result;
         }
 
-        public function passwordResetToken($token, $expDate, $email)
+        public static function passwordResetToken($token, $expDate, $email)
         {
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("INSERT INTO `passwordreset` (`token`, `expiry_date`, `email`) VALUES ('$token', '$expDate', :email);");
-                $statement->bindValue(":email", $this->email);
+                $statement->bindValue(":email", $email);
                 return $statement->execute();
         }
 
@@ -361,25 +361,25 @@ class User
 
      public function searchData($value) {
         try {
-            $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT email FROM `users` WHERE `email` = :value");
-            $statement->bindParam(':value', $value, PDO::PARAM_STR);
-            $statement->execute();
-            $count = $statement->rowCount();
-            $result = 0;
-            if ($count > 0) {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT email FROM `users` WHERE `email` = :value");
+        $statement->bindParam(':value', $value, PDO::PARAM_STR);
+        $statement->execute();
+        $count = $statement->rowCount();
+        $result = 0;
+        if ($count > 0) {
                 $result = "Found";
-            } else {
+        } else {
                 $result = "Not Found";
-            }
-            return $result;
-            var_dump($result);        }
+        }
+        return $result;
+        var_dump($result);        }
         catch (PDOException $e) {
-            echo 'Connection failed' . $e->getMessage();
+        echo 'Connection failed' . $e->getMessage();
 
         }
-     }
-     //function check database if i follow other user
+        }
+     
         public static function checkFollow($id_follower, $id_followed) {
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("SELECT * FROM `followers` WHERE `id_follower` = $id_follower AND `id_followed` = $id_followed");
@@ -402,6 +402,13 @@ class User
                 } else {
                         return 2;
                 }
+        }
+        public static function getAllUsers() {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("SELECT * FROM `users`");
+                $statement->execute();
+                $result = $statement->fetchAll();
+                return $result;
         }
         // function get
 

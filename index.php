@@ -1,11 +1,31 @@
 <?php
 
 include_once("bootstrap.php");
+include_once("classes/User.php");
 
 session_start();
 
 $post = new Post;
 $allPosts = $post->getAllPostsLimit();
+
+if (isset($_SESSION['user'])) {
+    $user = user::getUserFromEmail($_SESSION['user']);
+    $warning = "";
+
+    if ($user['warning'] == 1) {
+        $warning = "Je account staat onder toezicht wegens het schenden van de community regels. Klik <a href='removewarn.php?id=".$_SESSION['user']." '>hier</a> om akkord te gaan met de regels ";
+    }
+    if ($user['warning'] == 2) {
+        $warning = "Je account is permanent gebanned wegens het schenden van de community regels";
+    }
+}
+
+
+
+
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -23,15 +43,20 @@ $allPosts = $post->getAllPostsLimit();
     <header>
         <?php include('nav.php'); ?>
     </header>
+
+        <?php 
+        if (!empty($warning)) {
+            echo "<div id='showcase-warning'>" . $warning . "</div>";
+        }?>
+
     <h1 class="landingTitle">Share your work, get feedback and inspire others!</h1>
     
     <form action="projectfeed.php" method="get">
-        <input class="searchbar" type="text" name="search" placeholder="Search">
+        <div class="searchfilter">
+            <input class="searchbar" type="text" name="search" placeholder="Search">
+        </div>
     </form>
-    <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-        <option value="">Chronological</option>
-        <option value="https://google.com">Following</option>
-    </select>
+
     <div class="posts">
         <?php foreach ($allPosts as $p) : ?>
 
@@ -56,5 +81,11 @@ $allPosts = $post->getAllPostsLimit();
     </div>
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+ 
+
+</script>
 
 </html>

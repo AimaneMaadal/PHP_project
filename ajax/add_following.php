@@ -3,6 +3,7 @@
 include "../classes/DB.php";
 include "../classes/Follow.php";
 include "../classes/User.php";
+session_start();
 
 if (isset($_POST["followed"])) {
 

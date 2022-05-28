@@ -17,7 +17,7 @@ if (!isset($_SESSION['user'])) {
     $userData = User::getUserFromEmail($sessionId);
 }
 
-$config = parse_ini_file("config/config.ini");
+$config = parse_ini_file("classes/config.ini");
 Configuration::instance([
     'cloud' => [
         'cloud_name' => $config['cloud_name'],
@@ -165,17 +165,47 @@ if (!empty($_POST['update'])) {
             </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td>
                     <input class="updateProfileButton"type="submit" name="update" value="Update gegevens">
                 </td>
+                <td>
+                    <a href="changepassword.php">Change current password</a>&nbsp;
+                    <a href="delete.php">Delete profile</a>
+                </td>
+            </tr>    
         </tbody>
     </table>
        
 </form>
 
-    <a href="changepassword.php">Change current password</a>
-    <a href="delete.php">Delete profile</a>
 
+<?php 
+if ($userData['role'] == 'admin') {
+    include_once('classes/User.php');
+
+    $users = User::getAllUsers();
+
+    echo '<h1 class="editHeader">Admin</h1><div class="adminpanel">';
+
+
+    foreach ($users as $user) {
+        echo '<div class="adminUser">';
+        echo '<div class="adminUserImage" style="background-image: url('.$user['profilepicture'].');" ></div>';
+        echo '<div class="adminUserInfo">';
+        echo '<h2>'.$user['firstname'].' '.$user['lastname'].'</h2>';
+        echo '<p>'.$user['email'].'</p>';
+        echo '<p>'.$user['role'].'</p>';
+        echo '</div>';
+        echo '<div class="adminUserOptions">';
+        echo '<a href="admin.php?ban='.$user['id'].'">Permanent Ban</a>&nbsp;&nbsp;&nbsp;';
+        echo '<a href="admin.php?warn='.$user['id'].'">Send Warning</a>';
+        echo '</div>';
+        echo '</div>';
+    }
+
+    echo '</div>';
+
+}?>
 
 
 <script>

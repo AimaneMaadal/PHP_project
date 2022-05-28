@@ -19,7 +19,13 @@
         $sessionId = $_SESSION['user'];
         $user = User::getUserFromEmail($sessionId);
         //echo "Welkom ".$user["email"];
-        echo "<div class='nav_right'><a class='nav_btn' href='logout.php'>Log out</a><a class='nav_btn' href='usersettings.php'>Edit profile</a></div>";
+        echo "<div class='nav_right'><a class='nav_btn' href='logout.php'>Log out</a>";
+        if ($user['role'] == 'admin') {
+            echo "<a class='nav_btn' href='usersettings.php'>Admin</a></div>";
+        }
+        else {
+            echo "<a class='nav_btn' href='usersettings.php'>Edit profile</a></div>";
+        }
     } else {
         echo "<div class='nav_right'><a class='nav_btn' href='login.php'>Log in</a> ";
         echo "<a class='nav_btn' href='register.php'>Registreren</a></div>";
