@@ -59,6 +59,9 @@ if (!empty($_POST)) {
             $post->setTimePosted(date("Y-m-d H:i:s"));
 
             $userData = User::getUserFromEmail($sessionId);
+
+            $postData = Post::getLastPostByUserId($userData['id']);
+
             $post->setUserId($userData['id']);
 
             $post->uploadPost();
@@ -69,7 +72,8 @@ if (!empty($_POST)) {
                 unlink($uploadedImage);
             }
 
-            header('location: http://localhost/PHP_project/userdata.php?id=' . $userData['id']);
+            //redirect to posted project
+            header('Location: project.php?id=' . $postData['id']);
         }
     } catch (Exception $e) {
         echo $e->getMessage();
