@@ -11,7 +11,7 @@ $userData = user::getUserFromId($id);
 $user = user::getUserFromEmail($_SESSION['user']);
 
 
-if($user['id'] == $id){
+if ($user['id'] == $id) {
     header("Location: profilepage.php");
 }
 
@@ -30,7 +30,7 @@ $currentUser = user::getUserFromEmail($_SESSION['user'])['role'];
 
 $role = $userData["role"];
 
-echo $currentUser;
+// echo $currentUser;
 
 ?>
 <!DOCTYPE html>
@@ -61,33 +61,31 @@ echo $currentUser;
 
             <div class="profileCard_content">
                 <?php
-                echo '<p class="profileCard_username">'. htmlspecialchars($fullname);              
+                echo '<p class="profileCard_username">' . htmlspecialchars($fullname);
                 if ($role == "admin") {
                     echo " (Mod ✔)</p>";
                 }
-                
-   
-                if(user::checkFollow($user['id'], $id) == 2){
-                    echo '<input type="button" data-id="'.$id.'" class="add" id="followButton" name="follow"  value="folllow"/ >';
-                    echo '<input type="button" data-id="'.$id.'" class="remove" id="unfollowButton" name="follow"  value="unfolllow" style="display:none"/>';
-                }
-                else{
-                    echo '<input type="button" data-id="'.$id.'" class="add" id="followButton" name="follow"  value="folllow" style="display:none"/>';
-                    echo '<input type="button" data-id="'.$id.'" class="remove" id="unfollowButton" name="follow"  value="unfolllow" />';            
+
+
+                if (user::checkFollow($user['id'], $id) == 2) {
+                    echo '<input type="button" data-id="' . $id . '" class="add" id="followButton" name="follow"  value="folllow"/ >';
+                    echo '<input type="button" data-id="' . $id . '" class="remove" id="unfollowButton" name="follow"  value="unfolllow" style="display:none"/>';
+                } else {
+                    echo '<input type="button" data-id="' . $id . '" class="add" id="followButton" name="follow"  value="folllow" style="display:none"/>';
+                    echo '<input type="button" data-id="' . $id . '" class="remove" id="unfollowButton" name="follow"  value="unfolllow" />';
                 }
                 ?>
 
                 <?php
-                if(user::checkReported($user['id'], $id) == 2){
-                    echo '<input type="button" data-id="'.$id.'" class="add" id="reportButton" name="report"  value="report"/ >';
-                    }
-                else{
-                    echo '<input type="button" data-id="'.$id.'" class="add" id="reportButton" name="report"  value="reported"/>';
-                    }
+                if (user::checkReported($user['id'], $id) == 2) {
+                    echo '<input type="button" data-id="' . $id . '" class="add" id="reportButton" name="report"  value="report"/ >';
+                } else {
+                    echo '<input type="button" data-id="' . $id . '" class="add" id="reportButton" name="report"  value="reported"/>';
+                }
                 ?>
 
-                <p class="profileCard_education"><?php echo htmlspecialchars($education) ; ?></p>
-                <p class="profileCard_description"><?php echo htmlspecialchars($bio) ; ?></p>
+                <p class="profileCard_education"><?php echo htmlspecialchars($education); ?></p>
+                <p class="profileCard_description"><?php echo htmlspecialchars($bio); ?></p>
             </div>
         </div>
 
@@ -98,12 +96,12 @@ echo $currentUser;
             <?php foreach ($allPosts as $p) : ?>
                 <div class="project" style=" background-image: url('<?php echo htmlspecialchars($p["imgpath"]) ?>');">
                     <a href="#"><i class="fa-solid fa-bookmark"></i></i></a>
-                    <?php 
-                        if ($currentUser == "admin") {
-                            echo '<a href="deletepost.php?id='. $p["id"] .'&userId='. $id .'">Delete</a>';
-                        }
+                    <?php
+                    if ($currentUser == "admin") {
+                        echo '<a href="deletepost.php?id=' . $p["id"] . '&userId=' . $id . '">Delete</a>';
+                    }
                     ?>
-                    
+
                 </div>
             <?php endforeach; ?>
         </div>
@@ -111,58 +109,56 @@ echo $currentUser;
 
 </body>
 <script>
+    $(document).on("click", "#followButton", function() {
+        $("#unfollowButton").show();
+        $("#followButton").hide();
+        $.ajax({
+            url: "ajax/add_following.php",
+            method: "POST",
+            data: {
+                followed: $(this).attr("data-id"),
+                follower: <?php echo htmlspecialchars($currentUser) ?>
 
+            },
+            success: function(data) {
+                $('#showcase-success').html(data);
+                $('#showcase-success').addClass("show");
+            }
+        });
+    });
+    $(document).on("click", "#unfollowButton", function() {
+        $("#followButton").show();
+        $("#unfollowButton").hide();
+        $.ajax({
+            url: "ajax/remove_following.php",
+            method: "POST",
+            data: {
+                followed: $(this).attr("data-id"),
+                follower: <?php echo htmlspecialchars($currentUser) ?>
+            },
+            success: function(data) {
+                $('#showcase-success').html(data);
+                $('#showcase-success').addClass("show");
+            }
+        });
+    });
 
+    $(document).on("click", "#reportButton", function() {
+        $("#reportButton").show();
+        $("#reportButton").hide();
+        $.ajax({
+            url: "ajax/report.php",
+            method: "POST",
+            data: {
+                reported: $(this).attr("data-id"),
+                reporter: <?php echo htmlspecialchars($currentUser) ?>
+            },
+            success: function(data) {
+                $('#showcase-success').html(data);
+                $('#showcase-success').addClass("show");
+            }
+        });
+    });
+</script>
 
- $(document).on("click","#followButton",function(){
-    $("#unfollowButton").show();
-    $("#followButton").hide();
-    $.ajax({  
-        url:"ajax/add_following.php",  
-        method:"POST",  
-        data:{
-            followed: $(this).attr("data-id"),
-            follower: <?php echo htmlspecialchars($currentUser) ?> 
-          
-        },  
-        success:function(data){ 
-            $('#showcase-success').html(data); 
-            $('#showcase-success').addClass("show");
-        } 
-    }); 
- }); 
- $(document).on("click","#unfollowButton",function(){
-    $("#followButton").show();
-    $("#unfollowButton").hide();
-     $.ajax({  
-        url:"ajax/remove_following.php",  
-        method:"POST",  
-        data:{
-            followed: $(this).attr("data-id"),
-            follower: <?php echo htmlspecialchars($currentUser) ?> 
-        },  
-        success:function(data){ 
-            $('#showcase-success').html(data); 
-            $('#showcase-success').addClass("show");
-        } 
-     }); 
- }); 
-
- $(document).on("click","#reportButton",function(){
-    $("#reportButton").show();
-    $("#reportButton").hide();
-     $.ajax({  
-        url:"ajax/report.php",  
-        method:"POST",  
-        data:{
-            reported: $(this).attr("data-id"),
-            reporter: <?php echo htmlspecialchars($currentUser) ?> 
-        },  
-        success:function(data){ 
-            $('#showcase-success').html(data); 
-            $('#showcase-success').addClass("show");
-        } 
-     }); 
- }); 
- </script>  
 </html>

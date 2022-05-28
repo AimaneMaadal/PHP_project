@@ -9,7 +9,7 @@ use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
 
 
-$config = parse_ini_file("config/config.ini");
+$config = parse_ini_file("classes/config.ini");
 Configuration::instance([
     'cloud' => [
         'cloud_name' => $config['cloud_name'],
@@ -25,7 +25,7 @@ session_start();
 $sessionId = $_SESSION['user'];
 
 
-if(!isset($sessionId)){
+if (!isset($sessionId)) {
     header('Location: register.php');
 }
 
@@ -40,7 +40,7 @@ if (!empty($_POST)) {
 
         $imgPath = uploadFileCloud($_FILES['projectImage']);
 
-        if(isset($imgPath)){
+        if (isset($imgPath)) {
             $post = new Post();
             $post->setTitle($title);
             $post->setDescription($description);
@@ -51,26 +51,25 @@ if (!empty($_POST)) {
             $link = uploadFileCloud($_FILES['projectImage']);
             $post->setImgPath($link);
 
-           
+
 
             var_dump($link);
-         
+
             $post->setImgPath(uploadFileCloud($_FILES['projectImage']));
             $post->setTimePosted(date("Y-m-d H:i:s"));
 
             $userData = User::getUserFromEmail($sessionId);
             $post->setUserId($userData['id']);
-           
+
             $post->uploadPost();
 
-             
-            $uploadedImage = "images/".$_FILES['projectImage']['name'];
+
+            $uploadedImage = "images/" . $_FILES['projectImage']['name'];
             if (file_exists($uploadedImage)) {
-               unlink($uploadedImage);
+                unlink($uploadedImage);
             }
 
-            header('location: http://localhost/PHP_project/userdata.php?id='.$userData['id']);
-
+            header('location: http://localhost/PHP_project/userdata.php?id=' . $userData['id']);
         }
     } catch (Exception $e) {
         echo $e->getMessage();
@@ -99,8 +98,8 @@ if (!empty($_POST)) {
         <?php include('nav.php'); ?>
     </header>
     <?php if (!empty($error)) {
-    echo $error;
-} ?>
+        echo $error;
+    } ?>
 
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="uploadProjectForm">
@@ -112,118 +111,120 @@ if (!empty($_POST)) {
             <div class="inputFields">
                 <input type="text" placeholder="Title" name="title" value="" class="inputField1"><br>
                 <input type="text" placeholder="Description" name="description" value="" class="inputField2">
-                
-                <br><h2>tags</h2>
-                    <div class="field_wrapper">
-                        <div class="tagField">
-                            <input type="text" name="tags[]" class="tagsInput" value=""/>
-                            <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a> 
-                        </div>
+
+                <br>
+                <h2>tags</h2>
+                <div class="field_wrapper">
+                    <div class="tagField">
+                        <input type="text" name="tags[]" class="tagsInput" value="" />
+                        <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a>
                     </div>
-                    <br><a href="javascript:void(0);" class="add_button" title="Add field">Add tag +</a>
-                    <input type="submit" class="postButton" value="Upload project">
+                </div>
+                <br><a href="javascript:void(0);" class="add_button" title="Add field">Add tag +</a>
+                <input type="submit" class="postButton" value="Upload project">
             </div>
-           
 
-           
-            
-				
 
-   
+
+
+
+
+
         </div>
     </form>
 
 
     <script>
-        $(document).ready(function(){
-            var maxField = 5; 
+        $(document).ready(function() {
+            var maxField = 5;
             var addButton = $('.add_button');
-            var wrapper = $('.field_wrapper'); 
+            var wrapper = $('.field_wrapper');
             var fieldHTML = '<div class="tagField"><input type="text" name="tags[]" class="tagsInput" value="" /> <a href="javascript:void(0);" class="remove_button" style="display: none;">-</a></div>';
-            var x = 1; 
+            var x = 1;
 
-            
-            
-            $(addButton).click(function(){
-                if(x < maxField){ 
-                    var input = $( ".field_wrapper div:nth-child("+x+") input" ).val();
-                    if(input != ""){
-                        $( ".field_wrapper div:nth-child("+x+") input" ).prop( "readonly", true );
-                        $( ".field_wrapper div:nth-child("+x+") input" ).val("#"+input);
-                        $( ".field_wrapper div:nth-child("+x+") a" ).css("display", "inline");
+
+
+            $(addButton).click(function() {
+                if (x < maxField) {
+                    var input = $(".field_wrapper div:nth-child(" + x + ") input").val();
+                    if (input != "") {
+                        $(".field_wrapper div:nth-child(" + x + ") input").prop("readonly", true);
+                        $(".field_wrapper div:nth-child(" + x + ") input").val("#" + input);
+                        $(".field_wrapper div:nth-child(" + x + ") a").css("display", "inline");
                         x++;
-                        $(wrapper).append(fieldHTML); 
+                        $(wrapper).append(fieldHTML);
                     }
 
                 }
             });
-            
-            $(wrapper).on('click', '.remove_button', function(e){
+
+            $(wrapper).on('click', '.remove_button', function(e) {
                 e.preventDefault();
-                $(this).parent('div').remove(); 
+                $(this).parent('div').remove();
                 x--;
             });
         });
 
         document.querySelectorAll(".uploadzoneInput").forEach((inputElement) => {
-        const dropZoneElement = inputElement.closest(".uploadzone");
-        dropZoneElement.addEventListener("click", (e) => {
-            inputElement.click();
-        });
-        inputElement.addEventListener("change", (e) => {
-            if (inputElement.files.length) {
-            updateThumbnail(dropZoneElement, inputElement.files[0]);
-            }
-        });
-        dropZoneElement.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            dropZoneElement.classList.add("uploadzoneHover");
-        });
-        ["dragleave", "dragend"].forEach((type) => {
-            dropZoneElement.addEventListener(type, (e) => {
-            dropZoneElement.classList.remove("uploadzoneHover");
+            const dropZoneElement = inputElement.closest(".uploadzone");
+            dropZoneElement.addEventListener("click", (e) => {
+                inputElement.click();
+            });
+            inputElement.addEventListener("change", (e) => {
+                if (inputElement.files.length) {
+                    updateThumbnail(dropZoneElement, inputElement.files[0]);
+                }
+            });
+            dropZoneElement.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                dropZoneElement.classList.add("uploadzoneHover");
+            });
+            ["dragleave", "dragend"].forEach((type) => {
+                dropZoneElement.addEventListener(type, (e) => {
+                    dropZoneElement.classList.remove("uploadzoneHover");
+                });
+            });
+            dropZoneElement.addEventListener("drop", (e) => {
+                e.preventDefault();
+                if (e.dataTransfer.files.length) {
+                    inputElement.files = e.dataTransfer.files;
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+                }
+                dropZoneElement.classList.remove("uploadzoneHover");
             });
         });
-        dropZoneElement.addEventListener("drop", (e) => {
-            e.preventDefault();
-        if (e.dataTransfer.files.length) {
-            inputElement.files = e.dataTransfer.files;
-            updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
-            }
-        dropZoneElement.classList.remove("uploadzoneHover");
-        });
-        });
+
         function updateThumbnail(dropZoneElement, file) {
-        let thumbnailElement = dropZoneElement.querySelector(".uploadzonePreview");
-        // First time - remove the prompt
-        if (dropZoneElement.querySelector(".uploadzone__prompt")) {
-            dropZoneElement.querySelector(".uploadzone__prompt").remove();
+            let thumbnailElement = dropZoneElement.querySelector(".uploadzonePreview");
+            // First time - remove the prompt
+            if (dropZoneElement.querySelector(".uploadzone__prompt")) {
+                dropZoneElement.querySelector(".uploadzone__prompt").remove();
+            }
+            // First time - there is no thumbnail element, so lets create it
+            if (!thumbnailElement) {
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("uploadzonePreview");
+                dropZoneElement.appendChild(thumbnailElement);
+            }
+            thumbnailElement.dataset.label = file.name;
+            // Show thumbnail for image files
+            if (file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+                };
+            } else {
+                thumbnailElement.style.backgroundImage = null;
+            }
         }
-        // First time - there is no thumbnail element, so lets create it
-        if (!thumbnailElement) {
-            thumbnailElement = document.createElement("div");
-            thumbnailElement.classList.add("uploadzonePreview");
-            dropZoneElement.appendChild(thumbnailElement);
-        }
-        thumbnailElement.dataset.label = file.name;
-        // Show thumbnail for image files
-        if (file.type.startsWith("image/")) {
-            const reader = new FileReader();
-        reader.readAsDataURL(file);
-            reader.onload = () => {
-            thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-            };
-        } else {
-            thumbnailElement.style.backgroundImage = null;
-        }
-        } 
+
         function test() {
             alert();
             document.getElementByName("projectImage").value = null;
         }
-        
-</script>
-        
+    </script>
+
 
 
 
