@@ -5,9 +5,10 @@ if (!empty($_POST)) {
     try {
         //new comment
         $c = new Comment();
+
         $c->setText($_POST['comment']);
         $c->setPostId($_POST['postId']);
-        $c->setUserId(user::getUserFromEmail($_SESSION['user'])['id']);
+        // $c->setUserId(user::getUserFromEmail($_SESSION['user'])['id']);
 
         //save comment
         $c->saveComment();

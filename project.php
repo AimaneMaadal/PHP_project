@@ -84,15 +84,12 @@ $comments = Comment::getAll($_GET['id']);
             <h1>Comments</h1>
             <div class="commentSection">
                 <textarea name="comment" id="commentText" class="comment" cols="100" rows="10" placeholder="Share your opinion here..."></textarea>
-                <input id="btnSubmit" class="btn" type="submit" value="Add comment" data-postid="<?php $_GET['id']; ?>" />
+                <input id="btnSubmit" class="btn" type="button" value="Add comment" data-postid="<?php echo $_GET['id']; ?>" />
 
                 <ul class="listUpdates">
-                    <?php
-                    foreach ($comments as $c) {
-                        echo "<li>" . $c->getText() . "</li>";
-                    }
-
-                    ?>
+                    <?php foreach ($comments as $c) : ?>
+                        <li><?php echo $c['text']; ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </form>
