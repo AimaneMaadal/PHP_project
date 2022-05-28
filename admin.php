@@ -11,7 +11,6 @@ if (isset($_GET['ban'])) {
     $sql = "UPDATE users SET warning = '2' WHERE id = '$id'";
     $result = $conn->query($sql);
 }
-// unban
 if (isset($_GET['unban'])) {
     $id = $_GET['unban'];
     echo "You have been unbanned <b>" . $id . "</b>";

@@ -12,8 +12,11 @@ if (isset($_SESSION['user'])) {
     $user = user::getUserFromEmail($_SESSION['user']);
     $warning = "";
 
+    if ($user['warning'] == 0) {
+        $warning = "Je account is nu unbanned, welkom terug! ";
+    }
     if ($user['warning'] == 1) {
-        $warning = "Je account staat onder toezicht wegens het schenden van de community regels. Klik <a href='removewarn.php?id=".$_SESSION['user']." '>hier</a> om akkord te gaan met de regels ";
+        $warning = "Je account staat onder toezicht wegens het schenden van de community regels. Klik <a href='removewarn.php?id=" . $_SESSION['user'] . " '>hier</a> om akkord te gaan met de regels ";
     }
     if ($user['warning'] == 2) {
         $warning = "Je account is permanent gebanned wegens het schenden van de community regels";
@@ -44,13 +47,13 @@ if (isset($_SESSION['user'])) {
         <?php include('nav.php'); ?>
     </header>
 
-        <?php 
-        if (!empty($warning)) {
-            echo "<div id='showcase-warning'>" . $warning . "</div>";
-        }?>
+    <?php
+    if (!empty($warning)) {
+        echo "<div id='showcase-warning'>" . $warning . "</div>";
+    } ?>
 
     <h1 class="landingTitle">Share your work, get feedback and inspire others!</h1>
-    
+
     <form action="projectfeed.php" method="get">
         <div class="searchfilter">
             <input class="searchbar" type="text" name="search" placeholder="Search">
@@ -84,7 +87,7 @@ if (isset($_SESSION['user'])) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
- 
+
 
 </script>
 
