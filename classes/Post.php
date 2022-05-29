@@ -287,12 +287,11 @@ class Post
         return $result;
     }
 
-    public static function deletePostByPostId($id, $userId)
+    public static function deletePostByPostId($id)
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("DELETE FROM posts WHERE userid = :userId AND id = :postId");
+        $statement = $conn->prepare("DELETE FROM posts WHERE id = :postId");
         $statement->bindValue(':postId', $id);
-        $statement->bindValue(':userId', $userId);
         $statement->execute();
     }
 

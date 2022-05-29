@@ -9,7 +9,7 @@ if (!$_SESSION['user']) {
     header("location: register.php");
 }
 
-echo $sessionId;
+
 
 $userData = User::getUserFromEmail($sessionId);
 

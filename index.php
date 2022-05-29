@@ -11,15 +11,14 @@ $allPosts = $post->getAllPostsLimit();
 if (isset($_SESSION['user'])) {
     $user = user::getUserFromEmail($_SESSION['user']);
     $warning = "";
-
-    if ($user['warning'] == 0) {
-        $warning = "Je account is nu unbanned, welkom terug! ";
-    }
     if ($user['warning'] == 1) {
         $warning = "Je account staat onder toezicht wegens het schenden van de community regels. Klik <a href='removewarn.php?id=" . $_SESSION['user'] . " '>hier</a> om akkord te gaan met de regels ";
     }
     if ($user['warning'] == 2) {
         $warning = "Je account is permanent gebanned wegens het schenden van de community regels";
+    }
+    if ($user['warning'] == 3) {
+        $warning = "Je account is nu unbanned, welkom terug! ";
     }
 }
 

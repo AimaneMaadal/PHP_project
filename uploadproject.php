@@ -60,13 +60,13 @@ if (!empty($_POST)) {
 
             $userData = User::getUserFromEmail($sessionId);
 
-            $postData = Post::getLastPostByUserId($userData['id']);
+        
 
             $post->setUserId($userData['id']);
 
             $post->uploadPost();
 
-
+            $postData = Post::getLastPostByUserId($userData['id']);
             $uploadedImage = "images/" . $_FILES['projectImage']['name'];
             if (file_exists($uploadedImage)) {
                 unlink($uploadedImage);

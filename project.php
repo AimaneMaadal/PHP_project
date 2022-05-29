@@ -50,7 +50,7 @@ if (isset($_SESSION['unique_id'])) {
 // }
 
 //altijd alle laatste activiteiten ophalen
-$comments = Comment::getAll($_GET['id']);
+// $comments = Comment::getAll($_GET['id']);
 
 
 ?>
@@ -103,9 +103,9 @@ $comments = Comment::getAll($_GET['id']);
                 <input id="btnSubmit" class="btn" type="button" value="Add comment" data-postid="<?php echo $_GET['id']; ?>" />
 
                 <ul class="listUpdates">
-                    <?php foreach ($comments as $c) : ?>
+                    <!-- <?php foreach ($comments as $c) : ?>
                         <li><?php echo $c['text']; ?></li>
-                    <?php endforeach; ?>
+                    <?php endforeach; ?> -->
                 </ul>
             </div>
         </form>
