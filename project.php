@@ -19,15 +19,19 @@ $profilePicturePoster = $posterUserData['profilepicture'];
 $firstNamePoster = $posterUserData['firstname'];
 $lastNamePoster = $posterUserData['lastname'];
 $fullnamePoster = $firstNamePoster . " " . $lastNamePoster;
+$postTags = json_decode($postData['tags']);
 // echo "<pre>";
 // var_dump($posterUserData);
 // echo "</pre>";
 
-$userDataCommenter = User::getUserFromEmail($_SESSION['user']);
-$profilePictureCommenter = $userDataCommenter['profilepicture'];
-$firstNameCommenter = $userDataCommenter['firstname'];
-$lastNameCommenter = $userDataCommenter['lastname'];
-$fullnameCommenter = $firstNameCommenter . " " . $lastNameCommenter;
+if (isset($_SESSION['unique_id'])) {
+    $userDataCommenter = User::getUserFromEmail($_SESSION['user']);
+    $profilePictureCommenter = $userDataCommenter['profilepicture'];
+    $firstNameCommenter = $userDataCommenter['firstname'];
+    $lastNameCommenter = $userDataCommenter['lastname'];
+    $fullnameCommenter = $firstNameCommenter . " " . $lastNameCommenter;
+}
+
 // echo "<pre>";
 // var_dump($userDataCommenter);
 // echo "</pre>";
@@ -80,6 +84,18 @@ $comments = Comment::getAll();
             <img class="postImg" src="<?php echo $postPicture ?>" alt="">
         </div>
 
+        <?php 
+
+        foreach ($postTags as $tag) {
+            echo "<div class='tagContainer'>";
+            echo "<h3 class='tag'>".$tag."</h3>";
+            echo "</div>";
+        }
+
+        ?>
+
+
+        <?php if(isset($_SESSION['user'])) : ?>
         <form method="post" action="">
             <h1>Comments</h1>
             <div class="commentSection">
@@ -96,6 +112,7 @@ $comments = Comment::getAll();
                 </ul>
             </div>
         </form>
+        <?php endif; ?>
     </div>
 
     <script src="js/app.js"></script>

@@ -5,6 +5,10 @@ include_once("bootstrap.php");
 session_start();
 $sessionId = $_SESSION['user'];
 
+if (!$_SESSION['user']) {
+    header("location: register.php");
+}
+
 echo $sessionId;
 
 $userData = User::getUserFromEmail($sessionId);

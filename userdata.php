@@ -11,6 +11,7 @@ $userData = user::getUserFromId($id);
 $user = user::getUserFromEmail($_SESSION['user']);
 
 
+
 if($user['id'] == $id){
     header("Location: profilepage.php");
 }
@@ -26,11 +27,9 @@ $bio = $userData['bio'];
 
 $allPosts = Post::getPostsByUserId($id);
 
-$currentUser = user::getUserFromEmail($_SESSION['user'])['role'];
+$currentUser = user::getUserFromEmail($_SESSION['user'])['id'];
+$role = user::getUserFromEmail($_SESSION['user'])['role'];
 
-$role = $userData["role"];
-
-echo $currentUser;
 
 ?>
 <!DOCTYPE html>
@@ -44,7 +43,6 @@ echo $currentUser;
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="https://use.typekit.net/ppk1taf.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 </head>
 
 <body>
@@ -60,13 +58,10 @@ echo $currentUser;
             </div>
 
             <div class="profileCard_content">
+                <p class="profileCard_username"><?php echo htmlspecialchars($fullname) ; ?></p>
                 <?php
-                echo '<p class="profileCard_username">'. htmlspecialchars($fullname);              
-                if ($role == "admin") {
-                    echo " (Mod ✔)</p>";
-                }
                 
-   
+                // echo $user['id']." ". $id;
                 if(user::checkFollow($user['id'], $id) == 2){
                     echo '<input type="button" data-id="'.$id.'" class="add" id="followButton" name="follow"  value="folllow"/ >';
                     echo '<input type="button" data-id="'.$id.'" class="remove" id="unfollowButton" name="follow"  value="unfolllow" style="display:none"/>';
@@ -97,23 +92,19 @@ echo $currentUser;
 
             <?php foreach ($allPosts as $p) : ?>
                 <div class="project" style=" background-image: url('<?php echo htmlspecialchars($p["imgpath"]) ?>');">
+                <?php 
+                    if ($role == "admin") {
+                        echo '<a href="admin.php?postId='.$p["id"].'">Delete</a>';
+                    }
+                ?>
                     <a href="#"><i class="fa-solid fa-bookmark"></i></i></a>
-                    <?php 
-                        if ($currentUser == "admin") {
-                            echo '<a href="deletepost.php?id='. $p["id"] .'&userId='. $id .'">Delete</a>';
-                        }
-                    ?>
-                    
                 </div>
             <?php endforeach; ?>
         </div>
 
 
 </body>
-<script>
-
-
-
+<script>  
  $(document).on("click","#followButton",function(){
     $("#unfollowButton").show();
     $("#followButton").hide();

@@ -9,7 +9,7 @@ use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
 
 
-$config = parse_ini_file("config/config.ini");
+$config = parse_ini_file("classes/config.ini");
 Configuration::instance([
     'cloud' => [
         'cloud_name' => $config['cloud_name'],
