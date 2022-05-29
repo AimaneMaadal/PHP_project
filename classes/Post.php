@@ -224,7 +224,7 @@ class Post
         $result = $statement->fetchAll();
         return $result;
     }
-    
+
     public static function getAllPostsByUserTags($postId)
     {
         $conn = Db::getInstance();
@@ -265,6 +265,18 @@ class Post
         $result = $statement->fetchAll();
         return $result;
     }
+
+    //get last post by user email
+    public static function getLastPostByUserId($userId)
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM posts WHERE userid = :userId ORDER BY id DESC LIMIT 1");
+        $statement->bindValue(':userId', $userId);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     public static function getPostsByUserIdShowcased($userId)
     {
         $conn = Db::getInstance();

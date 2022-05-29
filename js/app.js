@@ -31,30 +31,33 @@ function checkEmail(e) {
 }
 
 document.querySelector("#btnSubmit").addEventListener("click", (e) => {
+  console.log("clicked");
   //tekst uitlezen
-  let comment = document.querySelector("#comment").value;
-  let postId = 1;
+  let comment = document.querySelector("#commentText").value;
+  //get post id from dataset
+  let postId = document.querySelector("#btnSubmit").dataset.postid;
 
   // via ajax naar server posten
   let data = new FormData();
   data.append("comment", comment);
   data.append("postId", postId);
 
-  fetch("ajax/save_comment.php", {
-    method: "POST", // or 'PUT'
+
+  //add new comment to list
+  fetch("./ajax/save_comment.php", {
+    method: "POST",
     body: data,
   })
     .then((response) => response.json())
     .then((data) => {
-      //console.log('Success:', data);
-      if (data.status === "success") {
-        let li = `<li class="animate__animated animate__bounce">${data.data.comment}</li>`;
-        document.querySelector("#listupdates").innerHTML += li;
+      if (data.status == "Success") {
+        let newComment = document.createElement("li");
+        newComment.innerHTML = data.body;
+        document.querySelector(".listUpdates").appendChild(newComment);
       }
     })
     .catch((error) => {
       console.error("Error:", error);
     });
-
   e.preventDefault();
 });

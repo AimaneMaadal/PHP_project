@@ -36,21 +36,19 @@ if (!empty($_POST['updateImage'])) {
             $file = $_FILES['userImage'];
 
             echo uploadFileCloud($file);
-    
+
             $imagePath = uploadFileCloud($file);
-            
+
             $user->setProfilePicture($imagePath);
             $user->updateProfilePicture($imagePath, $sessionId);
-    
-    
-            $uploadedImage = "images/".$_FILES['userImage']['name'];
+
+
+            $uploadedImage = "images/" . $_FILES['userImage']['name'];
             if (file_exists($uploadedImage)) {
-               unlink($uploadedImage);
+                unlink($uploadedImage);
             }
         }
-
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         echo $e->getMessage();
     }
 }
@@ -105,117 +103,120 @@ if (!empty($_POST['update'])) {
 
 
     <h1 class="editHeader"><span>Mijn profiel</span> &nbsp; &nbsp; Mijn gegevens</h1>
-    
+
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="editProfilePic">
             <img id="profilePic" class="profilePicture" src="<?php echo $userData['profilepicture']; ?>" alt="Profile picture">
             <label>Wijzig profiel foto<input type="file" id="userImag e" name="userImage" value=""></label><br>
-            <label>Upload image<input type="submit"id="userImageButton" name="updateImage" value="Update profile picture"></label>
+            <label>Upload image<input type="submit" id="userImageButton" name="updateImage" value="Update profile picture"></label>
         </div>
     </form>
 
 
 
-<form action="" method="post" class="profile_info">
-    <table class="profileTable">
-        <tbody>
-            <tr>
-                <td> 
-                    <label>First Name</label><br>
-                    <input class="updateProfileInput" type="text" name="updateFirstName" value="<?php echo htmlspecialchars($userData['firstname']); ?>">
-                </td>
+    <form action="" method="post" class="profile_info">
+        <table class="profileTable">
+            <tbody>
+                <tr>
+                    <td>
+                        <label>First Name</label><br>
+                        <input class="updateProfileInput" type="text" name="updateFirstName" value="<?php echo htmlspecialchars($userData['firstname']); ?>">
+                    </td>
                     <td><label>Last Name</label><br>
-                    <input class="updateProfileInput" type="text" name="updateLastName" value="<?php echo htmlspecialchars($userData['lastname']); ?>">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Email address</label><br>
-                    <input class="updateProfileInput" type="email" name="updateEmail" value="<?php echo htmlspecialchars($userData['email']); ?>" readonly>
-                </td>
-                <td>
-                    <label>Backup email address</label><br>
-                    <input class="updateProfileInput" type="email" name="updateBackupEmail" value="<?php echo htmlspecialchars($userData['backupemail']); ?>">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Education</label><br>
-                    <input class="updateProfileInput" type="text" name="updateEducation" value="<?php echo htmlspecialchars($userData['education']); ?>">
-                </td>
-                <td>
-                    <label>LinkedIn</label><br>
-                    <input class="updateProfileInput" type="text" name="updateLinkedIn" value="<?php echo htmlspecialchars($userData['linkedin']); ?>">
-                </td>
-            </tr>
-            <tr>
-                <td rowspan="2">
-                    <label>Bio</label><br>
-                    <input class="updateProfileInput" type="text" style="height: 130px;" name="updateBio" value="<?php echo htmlspecialchars($userData['bio']); ?>">
-                </td>
-                <td>
-                    <label>Behance</label><br>
-                    <input class="updateProfileInput" type="text" name="updateBehance" value="<?php echo htmlspecialchars($userData['behance']); ?>">
-            </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Dribble</label><br>
-                    <input class="updateProfileInput" type="text" name="updateDribble" value="<?php echo htmlspecialchars($userData['dribble']); ?>">
-            </td>
-            </tr>
-            <tr>
-                <td>
-                    <input class="updateProfileButton"type="submit" name="update" value="Update gegevens">
-                </td>
-                <td>
-                    <a href="changepassword.php">Change current password</a>&nbsp;
-                    <a href="delete.php">Delete profile</a>
-                </td>
-            </tr>    
-        </tbody>
-    </table>
-       
-</form>
+                        <input class="updateProfileInput" type="text" name="updateLastName" value="<?php echo htmlspecialchars($userData['lastname']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Email address</label><br>
+                        <input class="updateProfileInput" type="email" name="updateEmail" value="<?php echo htmlspecialchars($userData['email']); ?>" readonly>
+                    </td>
+                    <td>
+                        <label>Backup email address</label><br>
+                        <input class="updateProfileInput" type="email" name="updateBackupEmail" value="<?php echo htmlspecialchars($userData['backupemail']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Education</label><br>
+                        <input class="updateProfileInput" type="text" name="updateEducation" value="<?php echo htmlspecialchars($userData['education']); ?>">
+                    </td>
+                    <td>
+                        <label>LinkedIn</label><br>
+                        <input class="updateProfileInput" type="text" name="updateLinkedIn" value="<?php echo htmlspecialchars($userData['linkedin']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        <label>Bio</label><br>
+                        <input class="updateProfileInput" type="text" style="height: 130px;" name="updateBio" value="<?php echo htmlspecialchars($userData['bio']); ?>">
+                    </td>
+                    <td>
+                        <label>Behance</label><br>
+                        <input class="updateProfileInput" type="text" name="updateBehance" value="<?php echo htmlspecialchars($userData['behance']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Dribble</label><br>
+                        <input class="updateProfileInput" type="text" name="updateDribble" value="<?php echo htmlspecialchars($userData['dribble']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="updateProfileButton" type="submit" name="update" value="Update gegevens">
+                    </td>
+                    <td>
+                        <a href="changepassword.php">Change current password</a>&nbsp;
+                        <a href="delete.php">Delete profile</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </form>
 
 
-<?php 
-if ($userData['role'] == 'admin') {
-    include_once('classes/User.php');
+    <?php
+    if ($userData['role'] == 'admin') {
+        include_once('classes/User.php');
 
-    $users = User::getAllUsers();
+        $users = User::getAllUsers();
 
-    echo '<h1 class="editHeader">Admin</h1><div class="adminpanel">';
+        echo '<h1 class="editHeader">Admin</h1><div class="adminpanel">';
 
 
-    foreach ($users as $user) {
-        echo '<div class="adminUser">';
-        echo '<div class="adminUserImage" style="background-image: url('.$user['profilepicture'].');" ></div>';
-        echo '<div class="adminUserInfo">';
-        echo '<h2>'.$user['firstname'].' '.$user['lastname'].'</h2>';
-        echo '<p>'.$user['email'].'</p>';
-        echo '<p>'.$user['role'].'</p>';
+        foreach ($users as $user) {
+            echo '<div class="adminUser">';
+            echo '<div class="adminUserImage" style="background-image: url(' . $user['profilepicture'] . ');" ></div>';
+            echo '<div class="adminUserInfo">';
+            echo '<h2>' . $user['firstname'] . ' ' . $user['lastname'] . '</h2>';
+            echo '<p>' . $user['email'] . '</p>';
+            echo '<p>' . $user['role'] . '</p>';
+            echo '</div>';
+            echo '<div class="adminUserOptions">';
+            if ($user['warning'] == 2) {
+                echo '<a href="admin.php?unban=' . $user['id'] . '">Unban User</a>&nbsp;&nbsp;&nbsp;';
+            } else {
+                echo '<a href="admin.php?ban=' . $user['id'] . '">Permanent Ban</a>&nbsp;&nbsp;&nbsp;';
+            }
+            echo '<a href="admin.php?warn=' . $user['id'] . '">Send Warning</a>';
+            echo '</div>';
+            echo '</div>';
+        }
+
         echo '</div>';
-        echo '<div class="adminUserOptions">';
-        echo '<a href="admin.php?ban='.$user['id'].'">Permanent Ban</a>&nbsp;&nbsp;&nbsp;';
-        echo '<a href="admin.php?warn='.$user['id'].'">Send Warning</a>';
-        echo '</div>';
-        echo '</div>';
-    }
-
-    echo '</div>';
-
-}?>
+    } ?>
 
 
-<script>
-userImage.onchange = evt => {
-  const [file] = userImage.files
-  if (file) {
-    profilePic.src = URL.createObjectURL(file)
-  }
-}
-</script>
+    <script>
+        userImage.onchange = evt => {
+            const [file] = userImage.files
+            if (file) {
+                profilePic.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 
 </body>
 

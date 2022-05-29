@@ -39,18 +39,18 @@ if (isset($_SESSION['unique_id'])) {
 
 // COMMENTS MET AJAX
 //controleer of er een update wordt verzonden
-if (!empty($_POST)) {
-    try {
-        $comment = new Comment();
-        $comment->setText($_POST['comment']);
-        $comment->saveComment();
-    } catch (\Throwable $th) {
-        //throw $th;
-    }
-}
+// if (!empty($_POST)) {
+//     try {
+//         $comment = new Comment();
+//         $comment->setText($_POST['comment']);
+//         $comment->saveComment();
+//     } catch (\Throwable $th) {
+//         //throw $th;
+//     }
+// }
 
 //altijd alle laatste activiteiten ophalen
-$comments = Comment::getAll();
+$comments = Comment::getAll($_GET['id']);
 
 
 ?>
@@ -99,16 +99,13 @@ $comments = Comment::getAll();
         <form method="post" action="">
             <h1>Comments</h1>
             <div class="commentSection">
-                <textarea name="comment" class="comment" cols="100" rows="10" placeholder="Share your opinion here..."></textarea>
-                <input class="btn" type="submit" value="Add comment" />
+                <textarea name="comment" id="commentText" class="comment" cols="100" rows="10" placeholder="Share your opinion here..."></textarea>
+                <input id="btnSubmit" class="btn" type="button" value="Add comment" data-postid="<?php echo $_GET['id']; ?>" />
 
-                <ul id="listupdates">
-                    <?php
-                    foreach ($comments as $c) {
-                        echo "<li>" . $c->getText() . "</li>";
-                    }
-
-                    ?>
+                <ul class="listUpdates">
+                    <?php foreach ($comments as $c) : ?>
+                        <li><?php echo $c['text']; ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </form>

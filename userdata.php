@@ -73,16 +73,15 @@ $role = user::getUserFromEmail($_SESSION['user'])['role'];
                 ?>
 
                 <?php
-                if(user::checkReported($user['id'], $id) == 2){
-                    echo '<input type="button" data-id="'.$id.'" class="add" id="reportButton" name="report"  value="report"/ >';
-                    }
-                else{
-                    echo '<input type="button" data-id="'.$id.'" class="add" id="reportButton" name="report"  value="reported"/>';
-                    }
+                if (user::checkReported($user['id'], $id) == 2) {
+                    echo '<input type="button" data-id="' . $id . '" class="add" id="reportButton" name="report"  value="report"/ >';
+                } else {
+                    echo '<input type="button" data-id="' . $id . '" class="add" id="reportButton" name="report"  value="reported"/>';
+                }
                 ?>
 
-                <p class="profileCard_education"><?php echo htmlspecialchars($education) ; ?></p>
-                <p class="profileCard_description"><?php echo htmlspecialchars($bio) ; ?></p>
+                <p class="profileCard_education"><?php echo htmlspecialchars($education); ?></p>
+                <p class="profileCard_description"><?php echo htmlspecialchars($bio); ?></p>
             </div>
         </div>
 
